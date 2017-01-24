@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-export RESULT_DIR=services.${TRAVIS_BUILD_NUMBER}
+export RESULT_DIR=service.${TRAVIS_BUILD_NUMBER}
 export SSHPASS=${SSH_PASS}
-export ARCH_NAME=server.package.tgz
-export SYMLINK_NAME=services
-export PROCESS_NAME=services
+export ARCH_NAME=service.package.tgz
+export SYMLINK_NAME=service
+export PROCESS_NAME=service
 
 mkdir ${RESULT_DIR}
 shopt -s extglob
@@ -14,7 +14,7 @@ sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}
 sshpass -e ssh -C ${SSH_USER}@${SSH_IP} << EOF
 cd ${WEB_PATH};
 tar -xzf ./${ARCH_NAME} -C ./;
-rm ./${ARCH_NAME};
+# rm ./${ARCH_NAME};
 if [ ! -f ".env" ]; then
     echo GITHUB_SECRET_TOKEN=${GITHUB_SECRET_TOKEN} >> .env;
     echo TRELLO_KEY=${TRELLO_KEY} >> .env;

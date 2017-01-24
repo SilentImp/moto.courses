@@ -13,7 +13,7 @@ import Names from './lib/translit/translit.js';
 import Utilities from './lib/utilities/utilities.js';
 
 const app = express()
-    , PORT = process.env.PORT || 8082
+    , PORT = process.env.PORT || 3003
     , gitHub = new GitHub()
     , trello = new Trello()
     , answer = new Answer()
@@ -39,8 +39,7 @@ app.get('/github/check/:login', function (req, res) {
     gitHub.searchForUser(req.params.login).then( result => {
         (result.length > 0) ? answer.success(res) : answer.fail(res);
     }).catch( error => {
-        console.log(error);
-        answer.fail(res);
+        answer.fail(res, error);
     });
 });
 
@@ -49,8 +48,7 @@ app.get('/trello/check/:login', function (req, res) {
     trello.searchForUser(req.params.login).then( result => {
         (result.length > 0) ? answer.success(res, result) : answer.fail(res);
     }).catch( error => {
-        console.log(error);
-        answer.fail(res);
+        answer.fail(res, error);
     });
 });
 
@@ -59,8 +57,7 @@ app.get('/twitter/check/:login', function (req, res) {
     twitter.searchForUser(req.params.login).then( result => {
         (result.length > 0) ? answer.success(res, result) : answer.fail(res);
     }).catch( error => {
-        console.log(error);
-        answer.fail(res);
+        answer.fail(res, error);
     });
 });
 
@@ -80,8 +77,7 @@ app.get('/autofill/:keywords', function (req, res) {
                 .then( result => resolve({'github':utilities.flatten(result)}) )
                 .catch( error => reject(error) );
         }).catch( error => {
-            console.log(error);
-            answer.fail(res);
+            answer.fail(res, error);
         });
     }));
 
@@ -89,8 +85,7 @@ app.get('/autofill/:keywords', function (req, res) {
         trello.searchForUsers(names).then( result => {
             resolve({'trello': utilities.flatten(result)})
         }).catch( error => {
-            console.log(error);
-            answer.fail(res);
+            answer.fail(res, error);
         });
     }));
 
@@ -98,8 +93,7 @@ app.get('/autofill/:keywords', function (req, res) {
         twitter.searchForUsers(names).then( result => {
             resolve({'twitter': utilities.flatten(result)})
         }).catch( error => {
-            console.log(error);
-            answer.fail(res);
+            answer.fail(res, error);
         });
     }));
 
@@ -111,8 +105,7 @@ app.get('/autofill/:keywords', function (req, res) {
 
        answer.success(res, users);
     }).catch( error => {
-        console.log(error);
-        answer.fail(res);
+        answer.fail(res, error);
     });
 });
 
