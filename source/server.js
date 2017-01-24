@@ -2,6 +2,7 @@
 require('dotenv').config({path: '../.env'});
 
 const pkg = require('../package.json');
+const urlExists = require('url-exists');
 process.env.VERSION = pkg.version;
 
 import express from 'express';
@@ -60,6 +61,14 @@ app.get('/twitter/check/:login', function (req, res) {
         answer.fail(res, error);
     });
 });
+
+// Check if url answering
+app.get('/url/check/:url', function (req, res) {
+    urlExists(req.params.url, function(error, exists) {
+    exists ? answer.success(res) : (error === null) ? answer.fail(res) : answer.fail(res, error);
+    });
+});
+
 
 // Search for autofill information
 app.get('/autofill/:keywords', function (req, res) {

@@ -6,9 +6,9 @@
   "scripts": {
     "build": "gulp javascript"
   },
-  "repository" : { 
-    "type" : "git",
-    "url" : "https://github.com/FrontenderMagazineDevelopment/service.frontender.info.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FrontenderMagazineDevelopment/service.frontender.info.git"
   },
   "author": "Anton Nemtsev",
   "dependencies": {
@@ -20,6 +20,7 @@
     "node-fetch": "^1.6.3",
     "oauth-1.0a": "^2.1.0",
     "transliteration": "^1.2.2",
-    "translitit-cyrillic-russian-to-latin": "^0.1.1"
+    "translitit-cyrillic-russian-to-latin": "^0.1.1",
+    "url-exists": "^1.0.3"
   }
 }

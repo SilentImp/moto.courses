@@ -59,6 +59,12 @@ Checking if there are such trello user, if there is — payload will contain us
 
 Checking if there are such twitter user, if there is — payload will contain user data
 
+# URL
+
+### /url/check/:url
+
+Check if url answering
+
 ## Autofill
 
 ### /autofill/:keywords
