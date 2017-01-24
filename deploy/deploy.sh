@@ -12,10 +12,12 @@ mv -f !(${RESULT_DIR}) ./${RESULT_DIR}
 tar -czf ${ARCH_NAME} ${RESULT_DIR}
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
 sshpass -e ssh -C ${SSH_USER}@${SSH_IP} << EOF
+cd /;
 cd ${WEB_PATH};
 tar -xzf ./${ARCH_NAME} -C ./;
-# rm ./${ARCH_NAME};
+rm ./${ARCH_NAME};
 if [ ! -f ".env" ]; then
+    echo WEB_PATH=${WEB_PATH} >> .env;
     echo GITHUB_SECRET_TOKEN=${GITHUB_SECRET_TOKEN} >> .env;
     echo TRELLO_KEY=${TRELLO_KEY} >> .env;
     echo TRELLO_TOKEN=${TRELLO_TOKEN} >> .env;
@@ -25,8 +27,9 @@ if [ ! -f ".env" ]; then
     echo TWITTER_TOKEN_SECRET=${TWITTER_TOKEN_SECRET} >> .env;
 fi
 cd ${RESULT_DIR};
+nvm use 7
 npm install;
-gulp javascript;
+npm run build;
 cd ..
 rm -dRf ${SYMLINK_NAME}
 ln -ds ${RESULT_DIR} ./${SYMLINK_NAME}
