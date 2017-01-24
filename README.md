@@ -31,3 +31,36 @@ Set of micro-services for Fronteder Magazine
             proxy_redirect off;
         }
     }
+
+# API
+
+You will get JSON as an answer
+
+    {
+        success: true | false # if operation was successfull
+        payload: mixed # any additional data
+    }
+
+## GitHub
+
+### /github/check/:login
+
+Checking if there are such github user, if there is — payload will contain user data
+
+## Trello
+
+### /trello/check/:login
+
+Checking if there are such trello user, if there is — payload will contain user data
+
+## Twitter
+
+### /twitter/check/:login
+
+Checking if there are such twitter user, if there is — payload will contain user data
+
+## Autofill
+
+### /autofill/:keywords
+
+Search for users, :keywords — URL-encoded JSON-encoded array with names, nicknames, emails and other user information.
