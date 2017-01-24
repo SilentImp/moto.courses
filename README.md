@@ -5,7 +5,7 @@ Set of micro-services for Fronteder Magazine
 ## Installation
 
     npm install
-    npm run gulp
+    npm run build
     node ./build/server.js
 
 ## NGINX configuration
