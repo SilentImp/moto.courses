@@ -2,7 +2,7 @@
 require('dotenv').config({path: '../.env'});
 
 const pkg = require('../package.json');
-process.env.VERSION = pkg.varsion;
+process.env.VERSION = pkg.version;
 
 import express from 'express';
 import GitHub from './lib/github/github.js';
