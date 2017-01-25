@@ -6,7 +6,7 @@ Set of micro-services for Fronteder Magazine
 
     npm install
     npm run build
-    node ./build/server.js
+    npm run server
 
 ## NGINX configuration
 
