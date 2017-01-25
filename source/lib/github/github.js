@@ -60,8 +60,11 @@ export default class Github {
             fetch(this.urls.api + this.urls.search_users + '?q=' + encodeURIComponent(keyword), options).then(response => {
                 return response.json();
             }).then(response => {
+                console.log('github finded: ', response);
+                if (typeof response.items === "undefined") reject(response);
                 resolve(response.items);
             }).catch(error => {
+                console.log('github error: ', error);
                 reject(error);
             });
         });

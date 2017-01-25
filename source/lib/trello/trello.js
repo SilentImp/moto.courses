@@ -60,7 +60,7 @@ export default class Trello {
                 let users = [];
                 for(let user of response) {
                     let {username, fullName, email, avatarHash, gravatarHash} = user;
-                    users.push({username, fullName, email, avatarHash, gravatarHash});
+                    users.push({login: username, name: fullName, email, avatarHash, gravatarHash});
                 }
                 return users;
             }).then(response => {

@@ -4,7 +4,8 @@
   "description": "Services for Frontender Magazine",
   "main": "./build/server.js",
   "scripts": {
-    "build": "gulp javascript"
+    "build": "gulp javascript",
+    "server": "node ./build/server.js"
   },
   "repository": {
     "type": "git",
