@@ -15,7 +15,6 @@ sshpass -e ssh -C ${SSH_USER}@${SSH_IP} << EOF
 cd /;
 cd ${WEB_PATH};
 tar -xzf ./${ARCH_NAME} -C ./;
-rm ./${ARCH_NAME};
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
 fi
