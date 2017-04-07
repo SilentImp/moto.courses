@@ -4,8 +4,7 @@
   "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
   "scripts": {
-    "build": "gulp build && gulp server",
-    "server": "node ./server/server.js"
+    "build": "gulp build && gulp server"
   },
   "repository": {
     "type": "git",

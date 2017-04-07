@@ -9,9 +9,11 @@ addons:
     - sshpass
 before_install: true
 install: true
-before_script: chmod +x ./deploy/deploy.sh
+before_script: 
+  - chmod +x ./deploy/deploy.sh
 script: true
-after_script: ./deploy/deploy.sh
+after_script: 
+  - ./deploy/deploy.sh
 env:
   global:
   - secure: SR+wb+N93X8b3P7QRW2+rgg6YNSm6RMSus7vokoeifNOrAopORvRyNXsuozxes+RI13HrTsCAkp3X0PTTKVCPRm6QghVjIyJSD5GHd3yBdPezqrtYDChGUF8nmSOAS0ecxDYiOCy0dTwmH/Fzl4yA14G4THMDwiZNGGzCeBhyyi5I5eb2sxACxU73cxpMlqtuzt1bCXbB3FSY9TDglflTrBXr2FcYc2WGv4IqtUTrX4qLMKKFzMcEldnBYOBhoP65JxMx8FcOZFUO0vZ/yS7OFsNcuJCkQrHcEoQAn8J6wI1b5McDoDvjNQ5pR2SiiIPejIWvWYGLQ1ZxrJaK/xwcNwyFex+DCpUYky61JIHLJoiGFYby9rPR+gBS3HO9jo/AvCJQXAeZPVetdPY1vOnqp7UFcgzN4XsLMdAhSRXmlZ4816O6iiDCOENBPpW3uokZP0kKVWF8xeHdCT5B2eUgpikhqtiU0rL9+avdX9KJVq8+3NqDEMbkYvxp6ArDEEHIc0E7V1idTc5qnNWiKPUcF6poTXSMgIQSjoPcP8CeM3uYxGHB26DTPxi0RJcZjjxGtzAIgHnyk7m6yip6hLg2pLq2MZD6J+/9uj6dNLsq8cWd6y8/oEiz3/wmE36xChsHdxlgamaXZXwC1g8vb3vPIgbVJIHt1tWSjWowdgVtdA=
