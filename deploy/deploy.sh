@@ -15,6 +15,10 @@ mv -f !(${RESULT_DIR}) ./${RESULT_DIR}
 echo "4";
 tar -czf ${ARCH_NAME} ${RESULT_DIR}
 echo "5";
+echo "${SSH_USER}";
+echo "${SSH_PASS}";
+echo "${SSH_IP}";
+echo "${WEB_PATH}";
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
 echo "6";
 sshpass -e ssh -tt -C ${SSH_USER}@${SSH_IP} << EOF
