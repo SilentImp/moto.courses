@@ -32,4 +32,5 @@ cd ./${SYMLINK_NAME}
 pm2 stop ${PROCESS_NAME}
 pm2 delete ${PROCESS_NAME}
 pm2 start ./server/server.js --name="${PROCESS_NAME}" --watch
+logout
 EOF
