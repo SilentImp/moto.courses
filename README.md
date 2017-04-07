@@ -1,6 +1,6 @@
 # MOTO.COURSES
 
-Set of micro-services for Fronteder Magazine
+Landing site for moto.courses
 
 ## Installation
 
@@ -30,13 +30,4 @@ Set of micro-services for Fronteder Magazine
             proxy_pass http://moto.courses/;
             proxy_redirect off;
         }
-    }
-
-# API
-
-You will get JSON as an answer
-
-    {
-        success: true | false # if operation was successfull
-        payload: mixed # any additional data
     }
