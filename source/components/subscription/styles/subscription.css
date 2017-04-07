@@ -37,6 +37,7 @@
         position: relative;
         text-transform: uppercase;
         transition: background-color .25s;
+        
         &:after {
             content: "";
             height: 0;
@@ -50,6 +51,7 @@
             transition: border-color .25s;
         }
 
+        &:focus:after,
         &:hover:after {
             border-color: $color_blue_dark transparent transparent;
         }
