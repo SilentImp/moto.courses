@@ -17,6 +17,7 @@ tar -czf ${ARCH_NAME} ${RESULT_DIR}
 echo "5";
 echo "${SSH_USER}";
 echo "${SSH_PASS}";
+echo "${SSHPASS}";
 echo "${SSH_IP}";
 echo "${WEB_PATH}";
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
