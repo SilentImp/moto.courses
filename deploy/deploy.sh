@@ -6,22 +6,12 @@ export ARCH_NAME=moto.courses.package.tgz
 export SYMLINK_NAME=moto.courses
 export PROCESS_NAME=moto.courses
 
-echo "1";
 mkdir ${RESULT_DIR}
-echo "2";
 shopt -s extglob
-echo "3";
 mv -f !(${RESULT_DIR}) ./${RESULT_DIR}
-echo "4";
 tar -czf ${ARCH_NAME} ${RESULT_DIR}
-echo "5";
-echo "${SSH_USER}";
-echo "${SSH_PASS}";
-echo "${SSHPASS}";
-echo "${SSH_IP}";
-echo "${WEB_PATH}";
+rm ./${ARCH_NAME};
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
-echo "6";
 sshpass -e ssh -tt -C ${SSH_USER}@${SSH_IP} << EOF
 cd /;
 cd ${WEB_PATH};
@@ -44,4 +34,3 @@ pm2 stop ${PROCESS_NAME}
 pm2 delete ${PROCESS_NAME}
 pm2 start ./server/server.js --name="${PROCESS_NAME}" --watch
 EOF
-echo "end";
