@@ -25,7 +25,6 @@ nvm use 7
 nvm alias default 7
 npm install;
 npm run build;
-npm run server;
 cd ..
 rm -dRf ${SYMLINK_NAME}
 ln -ds ${RESULT_DIR} ./${SYMLINK_NAME}
