@@ -1,0 +1,58 @@
+@import "./_variables.css";
+
+@font-face {
+    font-family: 'BMW';
+    src: url('/fonts/bmw-regular.woff2') format('woff2'),
+        url('/fonts/bmw-regular.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BMW';
+    src: url('/fonts/bmw-light.woff2') format('woff2'),
+        url('/fonts/bmw-light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@define-mixin fontfamily {
+    font-family: 'BMW', Helvetica, Arial, sans-serif;
+}
+
+@define-mixin header {
+    @mixin fontfamily;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $color_black_1;
+    font-size: $font_size_header;
+    line-height: $line_height_header;
+
+    @media (max-width: 499px) { 
+        font-size: $font_size_4;
+        line-height: $step_2;
+    }
+}
+
+@define-mixin text {
+    @mixin fontfamily;
+    font-weight: normal;
+    color: $color_black_1;
+    font-size: $font_size_text;
+    line-height: $line_height_text;
+
+    @media (max-width: 499px) { 
+        font-size: $font_size_4;
+        line-height: $step_2;
+    }
+}
+
+@define-mixin smalltext {
+    @mixin fontfamily;
+    font-weight: normal;
+    color: $color_black_1;
+    font-size: $font_size_smalltext;
+    line-height: $line_height_smalltext;
+}

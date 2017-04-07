@@ -1,0 +1,15 @@
+header.header
+    h1.header__logotype 
+        include  ../../icon/pug/logotype.pug
+        script.
+            const logo = document.getElementById('logotype')
+                , list = ['airfilter', 'frontbrakes', 'rearbrakes', 'gas', 'screwdriver', 'trench', 'wrench']
+                , index = Math.floor(Math.random() * list.length);
+            logo.setAttribute('xlink:href', '#' + list[index]);
+
+        p.header__message Научись
+            br
+            | обслуживать
+            br
+            | свой мотоцикл
+    a.header__tel(href="tel:+380502773882") +38 (050) 2-77-3-88-2

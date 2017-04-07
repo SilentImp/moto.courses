@@ -1,0 +1,117 @@
+@import "./_variables.css";
+@import "./_typography.css";
+
+@define-mixin grid {
+    background: linear-gradient(to bottom, rgba(28,105,212,.1) 0, rgba(28,105,212,.1) 50%, transparent 50%, transparent 100%);
+    -webkit-background-size: 100% 24px;
+    background-size: 100% 24px;
+}
+
+@define-mixin page {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block;
+    padding: 0 $step_4;
+
+    @media (max-width: 499px) { 
+        padding: 0 $step_2;
+    }
+}
+
+@define-mixin clear {
+    &:after {
+        content: "";
+        clear: both;
+        display: block;
+        font-size: 0;
+        line-height: 0;
+        height: 0;
+        overflow: hidden;
+    }
+}
+
+@define-mixin clear_input {
+    border-radius: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border-style: none;
+    box-shadow: none;
+    background: none;
+    box-shadow: none;
+    outline: none;
+}
+
+@define-mixin clear_button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-decoration: none;
+    background: none;
+    border-style: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    display: inline-block;
+    @mixin fontfamily;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 0;
+    &::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+}
+
+@define-mixin button {
+    @mixin clear_button;
+    @mixin fontfamily;
+    color: $color_white;
+    height: $step_4;
+    line-height: $step_4;
+    padding: 0 $step_2;
+    width: $col_2;
+    text-align: center;
+    background: $color_blue;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: $step_2;
+    outline: none;
+
+    &:focus,
+    &:hover {
+        background: $color_blue_dark;
+    }
+}
+
+@define-mixin textinput {
+    @mixin clear_input;
+    @mixin fontfamily;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    border-color: $color_black_1;
+    height: $step_4;
+    line-height: calc($step_4 - 1px);
+    font-size: $font_size_5;
+    font-weight: 400;
+    width: 100%;
+
+    &::-webkit-input-placeholder {
+        @mixin fontfamily;
+        color: $color_grey_2;
+    }
+    &::-moz-placeholder {
+        @mixin fontfamily;
+        color: $color_grey_2;
+    }
+    &:-ms-input-placeholder {
+        @mixin fontfamily;
+        color: $color_grey_2;
+    }
+    &:-moz-placeholder {
+        @mixin fontfamily;
+        color: $color_grey_2;
+    }
+}

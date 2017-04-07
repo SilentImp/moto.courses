@@ -1,0 +1,45 @@
+$font_size_1: 10px;
+$font_size_2: 12px;
+$font_size_3: 14px;
+$font_size_4: 16px;
+$font_size_5: 18px;
+$font_size_6: 24px;
+
+$step_1: 12px;
+$step_2: 24px;
+$step_3: 36px;
+$step_4: 48px;
+$step_5: 60px;
+$step_6: 72px;
+$step_7: 84px;
+$step_8: 96px;
+$step_9: 108px;
+$step_10: 120px;
+$step_11: 132px;
+
+$line_height_header: $step_3;
+$font_size_header: $font_size_6;
+
+$line_height_text: $step_3;
+$font_size_text: $font_size_6;
+
+$line_height_smalltext: $step_2;
+$font_size_smalltext: $font_size_3;
+
+$color_black: #000;
+$color_black_1: #262626;
+$color_black_2: #4c4c4e;
+$color_black_3: #666;
+
+$color_grey: #808284;
+$color_grey_1: #999;
+$color_grey_2: #a2a3a6;
+$color_grey_3: #e6e7e8;
+
+$color_white: #fff;
+$color_blue: #1c69D4;
+$color_blue_semi: rgba(28, 105, 212, .5);
+$color_blue_dark: #039;
+$color_red: #f00;
+$color_red_semi: rgba(255, 0, 0, .5);
+$color_red_opaque: rgba(255, 0, 0, .2);

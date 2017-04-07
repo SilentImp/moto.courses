@@ -1,0 +1,36 @@
+@import "../../../helpers/_helpers.css";
+
+.icon {
+    &--made-in-ukraine {
+        width: $step_6;
+        height: $step_6;
+        position: absolute;
+        top: $step_2;
+        right: $step_4;
+    }
+
+    &--logotype {
+        width: $step_6;
+        height: $step_6;
+        padding: 18px;
+        margin-right: $step_2;
+        float: left;
+    }
+}
+
+@media (max-width: 499px) {
+    .icon {
+        &--made-in-ukraine {
+            width: $step_4;
+            height: $step_4;
+            top: 0;
+            right: $step_2;
+        }
+        &--logotype {
+            width: $step_4;
+            height: $step_4;
+            margin-right: $step_2;
+            padding: 12px 0;
+        }
+    }
+}

@@ -1,0 +1,73 @@
+@import "../../../helpers/_helpers.css";
+
+.header {
+    @mixin page;
+    @mixin clear;
+    padding-top: $step_4;
+    padding-bottom: $step_2;
+    z-index: 2;
+
+    .social-likes {
+        float: right;
+        clear: right;
+    }
+    
+    &__message {
+        @mixin header;
+        float: left;
+    }
+
+    &__logotype {
+        float: left;
+    }
+
+    &__tel {
+        float: right;
+        @mixin text;
+        text-decoration: none;
+        color: $color_black_1;
+
+        &:hover {
+            color: $color_blue;
+        }
+    }
+}
+
+
+@media (max-width: 700px) {
+    .header {
+        &__tel {
+            font-size: $font_size_4;
+        }
+    }
+}
+
+@media (max-width: 620px) {
+    .header {
+        &__tel {
+            float: none;
+            clear: both;
+            overflow: hidden;
+            display: block;
+            margin-left: $step_11;
+            font-size: $font_size_6;
+        }
+    }
+}
+
+@media (max-width: 499px) {
+    .header {
+        padding-top: $step_2;
+        padding-bottom: $step_1;
+
+        &__message { 
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+        &__tel {
+            margin-left: $step_6;
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+    }
+}

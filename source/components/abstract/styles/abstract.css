@@ -1,0 +1,53 @@
+@import "../../../helpers/_helpers.css";
+
+.abstract {
+    width: $col_3;
+    margin: $step_2 $gap $step_4 0;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    z-index: 2;
+    &__title {
+        @mixin header;
+    }
+    &__contents {
+        @mixin text;
+        list-style: disc;
+    }
+    &__chapter {
+        color: $color_black_1;
+        cursor: pointer;
+        &:hover,
+        &--current {
+            color: $color_blue;
+        }
+    }
+}
+
+@media (max-width: 989px) {
+    .abstract {
+        margin: $step_2 0 $step_4 0;
+        display: block;
+        width: $col_6;
+    }
+}
+
+@media (max-width: 619px) {
+    .abstract {
+        &__chapter {
+            cursor: auto;
+            color: $color_black_1;
+            &:hover,
+            &--current:hover,
+            &--current {
+                color: $color_black_1;
+            }
+        }
+    }
+}
+
+@media (max-width: 499px) {
+    .abstract {
+        margin: $step_1 0 $step_2 0;
+    }
+}

@@ -1,0 +1,42 @@
+section.scene.scene--oil(data-current="oil")
+    
+    .scene__abstract.scene__abstract--breaks
+        .dot.dot--rare-brakes
+            p.dot__title Расширительный бачок заднего тормоза
+        
+        .dot.dot--rare-brakes-choke
+            p.dot__title Штуцер
+
+        .dot.dot--front-brakes
+            p.dot__title Расширительный бачок переднего тормоза
+
+        .dot.dot--front-brakes-choke-1
+            p.dot__title Штуцер
+        
+        .dot.dot--front-brakes-choke-2
+
+    .scene__abstract.scene__abstract--air
+        .dot.dot--air-filter
+            p.dot__title Воздушный фильтр
+        
+        .dot.dot--air-snorkel
+            p.dot__title Шнорхель
+
+    .scene__abstract.scene__abstract--oil
+
+        .dot.dot--oil-filter
+            p.dot__title Маслянный фильтр
+
+        .dot.dot--oil-window
+            p.dot__title Окошко для проверки уровня масла
+
+    .scene__wrapper-outer
+        .scene__wrapper-inner
+            each val in [1, 2, 3, 4, 5, 6]
+                picture.scene__illustration
+                    source(media="(-o-min-device-pixel-ratio: 5/4) and (min-width: 620px), (-webkit-min-device-pixel-ratio: 1.25) and (min-width: 620px), (min--moz-device-pixel-ratio: 1.25) and (min-width: 620px), (min-device-pixel-ratio: 1.25) and (min-width: 620px), (min-resolution: 1.25dppx) and (min-width: 620px)", 
+                        srcset="images/bmw_"+val+"@2x.jpg")
+                    source(media="(-o-max-device-pixel-ratio: 5/4) and (min-width: 620px), (-webkit-max-device-pixel-ratio: 1.25) and (min-width: 620px), (max--moz-device-pixel-ratio: 1.25) and (min-width: 620px), (max-device-pixel-ratio: 1.25) and (min-width: 620px), (max-resolution: 1.25dppx) and (min-width: 620px)", 
+                        srcset="images/bmw_"+val+".jpg")
+                    source(media="(max-width: 619px)", srcset="about:blank")
+                    img(src="images/bmw_"+val+".jpg", alt="Мотоцикл")

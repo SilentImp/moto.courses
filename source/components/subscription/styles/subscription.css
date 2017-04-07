@@ -1,0 +1,86 @@
+@import "../../../helpers/_helpers.css";
+
+.subscription {
+    width: $col_3;
+    margin: $step_2 0 $step_4;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    z-index: 2;
+
+    &--success {
+        display: none;
+    }
+
+    &__fieldset {
+        @mixin clear;
+        margin: 0 0 $step_2;
+    }
+
+    &__title {
+        @mixin header;
+    }
+
+    &__message {
+        @mixin text;
+        margin: 0 0 $step_2;
+    }
+
+    &__email {
+        @mixin textinput;
+    }
+
+    &__subscribe {
+        @mixin button;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        text-transform: uppercase;
+        transition: background-color .25s;
+        &:after {
+            content: "";
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 100%;
+            left: $step_1;
+            border-style: solid;
+            border-width: $step_1 $step_1 0 0;
+            border-color: $color_blue transparent transparent;
+            transition: border-color .25s;
+        }
+
+        &:hover:after {
+            border-color: $color_blue_dark transparent transparent;
+        }
+    }
+
+    &__error {
+        display: inline-block;
+        vertical-align: middle;
+        color: $color_red;
+        display: none;
+    }
+}
+
+@media (max-width: 989px) {
+    .subscription {
+        display: block;
+        width: $col_6;
+
+        &__subscribe {
+            width: auto;
+            display: block;
+        }
+
+        &__subscribe {
+            margin: 0 0 $step_2;
+        }
+    }
+}
+
+@media (max-width: 499px) { 
+    .subscription {
+        margin: $step_1 0 $step_2;
+    }
+}

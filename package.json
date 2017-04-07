@@ -1,25 +1,46 @@
 {
-  "name": "service.frontender.info",
+  "name": "moto.courses",
   "version": "1.0.0",
-  "description": "Services for Frontender Magazine",
+  "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
   "scripts": {
-    "build": "gulp javascript",
-    "server": "node ./build/server.js"
+    "build": "gulp build && gulp server",
+    "server": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FrontenderMagazineDevelopment/service.frontender.info.git"
+    "url": "https://github.com/SilentImp/moto.courses/moto.courses.git"
   },
   "author": "Anton Nemtsev",
   "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-preset-latest": "^6.24.0",
     "babel-preset-modern-node": "^3.2.0",
     "dotenv": "^4.0.0",
     "express": "^4.14.0",
+    "gm": "^1.23.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-cheerio": "^0.6.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlclean": "^2.7.11",
+    "gulp-image-resize": "^0.12.0",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-order": "^1.1.1",
+    "gulp-postcss": "^6.4.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-svgmin": "^1.2.3",
+    "gulp-svgsprite": "^1.0.2",
+    "gulp-uglify": "^2.1.2",
+    "imagemin-webp": "^4.0.0",
     "node-fetch": "^1.6.3",
     "oauth-1.0a": "^2.1.0",
+    "postcss-clean": "^1.0.2",
+    "postcss-discard-empty": "^2.1.0",
+    "precss": "^1.4.0",
     "transliteration": "^1.2.2",
     "translitit-cyrillic-russian-to-latin": "^0.1.1",
     "url-exists": "^1.0.3"

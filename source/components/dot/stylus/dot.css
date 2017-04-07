@@ -1,0 +1,236 @@
+@import "../../../helpers/_helpers.css";
+
+@define-mixin small {
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    background-color: $color_red_semi;
+}
+
+.dot {
+    position: absolute;
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border-radius: 100%;
+    background-color: $color_red_semi;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform .25s, opacity .25s;
+
+    &:after {
+        content: "";
+        display: block;
+        height: 1px;
+        top: 47.5%;
+        background: $color_red_semi;
+        position: absolute;
+        opacity: 0;
+        transition: opacity .25s;
+    }
+
+    &__title {
+        position: absolute;
+        @mixin smalltext;
+        opacity: 0;
+        transition: opacity .25s;
+        /* background: rgba(0,255,0,.25); */
+    }
+
+    &--air-filter {
+        top: 37%;
+        left: 45%;
+
+        .dot__title {
+            bottom: 114px;
+            right: 140%;
+            text-align: right;
+        }
+
+        &:after {
+            width: 255%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(-120deg);
+        }
+    }
+
+    &--air-snorkel {
+        top: 42.2%;
+        left: 56%;
+
+        .dot__title {
+            bottom: 211px;
+            left: 180%;
+            text-align: right;
+        }
+
+        &:after {
+            width: 525%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(-70deg);
+        }
+    }
+
+    &--oil-filter {
+        top: 68%;
+        left: 49%;
+        border: 1px dotted $color_red_semi;
+        background-clip: padding-box;
+        background-color: $color_red_opaque;
+
+        &:after {
+            width: 90%;
+            left: 50%;
+
+            transform-origin: -20px 50%;
+            transform: translateX(20px) rotate(90deg);
+
+            background: linear-gradient(to left, $color_red_opaque 0, $color_red_opaque 50%, transparent 50%, transparent 100%);
+            background-size: 2px;
+        }
+
+        .dot__title {
+            left: -30%;
+            top: 65px;
+        }
+    }
+
+    &--oil-window {
+        top: 63%;
+        left: 44%;
+
+        &:after {
+            width: 160%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(130deg);
+        }
+
+        .dot__title {
+            right: 75%;
+            top: 72px;
+        }
+    }
+
+    &--oil {
+        top: 23.5%;
+        left: 47.17%;
+
+        &:after {
+            width: 120%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(-70deg);
+        }
+
+        .dot__title {
+            bottom: 75px;
+            left: -55%;
+        }
+    }
+
+    &--rare-brakes {
+        top: 42.4%;
+        left: 40.25%;
+
+        .dot__title {
+            bottom: 130px;
+            right: 60%;
+            text-align: right;
+        }
+
+        &:after {
+            width: 265%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(-100deg);
+        }
+    }
+
+    &--rare-brakes-choke {
+        top: 48.75%;
+        left: 31.25%;
+
+        &:after {
+            width: 90%;
+            right: 100%;
+        }
+
+        .dot__title {
+            right: 200%;
+            line-height: 36px;
+        }
+    }
+
+    &--front-brakes {
+        top: 16.75%;
+        left: 58.21%;
+
+        &:after {
+            width: 55%;
+            left: 50%;
+
+            transform-origin: -18px 50%;
+            transform: translateX(18px) rotate(-70deg);
+        }
+
+        .dot__title {
+            left: 30%;
+            bottom: 59px;
+        }
+    }
+
+    &--front-brakes-choke {
+        &-1 {
+            top: 58.7%;
+            left: 63.5%;
+
+            &:after {
+                width: 360%;
+                left: 100%;
+            }
+
+            .dot__title {
+                left: 480%;
+                line-height: 36px;
+            }
+        }
+        &-2 {
+            top: 61%;
+            left: 76%;
+
+            border: 1px dotted $color_red_semi;
+            background-clip: padding-box;
+            background-color: $color_red_opaque;
+
+            &:after {
+                width: 128%;
+                left: 50%;
+
+                transform-origin: -18px 50%;
+                transform: translateX(18px) rotate(-8deg);
+
+                background: linear-gradient(to left, $color_red_opaque 0, $color_red_opaque 50%, transparent 50%, transparent 100%);
+                background-size: 2px;
+            }
+        }
+    }
+}
+
+@media (max-width: 756px) {
+    .dot {
+        &__title {
+            font-size: $font_size_2;
+            line-height: $font_size_3;
+        }
+    }
+}
