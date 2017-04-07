@@ -1,6 +1,6 @@
 # MOTO.COURSES
 
-Landing site for moto.courses
+Landing site for moto.courses.
 
 ## Installation
 
