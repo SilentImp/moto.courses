@@ -26,7 +26,7 @@ const gulp = require('gulp')
             sprite: "./source/svg-sprites/**/*.svg",
             fonts: ["./source/fonts/**/*.woff", "./source/fonts/**/*.woff2"],
             server: "./server_source/*.js",
-            favicon: "./source/favicon/**/*.ico"
+            favicon: "./source/favicon/**/*"
         },
         build: {
             build: "./build/",
