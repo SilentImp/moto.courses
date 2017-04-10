@@ -25,7 +25,8 @@ const gulp = require('gulp')
             all_html:   ["./source/pages/**/*.pug", "./source/components/**/*.pug"],
             sprite: "./source/svg-sprites/**/*.svg",
             fonts: ["./source/fonts/**/*.woff", "./source/fonts/**/*.woff2"],
-            server: "./server_source/*.js"
+            server: "./server_source/*.js",
+            favicon: "./source/favicon/**/*.ico"
         },
         build: {
             build: "./build/",
@@ -34,6 +35,7 @@ const gulp = require('gulp')
             images: "./build/images/",
             fonts: "./build/fonts/",
             js: "./build/javascript/",
+            favicon: "./build/",
             server: "./server/"
         }
     };
@@ -128,11 +130,16 @@ gulp.task('images', function() {
 
 gulp.task('images', resizeImageTasks);
 
+gulp.task('favicon', function() {
+	return gulp.src( paths.source.favicon )
+        .pipe( gulp.dest(paths.build.favicon) );
+});
+
 gulp.task('default', ['javascript'], function() {
     gulp.watch( paths.source.js, ['javascript'] );
 });
 
-gulp.task('build', ['fonts','javascript', 'css', 'html', 'images']);
+gulp.task('build', ['fonts','javascript', 'css', 'html', 'images', 'favicon']);
 
 gulp.task('watch', function() {
     gulp.watch( paths.source.js, ['javascript'] );

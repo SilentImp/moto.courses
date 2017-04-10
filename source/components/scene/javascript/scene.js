@@ -42,6 +42,9 @@
          */
         init () {
             this.scene = document.querySelector('.scene');
+
+            if (this.scene == null) return;
+
             this.current = this.scene.getAttribute('data-current');
             document.addEventListener('abstractSelect', this.play);
         }

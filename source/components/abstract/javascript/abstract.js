@@ -42,6 +42,9 @@
          */
         init () {
             this.component = document.querySelector('.abstract');
+            
+            if (this.component == null) return;
+
             this.chapter = this.component.querySelector('.abstract__chapter--current');
             for(let chapter of this.component.querySelectorAll('.abstract__chapter')) {
                 chapter.addEventListener('click', this.open);
