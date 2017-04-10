@@ -2,11 +2,8 @@ header.header
     h1.header__logotype 
         a(href="https://moto.courses/")
             include  ../../icon/pug/logotype.pug
-        script.
-            const logo = document.getElementById('logotype')
-                , list = ['airfilter', 'frontbrakes', 'rearbrakes', 'gas', 'screwdriver', 'trench', 'wrench']
-                , index = Math.floor(Math.random() * list.length);
-            logo.setAttribute('xlink:href', '#' + list[index]);
+        script
+            include  ../javascript-inline/logotype.js
 
         p.header__message Научись
             br

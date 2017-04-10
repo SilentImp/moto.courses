@@ -20,7 +20,8 @@ const gulp = require('gulp')
             images:    ["./source/components/**/*.jpg", "./source/components/**/*.png"],
             components_css:    "./source/components/**/*.css",
             all_css: ["./source/components/**/*.css", "./source/helpers/**/*.css"],
-            js:     "./source/components/**/*.js",
+            js:     "./source/components/**/javascript/**/*.js",
+            jss:    "./source/components/**/javascript-unmergable/**/*.js",
             html:   "./source/pages/**/*.pug",
             all_html:   ["./source/pages/**/*.pug", "./source/components/**/*.pug"],
             sprite: "./source/svg-sprites/**/*.svg",
@@ -97,6 +98,16 @@ gulp.task('javascript', function() {
         .pipe( gulp.dest(paths.build.js) );
 });
 
+gulp.task('javascript-standalone', function() {
+	return gulp.src( paths.source.jss )
+        .pipe( babel({
+            presets: ['latest']
+        }))
+        .pipe( uglify() )
+        .pipe( rename({dirname: ''}) )
+        .pipe( gulp.dest(paths.build.js) );
+});
+
 gulp.task('fonts', function() {
 	return gulp.src( paths.source.fonts )
         .pipe( gulp.dest(paths.build.fonts) );
@@ -139,10 +150,10 @@ gulp.task('default', ['javascript'], function() {
     gulp.watch( paths.source.js, ['javascript'] );
 });
 
-gulp.task('build', ['fonts','javascript', 'css', 'html', 'images', 'favicon']);
+gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'css', 'html', 'images', 'favicon']);
 
 gulp.task('watch', function() {
-    gulp.watch( paths.source.js, ['javascript'] );
+    gulp.watch( paths.source.js, ['javascript','javascript-standalone'] );
     gulp.watch( paths.source.all_css, ['css'] );
     gulp.watch( paths.source.all_html, ['html'] );
 });
