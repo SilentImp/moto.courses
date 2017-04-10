@@ -68,6 +68,7 @@
 @define-mixin button {
     @mixin clear_button;
     @mixin fontfamily;
+    font-size: $font_size_2;
     color: $color_white;
     height: $step_4;
     line-height: $step_4;
