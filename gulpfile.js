@@ -103,9 +103,9 @@ gulp.task('javascript-standalone', function() {
         .pipe( babel({
             presets: ['latest']
         }))
-        .pipe( uglify() )
+        // .pipe( uglify() )
         .pipe( rename({dirname: ''}) )
-        .pipe( gulp.dest(paths.build.js) );
+        .pipe( gulp.dest(paths.build.build) );
 });
 
 gulp.task('fonts', function() {
