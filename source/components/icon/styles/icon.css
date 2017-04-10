@@ -2,11 +2,26 @@
 
 .icons {
     width: 100%;
+    @mixin text;
 
-    tr td{
-        padding: 0 0 $step_2;
+    &__icon {
+        box-sizing: border-box;
+        padding: 0 $step_2 $step_2 0;
+        width: $col_3;
+        margin: $step_2 $gap $step_2 0;
+        display: inline-block;
         vertical-align: top;
-        @mixin text;
+        @mixin clear;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+    }
+
+    &__author {
+        font-size: $font_size_6;
+        line-height: $step_3;
+        overflow: hidden;
     }
 }
 
@@ -14,6 +29,8 @@
     &--list {
         width: $step_6;
         height: $step_6;
+        float: left;
+        margin-right: $step_2;
     }
 
     &--made-in-ukraine {
@@ -33,8 +50,54 @@
     }
 }
 
-@media (max-width: 499px) {
+@media (max-width: 960px) {
+    .icons {
+        &__author {
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+    }
     .icon {
+        &--list {
+            width: $step_4;
+            height: $step_4;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .icons {
+        &__icon {
+            width: auto;
+            margin-right: 0;
+        }
+
+        &__author {
+            font-size: $font_size_6;
+            line-height: $step_3;
+        }
+    }
+    .icon {
+        &--list {
+            width: $step_6;
+            height: $step_6;
+        }
+    }
+}
+
+@media (max-width: 499px) {
+    .icons {
+        &__author {
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+    }
+
+    .icon {
+        &--list {
+            width: $step_4;
+            height: $step_4;
+        }
         &--made-in-ukraine {
             width: $step_4;
             height: $step_4;
