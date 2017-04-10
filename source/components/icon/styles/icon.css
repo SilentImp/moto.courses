@@ -1,6 +1,21 @@
 @import "../../../helpers/_helpers.css";
 
+.icons {
+    width: 100%;
+
+    tr td{
+        padding: 0 0 $step_2;
+        vertical-align: top;
+        @mixin text;
+    }
+}
+
 .icon {
+    &--list {
+        width: $step_6;
+        height: $step_6;
+    }
+
     &--made-in-ukraine {
         width: $step_6;
         height: $step_6;

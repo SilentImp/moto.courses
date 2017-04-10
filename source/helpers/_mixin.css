@@ -74,7 +74,7 @@
     padding: 0 $step_2;
     width: $col_2;
     text-align: center;
-    background: $color_blue;
+    background: color($color_blue l(-5%));
     display: inline-block;
     vertical-align: middle;
     margin-right: $step_2;
@@ -82,7 +82,7 @@
 
     &:focus,
     &:hover {
-        background: $color_blue_dark;
+        background: color($color_blue l(+5%));
     }
 }
 
