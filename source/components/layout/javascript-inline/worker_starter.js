@@ -1,4 +1,8 @@
 (function () {
-    if (typeof SharedWorker !== "function") return;
-    const black = new SharedWorker("https://moto.courses/javascript/work.js", "cache");
+    if ( typeof SharedWorker !== "function" ) return;
+    navigator.serviceWorker.register( "/javascript/work.js" , { scope: '/' } ).then( function( reg ) {
+        console.log( 'Регистрация сработала ' + reg.scope );
+    }).catch( function( error ) {
+        console.log( 'Регистрация прошла неудачно ' + error );
+    });
 })();
