@@ -27,8 +27,6 @@ caches.keys().then(function(cacheNames) {
 
 });
 
-console.log('boo: ', CACHE_NAME);
-
 self.addEventListener( 'install', function (event) {
     console.log('install', CACHE_NAME);
 });
@@ -38,26 +36,25 @@ self.addEventListener( 'activate', function (event) {
 });
 
 self.addEventListener( 'fetch', function (event) {
-    console.log('activate', CACHE_NAME);
-    console.log('this Handling fetch event for: ', event.request.url);
+    console.log('fetch', CACHE_NAME);
+    console.log('событие', event);
+    console.log('Запрашивается: ', event.request.url);
 
-    event.respondWith(
-        caches.match(event.request, {
-            ignoreSearch: true
-          , cacheName: CACHE_NAME
-        }).then(function (response) {
-            // да
-            console.log(' Нашли в кэше: ', response);
-            return response;
-        }).catch(function () {
-            // нету
-            fetch(event.request.url, {
-                method: event.request.method
-            }).then(function(response) {
+    caches.open(CACHE_NAME).then(function (cache) {
+        event.respondWith(
+            cache.match(event.request.url).then(function(response){
                 return response;
-            }).catch(function(error) {
-                throw new Error(error);
-            });
-        })
-    );
+            }).catch(function () {
+                let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+                fetch(event.request.url).then(function ( response ) {
+                    if (domain === "moto.courses") {
+                        return response;
+                    } else {
+                        return cache.put(event.request.url, response);
+                    }
+                });
+            })
+        );
+    });
+
 });
