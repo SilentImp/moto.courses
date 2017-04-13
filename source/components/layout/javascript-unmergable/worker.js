@@ -3,6 +3,9 @@ let CURRENT = Date.now() // Current date
   , REQUEST_DELAY = 1000 * 60 * 60 * 6 // Check cache validity one time per 6 hours
   , CACHE_NAME; // Cache name
 
+/**
+ * Check all caches and delete all caches that older the three days
+ */
 caches.keys().then(function(cacheNames) {
     for (let index in cacheNames) {
         let diff = Math.abs(CURRENT - cacheNames[index]);
@@ -17,6 +20,9 @@ caches.keys().then(function(cacheNames) {
     }
 });
 
+/**
+ * On each request cache it
+ */
 self.addEventListener( 'fetch', function (event) {
     event.respondWith(caches.open(CACHE_NAME).then(function (cache) {
         return cache.match(event.request.url).then(function(response){
@@ -39,6 +45,9 @@ self.addEventListener( 'fetch', function (event) {
     }));
 });
 
+/**
+ * On activation worker validate cache and repeat it every six hours
+ */
 self.addEventListener( 'activate', function (event) {
     setInterval(checkCache, REQUEST_DELAY);
     checkCache();
