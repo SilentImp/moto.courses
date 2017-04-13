@@ -29,7 +29,7 @@ const gulp = require('gulp')
             fonts:              ["./source/fonts/**/*.woff", "./source/fonts/**/*.woff2"],
             server:             "./server_source/*.js",
             favicon:            "./source/favicon/**/*",
-            static:             "./source/**/*"
+            static:             "./source/static/**/*"
         },
         build: {
             build:              "./build/",
@@ -151,6 +151,7 @@ gulp.task('favicon', function() {
 
 gulp.task('static', function() {
 	return gulp.src( paths.source.static )
+        .pipe( rename({dirname: ""}) )
         .pipe( gulp.dest(paths.build.static) );
 });
 
