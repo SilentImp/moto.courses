@@ -39,10 +39,12 @@ html(lang="RU-ru")
 
     body
         include  ../../../tmp/svg-sprites.svg
-        section.page
+        section.page(itemscope, itemtype="http://schema.org/Event")
             block header
                 include  ../../header/pug/header.pug
             main.content
                 block content
             block footer
                 include  ../../footer/pug/footer.pug
+        script
+            include ../javascript-inline/google_analytics.js
