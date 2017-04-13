@@ -17,28 +17,30 @@ const gulp = require('gulp')
     , resizeImageTasks = []
     , paths = {
         source: {
-            images:    ["./source/components/**/*.jpg", "./source/components/**/*.png"],
+            images:             ["./source/components/**/*.jpg", "./source/components/**/*.png"],
             components_css:    "./source/components/**/*.css",
-            all_css: ["./source/components/**/*.css", "./source/helpers/**/*.css"],
-            all_js: ["./source/components/**/*.js"],
-            js:     "./source/components/**/javascript/**/*.js",
-            jss:    "./source/components/**/javascript-unmergable/**/*.js",
-            html:   "./source/pages/**/*.pug",
-            all_html:   ["./source/pages/**/*.pug", "./source/components/**/*.pug"],
-            sprite: "./source/svg-sprites/**/*.svg",
-            fonts: ["./source/fonts/**/*.woff", "./source/fonts/**/*.woff2"],
-            server: "./server_source/*.js",
-            favicon: "./source/favicon/**/*"
+            all_css:            ["./source/components/**/*.css", "./source/helpers/**/*.css"],
+            all_js:             ["./source/components/**/*.js"],
+            js:                 "./source/components/**/javascript/**/*.js",
+            jss:                "./source/components/**/javascript-unmergable/**/*.js",
+            html:               "./source/pages/**/*.pug",
+            all_html:           ["./source/pages/**/*.pug", "./source/components/**/*.pug"],
+            sprite:             "./source/svg-sprites/**/*.svg",
+            fonts:              ["./source/fonts/**/*.woff", "./source/fonts/**/*.woff2"],
+            server:             "./server_source/*.js",
+            favicon:            "./source/favicon/**/*",
+            static:             "./source/**/*"
         },
         build: {
-            build: "./build/",
-            sprite: "./source/tmp/",
-            css: "./build/styles/",
-            images: "./build/images/",
-            fonts: "./build/fonts/",
-            js: "./build/javascript/",
-            favicon: "./build/",
-            server: "./server/"
+            build:              "./build/",
+            sprite:             "./source/tmp/",
+            css:                "./build/styles/",
+            images:             "./build/images/",
+            fonts:              "./build/fonts/",
+            js:                 "./build/javascript/",
+            favicon:            "./build/",
+            server:             "./server/",
+            static:             "./build/"
         }
     };
 
@@ -104,7 +106,7 @@ gulp.task('javascript-standalone', function() {
         .pipe( babel({
             presets: ['latest']
         }))
-        // .pipe( uglify() )
+        .pipe( uglify() )
         .pipe( rename({dirname: ''}) )
         .pipe( gulp.dest(paths.build.build) );
 });
@@ -147,11 +149,16 @@ gulp.task('favicon', function() {
         .pipe( gulp.dest(paths.build.favicon) );
 });
 
+gulp.task('static', function() {
+	return gulp.src( paths.source.static )
+        .pipe( gulp.dest(paths.build.static) );
+});
+
 gulp.task('default', ['javascript'], function() {
     gulp.watch( paths.source.js, ['javascript'] );
 });
 
-gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'css', 'html', 'images', 'favicon']);
+gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'css', 'html', 'images', 'favicon', 'static']);
 
 gulp.task('watch', function() {
     gulp.watch( paths.source.all_js, ['javascript','javascript-standalone'] );

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /index.html
+Allow: /
+Disallow: /subscribed.html
+Disallow: /success.html
