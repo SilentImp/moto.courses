@@ -1,60 +1,57 @@
 let CURRENT = Date.now() // Current date
-  , TTL = 1000 * 60 * 60 * 24 * 3 // Three days
+  , TTL = 1000 * 60 * 60 * 24 * 7 // Cache lives 7 days
+  , REQUEST_DELAY = 1000 * 60 * 60 * 6 // Check cache validity one time per 6 hours
   , CACHE_NAME; // Cache name
 
 caches.keys().then(function(cacheNames) {
-    
     for (let index in cacheNames) {
-        console.log(CURRENT, cacheNames[index], CURRENT - cacheNames[index], TTL);
         let diff = Math.abs(CURRENT - cacheNames[index]);
         if (!isNaN(diff) && diff < TTL ) {
-            console.log('до 3х дней');
             CACHE_NAME = cacheNames[index];
         } else {
-            console.log('удаляем кэш: ', cacheNames[index]);
-            caches.delete(cacheNames[index]).then(function () {
-                console.log('удалили успешно ', arguments);
-            }).catch(function (error) {
-                console.log('не смогли удалить ', arguments);
-            });
+            caches.delete(cacheNames[index]);
         }
     }
-
     if (typeof CACHE_NAME === "undefined") {
-        console.log('нет кеша');
         CACHE_NAME = CURRENT;
     }
-
-});
-
-self.addEventListener( 'install', function (event) {
-    console.log('install', CACHE_NAME);
-});
-
-self.addEventListener( 'activate', function (event) {
-    console.log('activate', CACHE_NAME);
 });
 
 self.addEventListener( 'fetch', function (event) {
-    console.log('fetch', CACHE_NAME);
-    console.log('событие', event);
-    console.log('Запрашивается: ', event.request.url);
-
-    caches.open(CACHE_NAME).then(function (cache) {
-        event.respondWith(
-            cache.match(event.request.url).then(function(response){
-                return response;
-            }).catch(function () {
+    event.respondWith(caches.open(CACHE_NAME).then(function (cache) {
+        return cache.match(event.request.url).then(function(response){
                 let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
-                fetch(event.request.url).then(function ( response ) {
-                    if (domain === "moto.courses") {
-                        return response;
-                    } else {
-                        return cache.put(event.request.url, response);
-                    }
-                });
-            })
-        );
-    });
-
+                if (
+                    (typeof response !== "undefined") 
+                    && (
+                        (domain === "127.0.0.1:8080")
+                     || (domain === "moto.courses")
+                    )
+                ){
+                    return response;
+                }
+                
+                return fetch(event.request.url);
+        }).then(function (response) {
+            cache.put(event.request, response.clone());
+            return response;
+        });
+    }));
 });
+
+self.addEventListener( 'activate', function (event) {
+    setInterval(checkCache, REQUEST_DELAY);
+    checkCache();
+});
+
+/**
+ * Get Last Modified header and clean cache if needed
+ */
+function checkCache () {
+    fetch('http://127.0.0.1:3004/cache/', {
+        method: 'HEAD'
+    }).then( function (response) {
+        if (parseInt(response.headers.get('Last-modified'), 10) > CACHE_NAME) {
+            caches.delete(CACHE_NAME);
+    }});
+};

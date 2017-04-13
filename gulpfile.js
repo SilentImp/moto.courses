@@ -20,6 +20,7 @@ const gulp = require('gulp')
             images:    ["./source/components/**/*.jpg", "./source/components/**/*.png"],
             components_css:    "./source/components/**/*.css",
             all_css: ["./source/components/**/*.css", "./source/helpers/**/*.css"],
+            all_js: ["./source/components/**/*.js"],
             js:     "./source/components/**/javascript/**/*.js",
             jss:    "./source/components/**/javascript-unmergable/**/*.js",
             html:   "./source/pages/**/*.pug",
@@ -153,7 +154,7 @@ gulp.task('default', ['javascript'], function() {
 gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'css', 'html', 'images', 'favicon']);
 
 gulp.task('watch', function() {
-    gulp.watch( paths.source.js, ['javascript','javascript-standalone'] );
+    gulp.watch( paths.source.all_js, ['javascript','javascript-standalone'] );
     gulp.watch( paths.source.all_css, ['css'] );
     gulp.watch( paths.source.all_html, ['html'] );
 });
