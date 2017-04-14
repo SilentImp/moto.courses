@@ -1,0 +1,58 @@
+@import "../../../helpers/_helpers.css";
+
+.icons {
+    width: 100%;
+    @mixin text;
+
+    &__icon {
+        box-sizing: border-box;
+        padding: 0 $step_2 $step_2 0;
+        width: $col_3;
+        margin: $step_2 $gap $step_2 0;
+        display: inline-block;
+        vertical-align: top;
+        @mixin clear;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+    }
+
+    &__author {
+        font-size: $font_size_6;
+        line-height: $step_3;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 960px) {
+    .icons {
+        &__author {
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .icons {
+        &__icon {
+            width: auto;
+            margin-right: 0;
+        }
+
+        &__author {
+            font-size: $font_size_6;
+            line-height: $step_3;
+        }
+    }
+}
+
+@media (max-width: 499px) {
+    .icons {
+        &__author {
+            font-size: $font_size_4;
+            line-height: $step_2;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@import "../../../helpers/_helpers.css";
+
+.social {
+    margin: $step_2 0 $step_4;
+
+    &__title {
+        @mixin header;
+    }
+
+    &__links {
+        @mixin text;
+    }
+
+    &__link {
+        color: $color_black;
+        &:hover {
+            text-decoration: none;
+            color: $color_blue;
+        }
+    }
+}
