@@ -23,6 +23,7 @@ body {
     min-height: 100vh;
     height: 100vh;
     z-index: 1;
+    @mixin text;
 }
 
 .content {

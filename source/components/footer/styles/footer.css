@@ -3,6 +3,7 @@
 .footer {
     @mixin page;
     @mixin clear;
+    @mixin text;
     padding-top: $step_2;
     padding-bottom: $step_2;
     position: relative;
