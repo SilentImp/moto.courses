@@ -24,7 +24,7 @@ caches.keys().then(function(cacheNames) {
  * On each request cache it
  */
 self.addEventListener( 'fetch', function (event) {
-    
+
     let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
     // We should cache only assets
     if (domain !== "moto.courses") return;
@@ -52,7 +52,7 @@ self.addEventListener( 'activate', function (event) {
  * Get Last Modified header and clean cache if needed
  */
 function checkCache () {
-    fetch('http://127.0.0.1:3004/cache/', {
+    fetch('/cache/', {
         method: 'HEAD'
     }).then( function (response) {
         if (parseInt(response.headers.get('Last-modified'), 10) > CACHE_NAME) {
