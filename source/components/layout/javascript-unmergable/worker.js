@@ -1,7 +1,8 @@
-let CURRENT = Date.now() // Current date
+const CURRENT = Date.now() // Current date
   , TTL = 1000 * 60 * 60 * 24 * 7 // Cache lives 7 days
   , REQUEST_DELAY = 1000 * 60 * 60 * 6 // Check cache validity one time per 6 hours
-  , CACHE_NAME; // Cache name
+
+let CACHE_NAME; // Cache name
 
 /**
  * Check all caches and delete all caches that older the three days
@@ -15,9 +16,7 @@ caches.keys().then(function(cacheNames) {
             caches.delete(cacheNames[index]);
         }
     }
-    if (typeof CACHE_NAME === "undefined") {
-        CACHE_NAME = CURRENT;
-    }
+    if (typeof CACHE_NAME === "undefined") CACHE_NAME = CURRENT;
 });
 
 /**
@@ -55,7 +54,6 @@ function checkCache () {
     fetch('/cache/', {
         method: 'HEAD'
     }).then( function (response) {
-        if (parseInt(response.headers.get('Last-modified'), 10) > CACHE_NAME) {
-            caches.delete(CACHE_NAME);
-    }});
+        if (parseInt(response.headers.get('Last-modified'), 10) > CACHE_NAME) caches.delete(CACHE_NAME);
+    });
 };
