@@ -24,20 +24,15 @@ caches.keys().then(function(cacheNames) {
  * On each request cache it
  */
 self.addEventListener( 'fetch', function (event) {
+    
+    let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+    // We should cache only assets
+    if (domain !== "moto.courses") return;
+
     event.respondWith(caches.open(CACHE_NAME).then(function (cache) {
         return cache.match(event.request.url).then(function(response){
-                let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
-                if (
-                    (typeof response !== "undefined") 
-                    && (
-                        (domain === "127.0.0.1:8080")
-                     || (domain === "moto.courses")
-                    )
-                ){
-                    return response;
-                }
-                
-                return fetch(event.request.url);
+            if (typeof response !== "undefined") return response;
+            return fetch(event.request.url);
         }).then(function (response) {
             cache.put(event.request, response.clone());
             return response;
