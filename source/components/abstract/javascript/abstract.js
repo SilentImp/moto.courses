@@ -3,7 +3,7 @@
   /**
    * Sigleton container
    */
-  let instance; sdcsdcdscsd
+  let instance;
 
   /**
    * @class Abstract represent contros for Scene class

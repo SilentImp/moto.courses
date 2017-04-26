@@ -6,8 +6,6 @@ const gulp = require('gulp')
   , svgmin = require('gulp-svgmin')
   , replace = require('gulp-replace')
   , htmlclean = require('gulp-htmlclean')
-  , jslint = require('gulp-jslint')
-  , jshint = require('gulp-jshint')
   , eslint = require('gulp-eslint')
   , rename = require('gulp-rename')
   , concat = require('gulp-concat')
@@ -106,18 +104,6 @@ gulp.task('javascript', ['lint_js'], function() {
 
 gulp.task('lint_js', function() {
   return gulp.src( paths.source.js )
-  
-    .pipe(jshint({
-      esversion: 6,
-      laxcomma: true,
-      browser : true,
-      indent : 4,
-      maxerr: 0,
-      maxlen: 120,
-      passfail: true
-    }))
-    .pipe(jshint.reporter('default'))
-
     .pipe(eslint({
       envs: ["browser", "es6"],
       rules: {
