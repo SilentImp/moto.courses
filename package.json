@@ -4,7 +4,7 @@
   "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
   "scripts": {
-    "lint": "gulp lint_js",
+    "lint": "gulp lint_js || true",
     "build": "gulp build && gulp server"
   },
   "repository": {
