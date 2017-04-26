@@ -60,13 +60,6 @@
             border-color: color($color_blue l(+5%)) transparent transparent;
         }
     }
-
-    &__error {
-        display: inline-block;
-        vertical-align: middle;
-        color: $color_red;
-        display: none;
-    }
 }
 
 @media (max-width: 989px) {
