@@ -77,6 +77,16 @@ gulp.task('html', ['sprite'], function() {
     .pipe( gulp.dest(paths.build.build) );
 });
 
+gulp.task('lint_css', function () {
+  let plugins = [
+    require('stylelint')
+    , require("postcss-reporter")({ clearMessages: true })
+  ];
+
+  return gulp.src( [paths.source.components_css, '!./**/reset.css'] )
+    .pipe( postcss(plugins) );
+});
+
 gulp.task('css', function() {
   let plugins = [
     require('precss')

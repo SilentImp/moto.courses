@@ -1,38 +1,42 @@
 @import "../../../helpers/_helpers.css";
 
 body {
-    position: relative;
-    min-height: 100vh;
-    @mixin text;
-    /**@mixin grid;**/
+  @mixin text;
 
-    &>svg:first-child {
-       position: fixed;
-       left: -100px;
-       top: -100px;
-       width: 0;
-       height: 0;
-    }
+  /** @mixin grid; что бы проверить вертикальный ритм **/
+
+  position: relative;
+  min-height: 100vh;
+
+  & > svg:first-child {
+    position: fixed;
+    left: -100px;
+    top: -100px;
+    width: 0;
+    height: 0;
+  }
 }
 
 .page {
-    position: relative;
-    display: flex;
-    flex-direction:column;
-    justify-content: space-between;
-    min-height: 100vh;
-    height: 100vh;
-    z-index: 1;
-    @mixin text;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  height: 100vh;
+  z-index: 1;
+
+  @mixin text;
 }
 
 .content {
-    @mixin page;
-    z-index: 1;
+  @mixin page;
+
+  z-index: 1;
 }
 
 @media (max-width: 499px) {
-    .page {
-        display: block;
-    }
+  .page {
+    display: block;
+  }
 }

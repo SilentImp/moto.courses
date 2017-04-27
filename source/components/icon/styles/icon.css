@@ -1,65 +1,67 @@
 @import "../../../helpers/_helpers.css";
 
 .icon {
-    &--list {
-        width: $step_6;
-        height: $step_6;
-        float: left;
-        margin-right: $step_2;
-    }
+  &--list {
+    width: $step_6;
+    height: $step_6;
+    float: left;
+    margin-right: $step_2;
+  }
 
-    &--made-in-ukraine {
-        width: $step_6;
-        height: $step_6;
-        position: absolute;
-        top: $step_2;
-        right: $step_4;
-    }
+  &--made-in-ukraine {
+    width: $step_6;
+    height: $step_6;
+    position: absolute;
+    top: $step_2;
+    right: $step_4;
+  }
 
-    &--logotype {
-        width: $step_6;
-        height: $step_6;
-        padding: 18px;
-        margin-right: $step_2;
-        float: left;
-    }
+  &--logotype {
+    width: $step_6;
+    height: $step_6;
+    padding: 18px;
+    margin-right: $step_2;
+    float: left;
+  }
 }
 
 @media (max-width: 960px) {
-    .icon {
-        &--list {
-            width: $step_4;
-            height: $step_4;
-        }
+  .icon {
+    &--list {
+      width: $step_4;
+      height: $step_4;
     }
+  }
 }
 
 @media (max-width: 700px) {
-    .icon {
-        &--list {
-            width: $step_6;
-            height: $step_6;
-        }
+  .icon {
+    &--list {
+      width: $step_6;
+      height: $step_6;
     }
+  }
 }
 
 @media (max-width: 499px) {
-    .icon {
-        &--list {
-            width: $step_4;
-            height: $step_4;
-        }
-        &--made-in-ukraine {
-            width: $step_4;
-            height: $step_4;
-            top: 0;
-            right: $step_2;
-        }
-        &--logotype {
-            width: $step_4;
-            height: $step_4;
-            margin-right: $step_2;
-            padding: 12px 0;
-        }
+  .icon {
+    &--list {
+      width: $step_4;
+      height: $step_4;
     }
+
+    &--made-in-ukraine {
+      width: $step_4;
+      height: $step_4;
+      top: 0;
+      right: $step_2;
+    }
+
+    &--logotype {
+      width: $step_4;
+      height: $step_4;
+      margin-right: $step_2;
+      padding: 12px 0;
+    }
+  }
 }

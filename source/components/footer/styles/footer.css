@@ -1,55 +1,58 @@
 @import "../../../helpers/_helpers.css";
 
 .footer {
-    @mixin page;
-    @mixin clear;
-    @mixin text;
-    padding-top: $step_2;
-    padding-bottom: $step_2;
-    position: relative;
+  @mixin page;
+  @mixin clear;
+  @mixin text;
 
-    &__copyright {
-        margin: $step_2 0 0;
-        color: $color_grey_2;
-        font-size: $font_size_1;
-        line-height: $step_1;
-        margin-right: $step_8;
-        max-width: $col_3;
-        a {
-            color: $color_grey_2;
-            text-decoration: underline;
-            &:hover {
-                text-decoration: none;  
-            }
-        }
-    }
+  padding-top: $step_2;
+  padding-bottom: $step_2;
+  position: relative;
 
-    &__contacts {
-        @mixin clear;
-    }
+  &__copyright {
+    margin: $step_2 0 0;
+    color: $color_grey_2;
+    font-size: $font_size_1;
+    line-height: $step_1;
+    margin-right: $step_8;
+    max-width: $col_3;
 
-    &__contact {
-        font-size: $font_size_3;
-        line-height: $step_2;
-        color: $color_black_1;
+    a {
+      color: $color_grey_2;
+      text-decoration: underline;
+
+      &:hover {
         text-decoration: none;
-        float: left;
-        clear: both;
-
-        &:hover {
-            color: $color_blue;
-        }
+      }
     }
+  }
+
+  &__contacts {
+    @mixin clear;
+  }
+
+  &__contact {
+    font-size: $font_size_3;
+    line-height: $step_2;
+    color: $color_black_1;
+    text-decoration: none;
+    float: left;
+    clear: both;
+
+    &:hover {
+      color: $color_blue;
+    }
+  }
 }
 
 @media (max-width: 499px) {
-    .footer {
-        padding: 0 $step_2 $step_2;
+  .footer {
+    padding: 0 $step_2 $step_2;
 
-        &__copyright {
-            clear: both;
-            margin: $step_2 $step_6 0 0;
-            max-width: none;
-        }
+    &__copyright {
+      clear: both;
+      margin: $step_2 $step_6 0 0;
+      max-width: none;
     }
+  }
 }

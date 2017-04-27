@@ -1,346 +1,386 @@
 @import "../../../helpers/_helpers.css";
 
 .scene {
+  width: 676px;
+  max-width: calc(100vw - 80px);
+  height: 600px;
+  margin: -$step_5 auto 0;
+  position: relative;
+  z-index: 1;
+
+  &--from-breaks-to-oil {
+    .scene__wrapper-inner {
+      animation: turn-from-breaks-to-oil .24s 1 steps(4) both;
+    }
+
+    .scene__abstract--oil {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .24s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .49s;
+        }
+      }
+    }
+  }
+
+  &--from-breaks-to-air {
+    .scene__wrapper-inner {
+      animation: turn-from-breaks-to-air .08s 1 steps(1) both;
+    }
+
+    .scene__abstract--air {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .08s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .32s;
+        }
+      }
+    }
+  }
+
+  &--from-oil-to-breaks {
+    .scene__wrapper-inner {
+      animation: turn-from-oil-to-breaks .24s 1 steps(4) both;
+    }
+
+    .scene__abstract--breaks {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .24s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .32s;
+        }
+      }
+    }
+  }
+
+  &--from-oil-to-air {
+    .scene__wrapper-inner {
+      animation: turn-from-oil-to-air .32s 1 steps(5) both;
+    }
+
+    .scene__abstract--air {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .32s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .57s;
+        }
+      }
+    }
+  }
+
+  &--from-air-to-breaks {
+    .scene__wrapper-inner {
+      animation: turn-from-air-to-breaks .08s 1 steps(1) both;
+    }
+
+    .scene__abstract--breaks {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .08s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .32s;
+        }
+      }
+    }
+  }
+
+  &--from-air-to-oil {
+    .scene__wrapper-inner {
+      animation: turn-from-air-to-oil .32s 1 steps(5) both;
+    }
+
+    .scene__abstract--oil {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: .32s;
+
+        &::after,
+        &__title {
+          opacity: 1;
+          transition-delay: .57s;
+        }
+      }
+    }
+  }
+
+  &--breaks.scene {
+    .scene {
+      &__abstract--breaks {
+        .dot {
+          transform: scale(1);
+          opacity: 1;
+
+          &::after,
+          &__title {
+            opacity: 1;
+          }
+        }
+      }
+
+      &__wrapper {
+        &-inner {
+          transform: translateX(-676px);
+        }
+      }
+    }
+  }
+
+  &--air.scene {
+    .scene {
+      &__abstract--air {
+        .dot {
+          transform: scale(1);
+          opacity: 1;
+
+          &::after,
+          &__title {
+            opacity: 1;
+          }
+        }
+      }
+
+      &__wrapper {
+        &-inner {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+
+  &--oil.scene {
+    .scene__abstract--oil {
+      .dot {
+        transform: scale(1);
+        opacity: 1;
+
+        &::after,
+        &__title {
+          opacity: 1;
+        }
+      }
+    }
+
+    .scene {
+      &__wrapper {
+        &-inner {
+          transform: translateX(-3380px);
+        }
+      }
+    }
+  }
+
+  &__wrapper {
+    &-outer {
+      width: 676px;
+      max-width: calc(100vw - 80px);
+      max-height: 600px;
+      overflow: hidden;
+    }
+
+    &-inner {
+      max-height: 600px;
+      white-space: nowrap;
+    }
+  }
+
+  &__illustration {
+    max-height: 600px;
     width: 676px;
     max-width: calc(100vw - 80px);
-    height: 600px;
-    margin: -$step_5 auto 0;
+    margin: auto;
+    display: inline-block;
     position: relative;
-    z-index: 1;
-    &--from-breaks-to-oil {
-        .scene__wrapper-inner {
-            animation: turn-from-breaks-to-oil .24s 1 steps(4) both;
-        }
-        .scene__abstract--oil {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .24s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .49s;
-                }
-            }
-        }
-    }
-    &--from-breaks-to-air {
-        .scene__wrapper-inner {
-            animation: turn-from-breaks-to-air .08s 1 steps(1) both;
-        }
-        .scene__abstract--air {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .08s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .32s;
-                }
-            }
-        }
-    }
-    &--from-oil-to-breaks {
-        .scene__wrapper-inner {
-            animation: turn-from-oil-to-breaks .24s 1 steps(4) both;
-        }
-        .scene__abstract--breaks {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .24s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .32s;
-                }
-            }
-        }
-    }
-    &--from-oil-to-air {
-        .scene__wrapper-inner {
-            animation: turn-from-oil-to-air .32s 1 steps(5) both;
-        }
-        .scene__abstract--air {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .32s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .57s;
-                }
-            }
-        }
-    }
-    &--from-air-to-breaks {
-        .scene__wrapper-inner {
-            animation: turn-from-air-to-breaks .08s 1 steps(1) both;
-        }
-        .scene__abstract--breaks {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .08s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .32s;
-                }
-            }
-        }
-    }
-    &--from-air-to-oil {
-        .scene__wrapper-inner {
-            animation: turn-from-air-to-oil .32s 1 steps(5) both;
-        }
-        .scene__abstract--oil {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                transition-delay: .32s;
-                &:after,
-                &__title {
-                    opacity: 1;
-                    transition-delay: .57s;
-                }
-            }
-        }
-    }
-    &--breaks.scene {
-        .scene {
-            &__abstract--breaks {
-                .dot {
-                    transform: scale(1);
-                    opacity: 1;
-                    &:after,
-                    &__title {
-                        opacity: 1;
-                    }
-                }
-            }
-            &__wrapper {
-                &-inner {
-                    transform: translateX(-676px);
-                }
-            }
-        }
-    }
-    &--air.scene {
-        .scene {
-            &__abstract--air {
-                .dot {
-                    transform: scale(1);
-                    opacity: 1;
-                    &:after,
-                    &__title {
-                        opacity: 1;
-                    }
-                }
-            }
-            &__wrapper {
-                &-inner {
-                    transform: translateX(0);
-                }
-            }
-        }
-    }
-    &--oil.scene {
-        .scene__abstract--oil {
-            .dot {
-                transform: scale(1);
-                opacity: 1;
-                &:after,
-                &__title {
-                    opacity: 1;
-                }
-            }
-        }
-        .scene {
-            &__wrapper {
-                &-inner {
-                    transform: translateX(-3380px);
-                }
-            }
-        }
-    }
-    &__wrapper {
-        &-outer {
-            /*opacity: .5;*/
-            width: 676px;
-            max-width: calc(100vw - 80px);
-            max-height: 600px;
-            overflow: hidden;
-        }
-        &-inner {
-            max-height: 600px;
-            white-space: nowrap;
-        }
-    }
-    &__illustration {
-        max-height: 600px;
-        width: 676px;
-        max-width: calc(100vw - 80px);
-        margin: auto;
-        display: inline-block;
-        position: relative;
-        vertical-align: top;
+    vertical-align: top;
 
-        source,
-        img {
-            width: 100%;
-        }
+    source,
+    img {
+      width: 100%;
     }
+  }
 }
 
 @keyframes turn-from-breaks-to-oil {
-    from {
-        transform: translateX(-676px);
-    }
-    to {
-        transform: translateX(-3380px);
-    }
+  from {
+    transform: translateX(-676px);
+  }
+
+  to {
+    transform: translateX(-3380px);
+  }
 }
 
 @keyframes turn-from-breaks-to-air {
-    from {
-        transform: translateX(-676px);
-    }
-    to {
-        transform: translateX(0);
-    }
+  from {
+    transform: translateX(-676px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes turn-from-oil-to-air {
-    from {
-        transform: translateX(-3380px);
-    }
-    to {
-        transform: translateX(0);
-    }
+  from {
+    transform: translateX(-3380px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes turn-from-oil-to-breaks {
-    from {
-        transform: translateX(-3380px);
-    }
-    to {
-        transform: translateX(-676px);
-    }
+  from {
+    transform: translateX(-3380px);
+  }
+
+  to {
+    transform: translateX(-676px);
+  }
 }
 
 @keyframes turn-from-air-to-oil {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-3380px);
-    }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-3380px);
+  }
 }
 
 @keyframes turn-from-air-to-breaks {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-676px);
-    }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-676px);
+  }
 }
 
 @media (max-width: 1020px) {
-    .scene {
-        margin: 0 auto;
-    }
+  .scene {
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 756px) {
-    .scene {
-        height: auto;
-        margin: 0 auto;
+  .scene {
+    height: auto;
+    margin: 0 auto;
 
-        &--breaks.scene {
-            .scene {
-                &__wrapper {
-                    &-inner {
-                        transform: translateX(calc((100vw - 80px) * -1));
-                    }
-                }
-            }
-        }
-        &--oil.scene {
-            .scene {
-                &__wrapper {
-                    &-inner {
-                        transform: translateX(calc((100vw - 80px) * -5));
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    @keyframes turn-from-breaks-to-oil {
-        from {
+    &--breaks.scene {
+      .scene {
+        &__wrapper {
+          &-inner {
             transform: translateX(calc((100vw - 80px) * -1));
+          }
         }
-        to {
+      }
+    }
+
+    &--oil.scene {
+      .scene {
+        &__wrapper {
+          &-inner {
             transform: translateX(calc((100vw - 80px) * -5));
+          }
         }
+      }
+    }
+  }
+
+  @keyframes turn-from-breaks-to-oil {
+    from {
+      transform: translateX(calc((100vw - 80px) * -1));
     }
 
-    @keyframes turn-from-breaks-to-air {
-        from {
-            transform: translateX(calc((100vw - 80px) * -1));
-        }
-        to {
-            transform: translateX(0);
-        }
+    to {
+      transform: translateX(calc((100vw - 80px) * -5));
+    }
+  }
+
+  @keyframes turn-from-breaks-to-air {
+    from {
+      transform: translateX(calc((100vw - 80px) * -1));
     }
 
-    @keyframes turn-from-oil-to-air {
-        from {
-            transform: translateX(calc((100vw - 80px) * -5));
-        }
-        to {
-            transform: translateX(0);
-        }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes turn-from-oil-to-air {
+    from {
+      transform: translateX(calc((100vw - 80px) * -5));
     }
 
-    @keyframes turn-from-oil-to-breaks {
-        from {
-            transform: translateX(calc((100vw - 80px) * -5));
-        }
-        to {
-            transform: translateX(calc((100vw - 80px) * -1));
-        }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes turn-from-oil-to-breaks {
+    from {
+      transform: translateX(calc((100vw - 80px) * -5));
     }
 
-    @keyframes turn-from-air-to-oil {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(calc((100vw - 80px) * -5));
-        }
+    to {
+      transform: translateX(calc((100vw - 80px) * -1));
+    }
+  }
+
+  @keyframes turn-from-air-to-oil {
+    from {
+      transform: translateX(0);
     }
 
-    @keyframes turn-from-air-to-breaks {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(calc((100vw - 80px) * -1));
-        }
+    to {
+      transform: translateX(calc((100vw - 80px) * -5));
     }
+  }
+
+  @keyframes turn-from-air-to-breaks {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc((100vw - 80px) * -1));
+    }
+  }
 }
 
 @media (max-width: 620px) {
-    .scene img,
-    .scene picture,
-    .scene {
-        display: none;
-    }
+  .scene img,
+  .scene picture,
+  .scene {
+    display: none;
+  }
 }
