@@ -11,6 +11,7 @@ const gulp = require('gulp')
   , concat = require('gulp-concat')
   , sourcemaps = require('gulp-sourcemaps')
   , postcss = require('gulp-postcss')
+  , stylint = require('gulp-stylint')
   , order = require("gulp-order")
   , imagemin = require('gulp-imagemin')
   , uglify = require('gulp-uglify')
@@ -80,11 +81,13 @@ gulp.task('html', ['sprite'], function() {
 gulp.task('lint_css', function () {
   let plugins = [
     require('stylelint')
-    , require("postcss-reporter")({ clearMessages: true })
+    , require("postcss-reporter")({
+      throwError: true
+    })
   ];
 
   return gulp.src( [paths.source.components_css, '!./**/reset.css'] )
-    .pipe( postcss(plugins) );
+    .pipe(postcss(plugins, {failOnError: true}));
 });
 
 gulp.task('css', function() {
