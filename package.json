@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
-  "postinstall": "./deploy/hooks.sh",
   "scripts": {
+    "install": "./deploy/hooks.sh && npm run static",
     "lint": "gulp lint:js && gulp lint:css && gulp lint:pug",
     "lintjs": "gulp lint:css",
     "lintcss": "gulp lint:css",
     "lintpug": "gulp lint:pug",
-    "build": "gulp build && gulp server"
+    "build": "gulp build && gulp server",
+    "static": "gulp build"
   },
   "repository": {
     "type": "git",
