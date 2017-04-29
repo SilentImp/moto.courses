@@ -4,10 +4,10 @@
   "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
   "scripts": {
-    "lint": "gulp lint_js && gulp lint_css && gulp lint_pug",
-    "lintjs": "gulp lint_css",
-    "lintcss": "gulp lint_css",
-    "lintpug": "gulp lint_pug",
+    "lint": "gulp lint:js && gulp lint:css && gulp lint:pug",
+    "lintjs": "gulp lint:css",
+    "lintcss": "gulp lint:css",
+    "lintpug": "gulp lint:pug",
     "build": "gulp build && gulp server"
   },
   "repository": {
@@ -37,11 +37,10 @@
     "gulp-htmlclean": "^2.7.11",
     "gulp-image-resize": "^0.12.0",
     "gulp-imagemin": "^3.2.0",
-    "gulp-jadelint": "^0.1.0",
     "gulp-order": "^1.1.1",
     "gulp-postcss": "^6.4.0",
     "gulp-pug": "^3.3.0",
-    "gulp-pug-lint": "^0.1.6",
+    "gulp-pug-lint": "git+https://github.com/SilentImp/gulp-pug-lint.git",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^2.4.1",

@@ -72,19 +72,19 @@ gulp.task('sprite', function() {
     .pipe( gulp.dest(paths.build.sprite) );
 });
 
-gulp.task('lint_pug', function () {
+gulp.task('lint:pug', function () {
   return gulp.src( paths.source.all_html )
-    .pipe(puglint());
+    .pipe(puglint({failOnError: true}));
 });
 
-gulp.task('html', ['sprite'], function() {
+gulp.task('html', ['sprite', 'lint:pug'], function() {
   return gulp.src( paths.source.html )
     .pipe( pug({}) )
     .pipe( htmlclean({}) )
     .pipe( gulp.dest(paths.build.build) );
 });
 
-gulp.task('lint_css', function () {
+gulp.task('lint:css', function () {
   let plugins = [
     require('stylelint')
     , require("postcss-reporter")({
@@ -96,7 +96,7 @@ gulp.task('lint_css', function () {
     .pipe(postcss(plugins, {failOnError: true}));
 });
 
-gulp.task('css', ['lint_css'], function() {
+gulp.task('css', ['lint:css'], function() {
   let plugins = [
     require('precss')
     , require('autoprefixer')
@@ -111,7 +111,7 @@ gulp.task('css', ['lint_css'], function() {
     .pipe( gulp.dest(paths.build.css) );
 });
 
-gulp.task('javascript', ['lint_js'], function() {
+gulp.task('javascript', ['lint:js'], function() {
   return gulp.src( paths.source.js )
     .pipe( babel({
       presets: ['latest']
@@ -121,7 +121,7 @@ gulp.task('javascript', ['lint_js'], function() {
     .pipe( gulp.dest(paths.build.js) );
 });
 
-gulp.task('lint_js', function() {
+gulp.task('lint:js', function() {
   return gulp.src( paths.source.js )
     .pipe(eslint())
     .pipe(eslint.format())
