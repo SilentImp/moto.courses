@@ -10,14 +10,15 @@ ls -la
 mkdir ${RESULT_DIR}
 ls -la
 shopt -s extglob
-mv -f !(${RESULT_DIR}) ./${RESULT_DIR}
-tar -czfv ${ARCH_NAME} ${RESULT_DIR}
+mv -f -v !(${RESULT_DIR}) ./${RESULT_DIR}
+mv -f -v ./.* ./${RESULT_DIR}
+tar -czf ${ARCH_NAME} ${RESULT_DIR}
 ls -la
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
 sshpass -e ssh -tt -C ${SSH_USER}@${SSH_IP} << EOF
 cd /;
 cd ${WEB_PATH};
-tar -xzfv ./${ARCH_NAME} -C ./;
+tar -xzf ./${ARCH_NAME} -C ./;
 rm ./${ARCH_NAME};
 ls -dt */ | tail -n +5 | xargs rm -rf;
 if [ ! -f ".env" ]; then
