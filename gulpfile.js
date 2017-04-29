@@ -12,6 +12,7 @@ const gulp = require('gulp')
   , sourcemaps = require('gulp-sourcemaps')
   , postcss = require('gulp-postcss')
   , stylint = require('gulp-stylint')
+  , puglint = require('gulp-pug-lint')
   , order = require("gulp-order")
   , imagemin = require('gulp-imagemin')
   , uglify = require('gulp-uglify')
@@ -71,6 +72,11 @@ gulp.task('sprite', function() {
     .pipe( gulp.dest(paths.build.sprite) );
 });
 
+gulp.task('lint_pug', function () {
+  return gulp.src( paths.source.all_html )
+    .pipe(puglint());
+});
+
 gulp.task('html', ['sprite'], function() {
   return gulp.src( paths.source.html )
     .pipe( pug({}) )
@@ -90,7 +96,7 @@ gulp.task('lint_css', function () {
     .pipe(postcss(plugins, {failOnError: true}));
 });
 
-gulp.task('css', function() {
+gulp.task('css', ['lint_css'], function() {
   let plugins = [
     require('precss')
     , require('autoprefixer')

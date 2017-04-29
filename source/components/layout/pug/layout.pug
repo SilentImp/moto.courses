@@ -1,51 +1,50 @@
-<!DOCTYPE html>
 html(lang="RU-ru")
-    head
-        block title
-            title Научись обслуживать свой мотоцикл | Мото Курсы
+  head
+    block title
+      title Научись обслуживать свой мотоцикл | Мото Курсы
 
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        meta(http-equiv="Last-Modified", content=(new Date()))
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    meta(http-equiv="Last-Modified", content=(new Date()))
 
-        script
-            include  ../javascript-inline/worker_starter.js
+    script
+      include  ../javascript-inline/worker_starter.js
 
-        block meta
-        
-            meta(property="og:type", content="website")
-            meta(property="og:url", content="https://moto.courses/")
-            meta(property="og:title", content="Мото Курсы")
-            meta(property="og:description", content="Научись обслуживать свой мотоцикл.")
-            meta(property="og:image", content="{image_url}")
-            
-            meta(name="twitter:card", content="summary")
-            meta(name="twitter:site", content="@motocourses")
-            meta(name="twitter:creator", content="@silentimp")
-            meta(name="twitter:description", content="Научись обслуживать свой мотоцикл.")
+    block meta
+    
+      meta(property="og:type", content="website")
+      meta(property="og:url", content="https://moto.courses/")
+      meta(property="og:title", content="Мото Курсы")
+      meta(property="og:description", content="Научись обслуживать свой мотоцикл.")
+      meta(property="og:image", content="{image_url}")
+      
+      meta(name="twitter:card", content="summary")
+      meta(name="twitter:site", content="@motocourses")
+      meta(name="twitter:creator", content="@silentimp")
+      meta(name="twitter:description", content="Научись обслуживать свой мотоцикл.")
 
-        link(rel="icon", href="/favicon.png", type="image/x-icon")
-        link(rel="author", href="/humans.txt")
+    link(rel="icon", href="/favicon.png", type="image/x-icon")
+    link(rel="author", href="/humans.txt")
 
-        block preload
-            link(rel="preload", href="fonts/bmw-regular.woff2", as="font", type="font/woff2", crossorigin)
-            link(rel="preload", href="fonts/bmw-light.woff2", as="font", type="font/woff2", crossorigin)
+    block preload
+      link(rel="preload", href="fonts/bmw-regular.woff2", as="font", type="font/woff2", crossorigin)
+      link(rel="preload", href="fonts/bmw-light.woff2", as="font", type="font/woff2", crossorigin)
 
-        block styles
-            link(rel="stylesheet", href="styles/styles.css")
+    block styles
+      link(rel="stylesheet", href="styles/styles.css")
 
-        block scripts
-            script(src="javascript/scripts.js", async, defer)
+    block scripts
+      script(src="javascript/scripts.js", async, defer)
 
-    body
-        include  ../../../tmp/svg-sprites.svg
-        section.page(itemscope, itemtype="http://schema.org/Event")
-            block header
-                include  ../../header/pug/header.pug
-            main.content
-                block content
-            block footer
-                include  ../../footer/pug/footer.pug
-        script
-            include ../javascript-inline/google_analytics.js
+  body
+    include  ../../../tmp/svg-sprites.svg
+    section.page(itemscope, itemtype="http://schema.org/Event")
+      block header
+        include  ../../header/pug/header.pug
+      main.content
+        block content
+      block footer
+        include  ../../footer/pug/footer.pug
+    script
+      include ../javascript-inline/google_analytics.js
