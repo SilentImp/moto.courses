@@ -4,7 +4,10 @@ node_modules
 gh-cache
 ^\.*
 !.gitignore
-!.bowerrc
+!.babelrc
+!.eslintrc
+!.pug-lintrc
+!.stylelintrc
 !.travis.yml
 .npm
 
