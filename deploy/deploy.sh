@@ -28,6 +28,7 @@ npm run build;
 cd ..
 rm -dRf ${SYMLINK_NAME}
 ln -ds ${RESULT_DIR} ./${SYMLINK_NAME}
+ls -dt */ | tail -n +11 | xargs rm -rf
 cd ./${SYMLINK_NAME}
 pm2 stop ${PROCESS_NAME}
 pm2 delete ${PROCESS_NAME}
