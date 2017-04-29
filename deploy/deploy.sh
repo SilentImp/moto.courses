@@ -6,12 +6,11 @@ export ARCH_NAME=moto.courses.package.tgz
 export SYMLINK_NAME=moto.courses
 export PROCESS_NAME=moto.courses
 
-ls -la
 mkdir ${RESULT_DIR}
 ls -la
 shopt -s extglob
 mv -f -v !(${RESULT_DIR}) ./${RESULT_DIR}
-mv -f -v ./.* ./${RESULT_DIR}
+mv -f -v ./{.[!.],}* ./${RESULT_DIR}
 tar -czf ${ARCH_NAME} ${RESULT_DIR}
 ls -la
 sshpass -e scp -C -o StrictHostKeyChecking=no ${ARCH_NAME} ${SSH_USER}@${SSH_IP}:${WEB_PATH}
@@ -20,7 +19,7 @@ cd /;
 cd ${WEB_PATH};
 tar -xzf ./${ARCH_NAME} -C ./;
 rm ./${ARCH_NAME};
-ls -dt */ | tail -n +5 | xargs rm -rf;
+ls -dt ${WEB_PATH}*/ | tail -n +5 | xargs rm -rf;
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
 fi
