@@ -33,12 +33,12 @@ cd ..;
 rm -dRf ${SYMLINK_NAME};
 ln -ds ${RESULT_DIR} ./${SYMLINK_NAME};
 cd ./${SYMLINK_NAME};
-if [[ "$(pm2 list | grep '${PROCESS_NAME}')" =~ "${PROCESS_NAME}" ]]; then
+if [[ "$(pm2 list | grep ${PROCESS_NAME})" =~ "${PROCESS_NAME}" ]]; then
 pm2 stop ${PROCESS_NAME};
 pm2 delete ${PROCESS_NAME};
 fi
 pm2 start ./server/server.js --name="${PROCESS_NAME}" --watch;
-echo ${SSH_PASS} | sudo pm2 startup -u ${PROCESS_NAME} --hp ${WEB_PATH};
+echo SSHPASS | sudo pm2 startup -u ${PROCESS_NAME} --hp ${WEB_PATH};
 pm2 save;
 logout;
 EOF
