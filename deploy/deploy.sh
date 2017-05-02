@@ -34,7 +34,5 @@ cd ./${SYMLINK_NAME};
 pm2 stop ${PROCESS_NAME};
 pm2 delete ${PROCESS_NAME};
 pm2 start ./server/server.js --name="${PROCESS_NAME}" --watch;
-pm2 save;
-sudo -s pm2 startup -u ${PROCESS_NAME} --hp ${WEB_PATH};
 logout;
 EOF
