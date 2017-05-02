@@ -9,7 +9,7 @@
     "lintjs": "gulp lint:css",
     "lintcss": "gulp lint:css",
     "lintpug": "gulp lint:pug",
-    "build": "gulp build && gulp server",
+    "build": "gulp server && gulp build",
     "static": "gulp build"
   },
   "repository": {

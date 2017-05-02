@@ -15,6 +15,7 @@ const gulp = require('gulp')
   , puglint = require('gulp-pug-lint')
   , order = require("gulp-order")
   , imagemin = require('gulp-imagemin')
+  , gm = require('gm').subClass({imageMagick: true})
   , uglify = require('gulp-uglify')
   , imageResize = require('gulp-image-resize')
   , resizeImageTasks = []
