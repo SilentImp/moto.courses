@@ -30,5 +30,4 @@ app.head('/cache/', function (req, res, next) {
 
 // Load static
 app.use(express.static(__dirname + '/../build'));
-
 export default app;
