@@ -131,11 +131,13 @@ gulp.task('lint:js', function() {
 
 gulp.task('javascript-standalone', function() {
   return gulp.src( paths.source.jss )
+    // .pipe(sourcemaps.init())
     .pipe( babel({
       presets: ['latest']
     }))
     .pipe( uglify() )
     .pipe( rename({dirname: ''}) )
+    // .pipe(sourcemaps.write())
     .pipe( gulp.dest(paths.build.build) );
 });
 

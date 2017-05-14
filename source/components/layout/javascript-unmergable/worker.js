@@ -1,6 +1,8 @@
 const CURRENT = Date.now() // Current date
   , TTL = 1000 * 60 * 60 * 24 * 7 // Cache lives 7 days
   , REQUEST_DELAY = 1000 * 60 * 60 * 6 // Check cache validity one time per 6 hours
+  , EXTENSIONS = ['jpg','jpeg','png','woff','woff2','ttf','otf','js','css']
+  , current_domain = "moto.courses";
 
 let CACHE_NAME; // Cache name
 
@@ -25,18 +27,32 @@ caches.keys().then(function(cacheNames) {
 self.addEventListener( 'fetch', function (event) {
 
     let domain = event.request.url.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+    let extension = event.request.url.split("?")[0].split("/").pop().split(".").pop();
+
+    // We should cache only get requests
+    if (event.request.method !== 'GET') return;
+
     // We should cache only assets
-    if (domain !== "moto.courses") return;
+    if (domain !== current_domain) return;
+
+    // We should cache only selected extensions
+    if (!EXTENSIONS.includes(extension)) return;
 
     event.respondWith(caches.open(CACHE_NAME).then(function (cache) {
+
         return cache.match(event.request.url).then(function(response){
             if (typeof response !== "undefined") return response;
-            return fetch(event.request.url);
-        }).then(function (response) {
-            cache.put(event.request, response.clone());
-            return response;
+            return fetch(event.request.url).then(function(response) {
+                if (!response.ok) return response;
+                let clone = response.clone();
+                cache.put(event.request.url, response);
+                return clone;
+            });
         });
+
     }));
+
+
 });
 
 /**
