@@ -31,6 +31,7 @@ cd ..;
 rm -dRf ${SYMLINK_NAME};
 ln -ds ${RESULT_DIR} ./${SYMLINK_NAME};
 cd ./${SYMLINK_NAME};
+pwd
 pm2 stop ${PROCESS_NAME};
 pm2 delete ${PROCESS_NAME};
 pm2 start ./server/server.js --name="${PROCESS_NAME}" --watch;
