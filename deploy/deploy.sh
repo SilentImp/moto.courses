@@ -4,7 +4,7 @@ export RESULT_DIR=moto.courses.${TRAVIS_BUILD_NUMBER}
 export SSHPASS=${SSH_PASS}
 export ARCH_NAME=moto.courses.package.tgz
 export SYMLINK_NAME=moto.courses
-export PROCESS_NAME=moto.courses
+export PROCESS_NAME=motocourses
 
 mkdir ${RESULT_DIR}
 shopt -s extglob
