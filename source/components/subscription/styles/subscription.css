@@ -43,7 +43,7 @@
     vertical-align: middle;
     position: relative;
     text-transform: uppercase;
-    transition: background-color .25s;
+    transition: background-color .25s, transform .25s;
 
     &::after {
       content: "";
@@ -55,7 +55,7 @@
       border-style: solid;
       border-width: $step_1 $step_1 0 0;
       border-color: color($color_blue l(-5%)) transparent transparent;
-      transition: border-color .25s, transform .25s;
+      transition: border-color .25s;
     }
 
     &:focus::after,
@@ -64,7 +64,7 @@
     }
 
     &:active {
-      transform: scale(.8);
+      transform: scale(.95);
     }
   }
 }
