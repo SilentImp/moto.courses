@@ -13,7 +13,7 @@
     "static": "gulp build",
     "build:critical": "gulp critical:main",
     "build:html": "gulp html",
-    "critical": "gulp html:critical"
+    "critical": "gulp critical:main"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "autoprefixer": "^6.7.7",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-modern-node": "^3.2.0",
+    "critical": "^0.9.1",
     "dotenv": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-defaults": "^9.0.0",
@@ -44,7 +45,6 @@
     "gulp-image-resize": "^0.12.0",
     "gulp-imagemin": "^3.2.0",
     "gulp-order": "^1.1.1",
-    "gulp-penthouse": "^0.2.0",
     "gulp-postcss": "^6.4.0",
     "gulp-pug": "^3.3.0",
     "gulp-pug-lint": "git+https://github.com/SilentImp/gulp-pug-lint.git",
@@ -56,7 +56,6 @@
     "gulp-svgsprite": "^1.0.2",
     "gulp-uglify": "^2.1.2",
     "imagemin-webp": "^4.0.0",
-    "inline-critical": "^2.4.2",
     "path": "^0.12.7",
     "postcss-clean": "^1.0.2",
     "postcss-discard-empty": "^2.1.0",

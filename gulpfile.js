@@ -1,8 +1,7 @@
 const gulp = require('gulp')
   , fs = require('fs')
-  , inline = require('inline-critical')
   , path = require('path')
-  , criticalCss = require('gulp-penthouse')
+  , critical = require('critical')
   , babel = require('gulp-babel')
   , pug = require('gulp-pug')
   , sprite = require('gulp-svgsprite')
@@ -87,19 +86,12 @@ gulp.task('lint:pug', function () {
     .pipe(puglint({failOnError: true}));
 });
 
-gulp.task('html', ['critical:main'], function () {
+gulp.task('html', function () {
   console.log(path.resolve(__dirname, './build/styles/'));
   return gulp.src(paths.source.html)
     .pipe(pug({}))
     .pipe(htmlclean({}))
-    // .pipe(procss({ base: path.resolve(__dirname, './build/styles/') }))
     .pipe(gulp.dest(paths.build.build));
-});
-
-gulp.task('html:critical', ['html'], function () {
-  const html = fs.readFileSync(path.resolve(__dirname, './build/index.html'), 'utf8');
-  const critical = fs.readFileSync(path.resolve(__dirname, './build/styles/critical.css'), 'utf8');
-  fs.writeFileSync(path.resolve(__dirname, './build/index.html'), inline(html, critical));
 });
 
 gulp.task('lint:css', function () {
@@ -129,17 +121,21 @@ gulp.task('css', ['lint:css'], function () {
     .pipe(gulp.dest(paths.build.css));
 });
 
-gulp.task('critical:main', ['css'], function () {
-  return gulp.src(paths.source.criticalSource)
-    .pipe(criticalCss({
-      out: 'critical.css'
-        , url: 'http://moto.courses/'
-        , width: 1300
-        , height: 900
-        , strict: true
-        , userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    }))
-    .pipe(gulp.dest(paths.build.critical));
+gulp.task('critical', ['html', 'css'], function () {
+  critical.generate({
+    inline: true
+    , base: 'build/'
+    , src: 'index.html'
+    , dest: 'index.html'
+    , ignore: ['@font-face', /url\(/]
+    , dimensions: [{
+      height: 500
+        , width: 320
+    }, {
+      height: 800
+        , width: 1200
+    }]
+  });
 });
 
 gulp.task('javascript', ['lint:js'], function () {
@@ -235,7 +231,7 @@ gulp.task('default', ['javascript'], function () {
   gulp.watch(paths.source.js, ['javascript']);
 });
 
-gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'html:critical', 'image:resize', 'favicon', 'static']);
+gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'critical', 'image:resize', 'favicon', 'static']);
 
 gulp.task('watch', function () {
   gulp.watch(paths.source.all_js, ['javascript', 'javascript-standalone']);
