@@ -13,7 +13,8 @@
     "static": "gulp build",
     "build:critical": "gulp critical:main",
     "build:html": "gulp html",
-    "critical": "gulp critical:main"
+    "critical": "gulp critical:main",
+    "pure": "purifycss build/styles/styles.css build/javascript/scripts.js build/*.html -m -o build/styles/styles.css -i -r"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "gulp-postcss": "^6.4.0",
     "gulp-pug": "^3.3.0",
     "gulp-pug-lint": "git+https://github.com/SilentImp/gulp-pug-lint.git",
+    "gulp-purifycss": "^0.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^2.4.1",

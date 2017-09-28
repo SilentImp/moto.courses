@@ -14,6 +14,7 @@ const gulp = require('gulp')
   , rename = require('gulp-rename')
   , concat = require('gulp-concat')
   , sourcemaps = require('gulp-sourcemaps')
+  , purify = require('gulp-purifycss')
   , postcss = require('gulp-postcss')
   , stylint = require('gulp-stylint')
   , puglint = require('gulp-pug-lint')
@@ -106,7 +107,7 @@ gulp.task('lint:css', function () {
     .pipe(postcss(plugins, {failOnError: true}));
 });
 
-gulp.task('css', ['lint:css'], function () {
+gulp.task('css', ['lint:css', 'html'], function () {
   let plugins = [
     require('precss')
     , require('autoprefixer')
@@ -118,16 +119,21 @@ gulp.task('css', ['lint:css'], function () {
     .pipe(postcss(plugins))
     .pipe(order(['reset.css']))
     .pipe(concat('styles.css'))
+    .pipe(purify(['./build/**/*.js', './build/*.html'], {
+      minify: true
+      , info: true
+    }))
     .pipe(gulp.dest(paths.build.css));
 });
 
-gulp.task('critical', ['html', 'css'], function () {
+gulp.task('critical', ['css'], function () {
   critical.generate({
     inline: true
     , base: 'build/'
     , src: 'index.html'
     , dest: 'index.html'
     , ignore: ['@font-face', /url\(/]
+    , minify: true
     , dimensions: [{
       height: 500
         , width: 320
