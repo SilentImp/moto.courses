@@ -87,7 +87,7 @@ gulp.task('lint:pug', function () {
     .pipe(puglint({failOnError: true}));
 });
 
-gulp.task('html', function () {
+gulp.task('html', ['lint:pug'], function () {
   console.log(path.resolve(__dirname, './build/styles/'));
   return gulp.src(paths.source.html)
     .pipe(pug({}))
