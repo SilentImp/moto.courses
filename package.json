@@ -11,9 +11,9 @@
     "lintpug": "gulp lint:pug",
     "build": "gulp server && gulp build",
     "static": "gulp build",
-    "build:critical": "gulp critical:main",
+    "build:critical": "gulp critical",
     "build:html": "gulp html",
-    "critical": "gulp critical:main",
+    "critical": "gulp critical",
     "pure": "purifycss build/styles/styles.css build/javascript/scripts.js build/*.html -m -o build/styles/styles.css -i -r"
   },
   "repository": {
