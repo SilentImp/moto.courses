@@ -3,12 +3,13 @@
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
+
+require('dotenv').config({path: '../.env'});
+
 const stripe = require("stripe")(process.env.STRIPE_API_KEY_SECRET);
 const bodyParser = require('body-parser');
 const app = express()
     , PORT = process.env.PORT || 3004;
-
-require('dotenv').config();
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
