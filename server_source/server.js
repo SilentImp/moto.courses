@@ -47,15 +47,11 @@ app.post('/charges', function (req, res, next) {
       }`).status(200).end();
     } else {
       res.setHeader('Content-Type', 'application/json');
-      console.log('code: ', error.raw.headers.statusCode);
-      console.log('headers: ', error.raw.headers);
-      console.log('raw: ', error.raw);
-      console.log('error: ', error);
       res.send(`{
         "error": true, 
         "message": "${error.message}",
-        "charge": ${charge}
-      }`).status(error.raw.headers.statusCode).end();
+        "charge": ${error}
+      }`).status(parseInt(error.statusCode, 10)).end();
     }
   });
 });
