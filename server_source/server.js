@@ -41,10 +41,7 @@ app.post('/charges', function (req, res, next) {
   }, function(error, charge) {
     if (error === null) {
       res.setHeader('Content-Type', 'application/json');
-      res.send(`{
-        "error": false, 
-        "charge": ${charge}
-      }`).status(200).end();
+      res.send(JSON.stringify(charge)).status(200).end();
     } else {
       res.setHeader('Content-Type', 'application/json');
       res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
