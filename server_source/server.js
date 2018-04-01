@@ -47,11 +47,7 @@ app.post('/charges', function (req, res, next) {
       }`).status(200).end();
     } else {
       res.setHeader('Content-Type', 'application/json');
-      res.send(`{
-        "error": true, 
-        "message": "${error.message}",
-        "charge": ${error}
-      }`).status(parseInt(error.statusCode, 10)).end();
+      res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
     }
   });
 });
