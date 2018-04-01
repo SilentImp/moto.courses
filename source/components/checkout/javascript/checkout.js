@@ -9,10 +9,10 @@ if (Stripe !== undefined) {
     , requestPayerEmail: true
     , requestPayerPhone: true
     , requestShipping: false
-    , displayItems: {
+    , displayItems: [{
       amount: 4000
       , label: 'maintenance.course'
-    }
+    }]
     , total: {
       label: 'Мастеркласс'
       , amount: 4000
