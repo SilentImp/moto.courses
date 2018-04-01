@@ -24,37 +24,41 @@ const gulp = require('gulp')
   , ggm = require('gulp-gm')
   , uglify = require('gulp-uglify')
   , imageResize = require('gulp-image-resize')
+  , glob = require('glob-array')
+  , browserify = require('browserify')
+  , source = require('vinyl-source-stream')
+  , buffer = require('vinyl-buffer')
   , resizeImageTasks = []
   , paths = {
     source: {
       images: ['./source/components/**/*.jpg', './source/components/**/*.png']
-      , components_css: './source/components/**/*.css'
-      , all_css: ['./source/components/**/*.css', './source/helpers/**/*.css']
-      , all_js: ['./source/components/**/*.js']
-      , js: './source/components/**/javascript/**/*.js'
-      , jss: './source/components/**/javascript-unmergable/**/*.js'
-      , html: './source/pages/**/*.pug'
-      , all_html: ['./source/pages/**/*.pug', './source/components/**/*.pug']
-      , sprite: './source/svg-sprites/**/*.svg'
-      , fonts: ['./source/fonts/**/*.woff', './source/fonts/**/*.woff2']
-      , server: './server_source/*.js'
-      , favicon: './source/favicon/**/*'
-      , static: './source/static/**/*'
-      , blur: ['./build/images/*.jpg', './build/images/*.png']
-      , criticalSource: './build/styles/styles.css'
+    , components_css: './source/components/**/*.css'
+    , all_css: ['./source/components/**/*.css', './source/helpers/**/*.css']
+    , all_js: ['./source/components/**/*.js']
+    , js: './source/components/**/javascript/**/*.js'
+    , jss: './source/components/**/javascript-unmergable/**/*.js'
+    , html: './source/pages/**/*.pug'
+    , all_html: ['./source/pages/**/*.pug', './source/components/**/*.pug']
+    , sprite: './source/svg-sprites/**/*.svg'
+    , fonts: ['./source/fonts/**/*.woff', './source/fonts/**/*.woff2']
+    , server: './server_source/*.js'
+    , favicon: './source/favicon/**/*'
+    , static: './source/static/**/*'
+    , blur: ['./build/images/*.jpg', './build/images/*.png']
+    , criticalSource: './build/styles/styles.css'
     }
-    , build: {
-      build: './build/'
-      , critical: './build/styles/'
-      , sprite: './source/tmp/'
-      , css: './build/styles/'
-      , images: './build/images/'
-      , fonts: './build/fonts/'
-      , js: './build/javascript/'
-      , favicon: './build/'
-      , server: './server/'
-      , static: './build/'
-    }
+  , build: {
+    build: './build/'
+    , critical: './build/styles/'
+    , sprite: './source/tmp/'
+    , css: './build/styles/'
+    , images: './build/images/'
+    , fonts: './build/fonts/'
+    , js: './build/javascript/'
+    , favicon: './build/'
+    , server: './server/'
+    , static: './build/'
+  }
   };
 
 gulp.task('sprite', function () {
@@ -69,7 +73,7 @@ gulp.task('sprite', function () {
         $('[fill]').removeAttr('fill');
         $('[style]').removeAttr('style');
       }
-      , parserOptions: { xmlMode: true }
+      , parserOptions: {xmlMode: true}
     }))
     .pipe(replace('&gt;', '>'))
     .pipe(sprite({
@@ -136,20 +140,31 @@ gulp.task('critical', ['css'], function () {
     , minify: true
     , dimensions: [{
       height: 500
-        , width: 320
+      , width: 320
     }, {
       height: 800
-        , width: 1200
+      , width: 1200
     }]
   });
 });
 
+// gulp.task('javascript', ['lint:js'], function () {
+//   return gulp.src(paths.source.js)
+//     .pipe(babel({
+//       presets: ['latest']
+//     }))
+//     .pipe(concat('scripts.js'))
+//     .pipe(uglify())
+//     .pipe(gulp.dest(paths.build.js));
+// });
+
 gulp.task('javascript', ['lint:js'], function () {
-  return gulp.src(paths.source.js)
-    .pipe(babel({
-      presets: ['latest']
-    }))
-    .pipe(concat('scripts.js'))
+  const files = glob.sync([paths.source.js]);
+  browserify({entries: files, extensions: ['.js']})
+    .transform('babelify', {presets: ['env', 'stage-1']})
+    .bundle()
+    .pipe(source('scripts.js'))
+    .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(paths.build.js));
 });
@@ -163,7 +178,7 @@ gulp.task('lint:js', function () {
 
 gulp.task('javascript-standalone', function () {
   return gulp.src(paths.source.jss)
-    // .pipe(sourcemaps.init())
+  // .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['latest']
     }))
@@ -179,7 +194,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('image:min', function () {
-  return gulp.src(paths.source.images, { base: './' })
+  return gulp.src(paths.source.images, {base: './'})
     .pipe(imagemin({
       interlaced: true
       , progressive: true
@@ -191,7 +206,7 @@ gulp.task('image:min', function () {
 
 [1270, 676, '676-blured'].forEach(function (size) {
   const resizeImageTask = 'resize_' + size
-        , blured = (size.toString().indexOf('-blured') > -1);
+    , blured = (size.toString().indexOf('-blured') > -1);
 
   size = parseInt(size, 10);
 

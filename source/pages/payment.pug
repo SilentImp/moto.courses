@@ -1,0 +1,6 @@
+extends ../components/layout/pug/layout.pug
+block content
+  include  ../components/checkout/pug/checkout.pug
+block scripts
+  script(src="https://js.stripe.com/v3/")
+  script(src="javascript/scripts.js", async, defer)

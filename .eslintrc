@@ -8,6 +8,9 @@
         "browser": true,
         "es6": true
   },
+  "globals": {
+    "Stripe": true
+  },
   "rules": {
     "one-var": 0,
     "no-new": 0,
