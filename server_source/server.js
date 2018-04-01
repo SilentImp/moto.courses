@@ -32,17 +32,20 @@ app.use(function (req, res, next) {
 });
 
 app.post('/charges', function (req, res, next) {
-  const token = req.body.stripeToken;
+  const token = req.body.token;
   stripe.charges.create({
     amount: 4000,
     currency: "uah",
     description: "Мастеркласс",
     source: token,
   }, function(error, charge) {
-    conosole.log(error, charge);
-    res.send(JSON.stringify(error));
-    res.send(JSON.stringify(charge));
-    res.end();
+    if (error === null) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(charge).status(200).end();
+    } else {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(error.message).status(error.raw.headers.statusCode).end();
+    }
   });
 });
 
