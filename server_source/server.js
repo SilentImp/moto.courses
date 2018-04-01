@@ -41,10 +41,21 @@ app.post('/charges', function (req, res, next) {
   }, function(error, charge) {
     if (error === null) {
       res.setHeader('Content-Type', 'application/json');
-      res.send(charge).status(200).end();
+      res.send(`{
+        "error": false, 
+        "charge": ${charge}
+      }`).status(200).end();
     } else {
       res.setHeader('Content-Type', 'application/json');
-      res.send(error.message).status(error.raw.headers.statusCode).end();
+      console.log('code: ', error.raw.headers.statusCode);
+      console.log('headers: ', error.raw.headers);
+      console.log('raw: ', error.raw);
+      console.log('error: ', error);
+      res.send(`{
+        "error": true, 
+        "message": "${error.message}",
+        "charge": ${charge}
+      }`).status(error.raw.headers.statusCode).end();
     }
   });
 });

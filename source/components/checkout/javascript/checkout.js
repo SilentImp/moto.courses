@@ -5,6 +5,10 @@ if (Stripe !== undefined) {
   const paymentRequest = stripe.paymentRequest({
     country: 'US'
     , currency: 'uah'
+    , requestPayerName: true
+    , requestPayerEmail: true
+    , requestPayerPhone: true
+    , requestShipping: false
     , total: {
       label: 'Мастеркласс'
       , amount: 4000
@@ -22,7 +26,6 @@ if (Stripe !== undefined) {
   });
 
   (async () => {
-    // Check the availability of the Payment Request API first.
     const result = await paymentRequest.canMakePayment();
     if (result) {
       prButton.mount('#payment-request-button');
@@ -31,23 +34,18 @@ if (Stripe !== undefined) {
     }
   })();
 
-  paymentRequest.on('token', async (ev) => {
-    // Send the token to your server to charge it!
+  paymentRequest.on('token', async (event) => {
+    console.warn(event);
     const response = await fetch('/charges', {
       method: 'POST'
-      , body: JSON.stringify({token: ev.token.id})
+      , body: JSON.stringify({token: event.token.id})
       , headers: {'content-type': 'application/json'}
     });
 
     if (response.ok) {
-      // Report to the browser that the payment was successful, prompting
-      // it to close the browser payment interface.
-      ev.complete('success');
+      event.complete('success');
     } else {
-      // Report to the browser that the payment failed, prompting it to
-      // re-show the payment interface, or show an error message and close
-      // the payment interface.
-      ev.complete('fail');
+      event.complete('fail');
     }
   });
 }
