@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 app.post('/charges', function (req, res, next) {
   const token = req.body.stripeToken;
   stripe.charges.create({
-    amount: 40,
+    amount: 4000,
     currency: "uah",
     description: "Мастеркласс",
     source: token,
