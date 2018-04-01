@@ -7,7 +7,7 @@ const paymentRequest = stripe.paymentRequest({
   , currency: 'uah'
   , total: {
     label: 'Мастеркласс'
-    , amount: 10
+    , amount: 40.00
   }
 });
 

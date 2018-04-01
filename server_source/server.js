@@ -34,12 +34,15 @@ app.use(function (req, res, next) {
 app.post('/charges', function (req, res, next) {
   const token = req.body.stripeToken;
   stripe.charges.create({
-    amount: 10,
+    amount: 40,
     currency: "uah",
     description: "Мастеркласс",
     source: token,
-  }, function(err, charge) {
-    console.log(err, charge);
+  }, function(error, charge) {
+    conosole.log(error, charge);
+    res.send(JSON.stringify(error));
+    res.send(JSON.stringify(charge));
+    res.end();
   });
 });
 
