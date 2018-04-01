@@ -28,7 +28,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/charges', function (req, res, next) {
+app.post('/charges', function (req, res, next) {
   const token = req.body.stripeToken;
   stripe.charges.create({
     amount: 10,
