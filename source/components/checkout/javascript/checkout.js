@@ -3,10 +3,10 @@ import 'babel-polyfill';
 const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
 
 const paymentRequest = stripe.paymentRequest({
-  country: 'US'
-  , currency: 'usd'
+  country: 'UA'
+  , currency: 'UAH'
   , total: {
-    label: 'Course'
+    label: 'Мастеркласс'
     , amount: 1000
   }
 });

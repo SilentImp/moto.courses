@@ -3,9 +3,16 @@
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
-
+const stripe = require("stripe")(process.env.STRIPE_API_KEY_SECRET);
+const bodyParser = require('body-parser');
 const app = express()
     , PORT = process.env.PORT || 3004;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Listen for requests
 app.listen(PORT, () => {
@@ -19,6 +26,18 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
+});
+
+app.get('/charges', function (req, res, next) {
+  const token = req.body.stripeToken;
+  stripe.charges.create({
+    amount: 1000,
+    currency: "UAH",
+    description: "Мастеркласс",
+    source: token,
+  }, function(err, charge) {
+    console.log(err, charge);
+  });
 });
 
 app.head('/cache/', function (req, res, next) {

@@ -20,6 +20,7 @@ rm ./${ARCH_NAME};
 ls -dt ${WEB_PATH}*/ | tail -n +5 | xargs rm -rf;
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
+    echo STRIPE_API_KEY_SECRET=${STRIPE_API_KEY_SECRET} >> .env;
 fi
 cd ${RESULT_DIR};
 nvm install 7;
