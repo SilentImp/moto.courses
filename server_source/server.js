@@ -31,8 +31,8 @@ app.use(function (req, res, next) {
 app.get('/charges', function (req, res, next) {
   const token = req.body.stripeToken;
   stripe.charges.create({
-    amount: 1000,
-    currency: "UAH",
+    amount: 10,
+    currency: "uah",
     description: "Мастеркласс",
     source: token,
   }, function(err, charge) {

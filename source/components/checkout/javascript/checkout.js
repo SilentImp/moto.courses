@@ -4,10 +4,10 @@ const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
 
 const paymentRequest = stripe.paymentRequest({
   country: 'UA'
-  , currency: 'UAH'
+  , currency: 'uah'
   , total: {
     label: 'Мастеркласс'
-    , amount: 1000
+    , amount: 10
   }
 });
 
