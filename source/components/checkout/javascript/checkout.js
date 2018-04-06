@@ -42,11 +42,11 @@ if (Stripe !== undefined) {
   })();
 
   paymentRequest.on('token', async (event) => {
-    console.warn(skusku, event);
-    console.info({token: event.token.id, skusku});
+    console.info(event.token);
+    console.info(skusku);
     const response = await fetch('/order', {
       method: 'POST'
-      , body: JSON.stringify({token: event.token.id, skusku})
+      , body: JSON.stringify({token: event.token, skusku})
       , headers: {'content-type': 'application/json'}
     });
 

@@ -81,7 +81,7 @@ app.post('/charge', async (req, res, next) => {
     amount: sku.price
     , currency: sku.currency
     , description: 'Мастеркласс'
-    , source: token
+    , source: token.id
   }, function (error, charge) {
     if (error === null) {
       res.setHeader('Content-Type', 'application/json');
