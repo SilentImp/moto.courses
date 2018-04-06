@@ -35,8 +35,7 @@ app.use(function (req, res, next) {
 });
 
 app.post('/order', async (req, res, next) => {
-  const token = req.body.token;
-  const sku = req.body.skusku;
+  const { token, sku } = req.body;
   console.log(req.body);
 
   try {
@@ -56,17 +55,17 @@ app.post('/order', async (req, res, next) => {
     });
 
     console.log('order paid: ', paidOrder);
-    const fulfilledOrder = stripe.orders.update(order.id, {
+    const fulfilledOrder = await stripe.orders.update(order.id, {
       status: 'fulfilled'
     });
 
     console.log('order fulfilled: ', fulfilledOrder);
-    
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(fulfilledOrder)).status(200).end();
   } catch (error) {
     console.error('order fail: ', error);
-    res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
   }
 
 });
@@ -88,7 +87,7 @@ app.post('/charge', async (req, res, next) => {
       res.send(JSON.stringify(charge)).status(200).end();
     } else {
       res.setHeader('Content-Type', 'application/json');
-      res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
+      res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
     }
   });
   

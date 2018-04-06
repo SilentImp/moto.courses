@@ -44,12 +44,12 @@ if (Stripe !== undefined) {
   paymentRequest.on('token', async (event) => {
     console.info(event.token);
     console.info(skusku);
+    const { token } = event;
     const response = await fetch('/order', {
       method: 'POST'
-      , body: JSON.stringify({token: event.token, skusku})
+      , body: JSON.stringify({ token, skusku })
       , headers: {'content-type': 'application/json'}
     });
-
     if (response.ok) {
       event.complete('success');
     } else {
