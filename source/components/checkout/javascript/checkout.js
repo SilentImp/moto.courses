@@ -1,7 +1,5 @@
 import 'babel-polyfill';
 
-let skusku = null;
-
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const paymentRequest = stripe.paymentRequest({
@@ -32,6 +30,13 @@ if (Stripe !== undefined) {
   });
 
   (async () => {
+    const response = await fetch('/skus');
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+    const sku = await response.json();
+    document.querySelector('.checkout__skus').innerText = `${sku.inventory.quantity} мест осталось`;
+
     const result = await paymentRequest.canMakePayment();
     console.log('canMakePayment: ', result);
     if (result) {
@@ -39,26 +44,20 @@ if (Stripe !== undefined) {
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
     }
-  })();
 
-  paymentRequest.on('token', async (event) => {
-    console.info(event.token);
-    console.info(skusku);
-    const { token } = event;
-    const response = await fetch('/order', {
-      method: 'POST'
-      , body: JSON.stringify({ token, skusku })
-      , headers: {'content-type': 'application/json'}
+    paymentRequest.on('token', async (event) => {
+      const { token } = event;
+      console.info(sku, token);
+      const response = await fetch('/orders', {
+        method: 'POST'
+        , body: JSON.stringify({ token, sku })
+        , headers: {'content-type': 'application/json'}
+      });
+      if (response.ok) {
+        event.complete('success');
+      } else {
+        event.complete('fail');
+      }
     });
-    if (response.ok) {
-      event.complete('success');
-    } else {
-      event.complete('fail');
-    }
-  });
+  })();
 }
-
-const skus = document.querySelector('.checkout__skus');
-fetch('/skus').then((response) => response.json())
-  .then((sku) => { skusku = sku; skus.innerText = sku.inventory.quantity + ' мест осталось'; }) // eslint-disable-line
-  .catch((error) => { console.log(error); });

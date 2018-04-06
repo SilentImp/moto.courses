@@ -36,7 +36,9 @@ app.use(function (req, res, next) {
 
 app.post('/order', async (req, res, next) => {
   const { token, sku } = req.body;
-  console.log(req.body);
+  console.log(token);
+  console.log(sku);
+  console.log(sku.currency);
 
   try {
     const order = await stripe.orders.create({
