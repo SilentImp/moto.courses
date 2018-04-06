@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 
+let skusku = null;
+
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const paymentRequest = stripe.paymentRequest({
@@ -30,7 +32,9 @@ if (Stripe !== undefined) {
   });
 
   (async () => {
+    console.log(1);
     const result = await paymentRequest.canMakePayment();
+    console.log('2: ', result);
     if (result) {
       prButton.mount('#payment-request-button');
     } else {
@@ -39,10 +43,11 @@ if (Stripe !== undefined) {
   })();
 
   paymentRequest.on('token', async (event) => {
-    console.warn(event);
+    console.warn(skusku);
+    console.info({token: event.token.id, skusku});
     const response = await fetch('/charges', {
       method: 'POST'
-      , body: JSON.stringify({token: event.token.id})
+      , body: JSON.stringify({token: event.token.id, skusku})
       , headers: {'content-type': 'application/json'}
     });
 
@@ -53,3 +58,9 @@ if (Stripe !== undefined) {
     }
   });
 }
+
+const skus = document.querySelector('.checkout__skus');
+fetch('/skus').then((response) => response.json())
+  .then((sku) => { skusku = sku; skus.innerText = sku.inventory.quantity + ' мест осталось'; }) // eslint-disable-line
+  .catch((error) => { console.log(error); });
+

@@ -1,3 +1,16 @@
 {
-  "presets": ["modern-node", "latest"]
+  "presets":
+  [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [">3%", "ie 11"]
+        },
+        "debug": true
+      }
+    ],
+    "stage-0",
+    "modern-node"
+  ]
 }

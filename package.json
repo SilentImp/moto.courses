@@ -63,6 +63,7 @@
     "gulp-svgmin": "^1.2.3",
     "gulp-svgsprite": "^1.0.2",
     "gulp-uglify": "^2.1.2",
+    "https": "^1.0.0",
     "imagemin-webp": "^4.0.0",
     "path": "^0.12.7",
     "postcss-clean": "^1.0.2",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1"
   }
 }
