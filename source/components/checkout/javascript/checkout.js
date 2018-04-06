@@ -63,4 +63,3 @@ const skus = document.querySelector('.checkout__skus');
 fetch('/skus').then((response) => response.json())
   .then((sku) => { skusku = sku; skus.innerText = sku.inventory.quantity + ' мест осталось'; }) // eslint-disable-line
   .catch((error) => { console.log(error); });
-
