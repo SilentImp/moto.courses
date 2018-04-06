@@ -194,45 +194,45 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('image:min', function () {
-//   return gulp.src(paths.source.images, {base: './'})
-//     .pipe(imagemin({
-//       interlaced: true
-//       , progressive: true
-//       , optimizationLevel: 5
-//     }))
-//     .pipe(rename({dirname: ''}))
-//     .pipe(gulp.dest('./build/images/'));
-// });
-//
-// [1270, 676, '676-blured'].forEach(function (size) {
-//   const resizeImageTask = 'resize_' + size
-//     , blured = (size.toString().indexOf('-blured') > -1);
-//
-//   size = parseInt(size, 10);
-//
-//   gulp.task(resizeImageTask, function () {
-//     return gulp.src(paths.source.images)
-//     .pipe(imageResize({
-//       width: size
-//       , imageMagick: false
-//       , upscale: false
-//     }))
-//     .pipe(rename({dirname: '', suffix: (size == 1270) ? '@2x' : blured ? '@blured' : ''}))
-//     .pipe(gulpif(blured, ggm(function (gmfile, done) {
-//       gmfile.size(function (err, size) {
-//         const part = 5
-//             , window_size = Math.round(Math.min(size.width, size.height) / part);
-//         done(null, gmfile.blur(window_size, Math.round(window_size / part)));
-//       });
-//     })))
-//     .pipe(imagemin({
-//       interlaced: true
-//       , progressive: true
-//       , optimizationLevel: 5
-//     }))
-//     .pipe(gulp.dest(paths.build.images));
-//   });
-//   resizeImageTasks.push(resizeImageTask);
+  return gulp.src(paths.source.images, {base: './'})
+    .pipe(imagemin({
+      interlaced: true
+      , progressive: true
+      , optimizationLevel: 5
+    }))
+    .pipe(rename({dirname: ''}))
+    .pipe(gulp.dest('./build/images/'));
+});
+
+[1270, 676, '676-blured'].forEach(function (size) {
+  const resizeImageTask = 'resize_' + size
+    , blured = (size.toString().indexOf('-blured') > -1);
+
+  size = parseInt(size, 10);
+
+  gulp.task(resizeImageTask, function () {
+    return gulp.src(paths.source.images)
+    .pipe(imageResize({
+      width: size
+      , imageMagick: false
+      , upscale: false
+    }))
+    .pipe(rename({dirname: '', suffix: (size == 1270) ? '@2x' : blured ? '@blured' : ''}))
+    .pipe(gulpif(blured, ggm(function (gmfile, done) {
+      gmfile.size(function (err, size) {
+        const part = 5
+            , window_size = Math.round(Math.min(size.width, size.height) / part);
+        done(null, gmfile.blur(window_size, Math.round(window_size / part)));
+      });
+    })))
+    .pipe(imagemin({
+      interlaced: true
+      , progressive: true
+      , optimizationLevel: 5
+    }))
+    .pipe(gulp.dest(paths.build.images));
+  });
+  resizeImageTasks.push(resizeImageTask);
 });
 
 gulp.task('image:resize', resizeImageTasks);

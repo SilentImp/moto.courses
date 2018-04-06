@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post('/charges', async (req, res, next) => {
+app.post('/order', async (req, res, next) => {
   const token = req.body.token;
   const sku = req.body.skusku;
   console.log(req.body);
@@ -61,24 +61,37 @@ app.post('/charges', async (req, res, next) => {
     });
 
     console.log('order fulfilled: ', fulfilledOrder);
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(fulfilledOrder)).status(200).end();
   } catch (error) {
     console.error('order fail: ', error);
+    res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
   }
 
-  // stripe.charges.create({
-  //   amount: sku.price
-  //   , currency: sku.currency
-  //   , description: 'Мастеркласс'
-  //   , source: token
-  // }, function (error, charge) {
-  //   if (error === null) {
-  //     res.setHeader('Content-Type', 'application/json');
-  //     res.send(JSON.stringify(charge)).status(200).end();
-  //   } else {
-  //     res.setHeader('Content-Type', 'application/json');
-  //     res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
-  //   }
-  // });
+});
+
+
+app.post('/charge', async (req, res, next) => {
+  const token = req.body.token;
+  const sku = req.body.skusku;
+  console.log(req.body);
+  
+  stripe.charges.create({
+    amount: sku.price
+    , currency: sku.currency
+    , description: 'Мастеркласс'
+    , source: token
+  }, function (error, charge) {
+    if (error === null) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(charge)).status(200).end();
+    } else {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(error.statusCode, error.message).end(http.STATUS_CODES[error.statusCode]);
+    }
+  });
+  
 });
 
 app.head('/cache/', function (req, res, next) {
@@ -93,13 +106,10 @@ app.head('/cache/', function (req, res, next) {
 });
 
 app.get('/skus', function (req, res, next) {
-  // res.send('жирожоп');
-  // res.status(201).end(http.STATUS_CODES[201]);
-//  next();
   stripe.skus.retrieve(
-    'sku_CckkugPVHUWbpZ', function (error, sku) {
+    'sku_CckkugPVHUWbpZ', 
+    (error, sku) => {
       if (error === null) {
-        // res.send('жирожоп');
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(sku)).status(200).end();
       } else {

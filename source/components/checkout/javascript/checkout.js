@@ -32,9 +32,8 @@ if (Stripe !== undefined) {
   });
 
   (async () => {
-    console.log(1);
     const result = await paymentRequest.canMakePayment();
-    console.log('2: ', result);
+    console.log('canMakePayment: ', result);
     if (result) {
       prButton.mount('#payment-request-button');
     } else {
@@ -43,9 +42,9 @@ if (Stripe !== undefined) {
   })();
 
   paymentRequest.on('token', async (event) => {
-    console.warn(skusku);
+    console.warn(skusku, event);
     console.info({token: event.token.id, skusku});
-    const response = await fetch('/charges', {
+    const response = await fetch('/order', {
       method: 'POST'
       , body: JSON.stringify({token: event.token.id, skusku})
       , headers: {'content-type': 'application/json'}

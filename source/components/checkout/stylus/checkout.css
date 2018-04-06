@@ -1,0 +1,5 @@
+@import "../../../helpers/_helpers.css";
+
+#payment-request-button {
+  width: 200px;
+}
