@@ -75,9 +75,7 @@
     "stylelint-config-standard": "^16.0.0",
     "stylint-stylish": "^1.4.0",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "devDependencies": {
+    "vinyl-source-stream": "^2.0.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1"
