@@ -50,7 +50,7 @@ app.post('/order', async (req, res, next) => {
     });
 
     const paidOrder = await stripe.orders.pay(order.id, {
-      source: token.livemode ? token.id : 'tok_visa',
+      source: (token.livemode ? token.id : 'tok_visa'),
     });
 
     const fulfilledOrder = await stripe.orders.update(order.id, {
@@ -75,7 +75,7 @@ app.post('/charge', async (req, res, next) => {
     amount: sku.price
     , currency: sku.currency
     , description: 'Мастеркласс'
-    , source: token.livemode ? token.id : 'tok_visa',
+    , source: (token.livemode ? token.id : 'tok_visa')
     , metadata: {
       email: token.email
     }
