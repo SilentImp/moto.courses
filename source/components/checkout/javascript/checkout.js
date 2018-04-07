@@ -72,6 +72,7 @@ if (Stripe !== undefined) {
       prButton.mount('#payment-request-button');
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
+      document.getElementById('checkout__message').appendChild(document.createTextNode('И вы не сможете их купить, так как у вас нет ApplePay.'));
     }
   };
 

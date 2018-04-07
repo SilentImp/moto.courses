@@ -6,6 +6,10 @@
   vertical-align: middle;
 }
 
+.checkout {
+  margin: 40px 0;
+}
+
 .checkout__skus {
   display: inline-block;
   margin-right: 20px;
