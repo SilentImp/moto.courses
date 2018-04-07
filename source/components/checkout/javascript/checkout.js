@@ -30,26 +30,40 @@ if (Stripe !== undefined) {
     }
   });
 
-  (async () => {
+  const updateCount = async () => {
     const response = await fetch('/skus');
     if (!response.ok) {
       throw new Error(`${response.status} ${response.statusText}`);
     }
     const sku = await response.json();
-    document.querySelector('.checkout__skus').innerText = `${sku.inventory.quantity} мест осталось`;
+    const quantity = parseInt(sku.inventory.quantity, 10);
+    const plural = new Intl.PluralRules('ru').select(quantity);
+    const suffixes = new Map([
+        ['many', 'Билетов осталось']
+      , ['one', 'Билет остался']
+      , ['few', 'Билета осталось']
+    ]);
+    document.querySelector('.checkout__skus').innerText = (quantity === 0)
+      ? 'Билетов нет'
+      : `${sku.inventory.quantity} ${suffixes.get(plural)}`;
+    return sku;
+  };
 
+  const showButton = async (sku) => {
+    const quantity = parseInt(sku.inventory.quantity, 10);
     const result = await paymentRequest.canMakePayment();
-    console.log('canMakePayment: ', result);
-    if (result) {
+    if (result && (quantity > 0)) {
       prButton.mount('#payment-request-button');
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
     }
-    paymentRequest.on('source', async event => {
+  };
+
+  (async () => {
+    let sku = await updateCount();
+    showButton(sku);
+    paymentRequest.on('token', async (event) => {
       const { token } = event;
-      console.info(sku);
-      console.info(token);
-      console.info(event);
       const response = await fetch('/order', {
         method: 'POST'
         , body: JSON.stringify({ token, sku })
@@ -60,6 +74,8 @@ if (Stripe !== undefined) {
       } else {
         event.complete('fail');
       }
+      sku = await updateCount();
+      showButton(sku);
     });
   })();
 }

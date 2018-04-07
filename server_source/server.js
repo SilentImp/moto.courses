@@ -36,9 +36,6 @@ app.use(function (req, res, next) {
 
 app.post('/order', async (req, res, next) => {
   const { token, sku } = req.body;
-  console.log(token);
-  console.log(sku);
-  console.log(sku.currency);
 
   try {
     const order = await stripe.orders.create({
@@ -52,21 +49,17 @@ app.post('/order', async (req, res, next) => {
       ]
     });
 
-    console.log('order: ', order);
     const paidOrder = await stripe.orders.pay(order.id, {
-      source: source.livemode ? token : 'tok_visa',
+      source: token.livemode ? token.id : 'tok_visa',
     });
 
-    console.log('order paid: ', paidOrder);
     const fulfilledOrder = await stripe.orders.update(order.id, {
       status: 'fulfilled'
     });
 
-    console.log('order fulfilled: ', fulfilledOrder);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(fulfilledOrder)).status(200).end();
   } catch (error) {
-    console.error('order fail: ', error);
     res.setHeader('Content-Type', 'application/json');
     res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
   }
@@ -75,15 +68,17 @@ app.post('/order', async (req, res, next) => {
 
 
 app.post('/charge', async (req, res, next) => {
-  const token = req.body.token;
-  const sku = req.body.skusku;
-  console.log(req.body);
+  const { token, sku } = req.body;
+  console.log(token, sku);
   
   stripe.charges.create({
     amount: sku.price
     , currency: sku.currency
     , description: 'Мастеркласс'
-    , source: token.id
+    , source: token.livemode ? token.id : 'tok_visa',
+    , metadata: {
+      email: token.email
+    }
   }, function (error, charge) {
     if (error === null) {
       res.setHeader('Content-Type', 'application/json');

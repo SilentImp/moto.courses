@@ -1,5 +1,11 @@
 @import "../../../helpers/_helpers.css";
 
 #payment-request-button {
+  display inline-block
+  margin-right 20px
   width: 200px;
+}
+
+.checkout__skus {
+  display: inline-block;
 }
