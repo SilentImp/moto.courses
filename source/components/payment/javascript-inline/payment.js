@@ -2,34 +2,33 @@ const methodData = [{
   supportedMethods: "basic-card",
 }];
 
-const options = {
-  requestPayerEmail: true,
-  requestPayerName: true,
-  requestPayerPhone: true,
-  requestShipping: false,
-}
 const details = {
-      id: "order-1",
-      displayItems: [{
-          label: "Волшебный говорящий медведь-проститутка",
-          amount: {
-            currency: "usd",
-            value: "25.00"
-          },
-        }],
-      total: {
-        label: "Total",
-        amount: {
-          currency: "usd",
-          value: "25.00"
-        },
-      },
-    };
+  total: {label: 'Donation', amount: {currency: 'USD', value: '55.00'}},
+  displayItems: [
+    {
+      label: 'Original donation amount',
+      amount: {currency: 'USD', value: '65.00'},
+    },
+    {
+      label: 'Friends and family discount',
+      amount: {currency: 'USD', value: '-10.00'},
+    },
+  ],
+};
 
-let request = new PaymentRequest(methodData, details, options);
+let request = new PaymentRequest(methodData, details);
 
 document.getElementById('payme').addEventListener('click', async () => {
-  const response = await request.show(); 
-  console.log(response);
-  request = new PaymentRequest(methodData, details, options);
+  try {
+    const response = await request.show(); 
+    console.log(response);
+  } catch(error){
+    console.log(error);
+  }
+  
+  try {
+    request = new PaymentRequest(methodData, details, options);
+  } catch(error){
+    console.log('cant restore: ', error);
+  }
 });
