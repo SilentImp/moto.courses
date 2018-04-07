@@ -2,6 +2,30 @@ const methodData = [{
   supportedMethods: "basic-card",
 }];
 
+const applePayMethod = {
+    supportedMethods: "https://apple.com/apple-pay",
+    data: {
+        version: 3,
+        merchantIdentifier: "merchant.com.example",
+        merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
+        supportedNetworks: ["amex", "discover", "masterCard", "visa"],
+        countryCode: "US",
+    },
+};
+
+const debitModifier = {
+    supportedMethods: "https://apple.com/apple-pay",
+    data: { paymentMethodType: "debit" },
+    total: {
+        label: "My Merchant",
+        amount: { value: "26.50", currency: "USD" },
+    },
+    additionalDisplayItems: [{
+        label: "Debit Card Discount",
+        amount: { value: "-1.00", currency: "USD" },
+    }],
+};
+
 const options = {
   requestPayerEmail: false,
   requestPayerName: false,
@@ -23,14 +47,21 @@ const details = {
   ],
 };
 
-let request = new PaymentRequest(methodData, details);
+let firefoxRequest = new PaymentRequest(methodData, details, options);
+let appleRequest = new PaymentRequest([applePayMethod], details, options);
+
 
 document.getElementById('payme').addEventListener('click', async () => {
   try {
-    const response = await request.show(); 
+    const response = await appleRequest.show(); 
     console.log(response);
   } catch(error){
-    console.log(error);
+    console.log('apple faile: ', error);
+    try {
+      const response = await firefoxRequest.show(); 
+    } catch(error){
+      console.log('ff fail', error);
+    }
   }
   
   try {
