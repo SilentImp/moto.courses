@@ -2,6 +2,13 @@ const methodData = [{
   supportedMethods: "basic-card",
 }];
 
+const options = {
+  requestPayerEmail: false,
+  requestPayerName: false,
+  requestPayerPhone: false,
+  requestShipping: false,
+}
+
 const details = {
   total: {label: 'Donation', amount: {currency: 'USD', value: '55.00'}},
   displayItems: [
