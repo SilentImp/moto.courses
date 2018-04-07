@@ -3,8 +3,9 @@ block content
   include  ../components/scene/pug/scene.pug
   include  ../components/abstract/pug/abstract.pug
   //include  ../components/subscription/pug/form.pug
-  include  ../components/checkout/pug/checkout.pug
-  include  ../components/payment/pug/payment.pug
+  .subscription
+    include  ../components/checkout/pug/checkout.pug
+    include  ../components/payment/pug/payment.pug
 block scripts
   script(src="https://js.stripe.com/v3/")
   script(src="javascript/scripts.js", async, defer)
