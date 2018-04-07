@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import 'intl-polyfill';
 
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
@@ -54,13 +53,11 @@ if (Stripe !== undefined) {
     }
     const sku = await response.json();
     const quantity = parseInt(sku.inventory.quantity, 10);
-    const plural = (Intl.PluralRules !== undefined)
-      ? getNoun(quantity)
-      : new Intl.PluralRules('ru').select(quantity);
+    const plural = getNoun(quantity);
     const suffixes = new Map([
-        ['many', 'Билетов осталось']
-      , ['one', 'Билет остался']
-      , ['few', 'Билета осталось']
+        ['many', 'билетов осталось']
+      , ['one', 'билет остался']
+      , ['few', 'билета осталось']
     ]);
     document.querySelector('.checkout__skus').innerText = (quantity === 0)
       ? 'Билетов нет'
