@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'intl-polyfill';
 
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
