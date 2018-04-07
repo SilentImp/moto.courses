@@ -42,7 +42,8 @@ app.post('/order', async (req, res, next) => {
 
   try {
     const order = await stripe.orders.create({
-      currency: sku.currency
+      email: token.email
+      , currency: sku.currency
       , items: [
         {
           type: 'sku'
@@ -53,7 +54,7 @@ app.post('/order', async (req, res, next) => {
 
     console.log('order: ', order);
     const paidOrder = await stripe.orders.pay(order.id, {
-      source: token
+      source: source.livemode ? token : 'tok_visa',
     });
 
     console.log('order paid: ', paidOrder);

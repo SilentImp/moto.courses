@@ -2,6 +2,10 @@ import 'babel-polyfill';
 
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
+  const items = [{
+    amount: 4000
+    , label: 'maintenance.course'
+  }];
   const paymentRequest = stripe.paymentRequest({
     country: 'US'
     , currency: 'uah'
@@ -9,10 +13,7 @@ if (Stripe !== undefined) {
     , requestPayerEmail: true
     , requestPayerPhone: true
     , requestShipping: false
-    , displayItems: [{
-      amount: 4000
-      , label: 'maintenance.course'
-    }]
+    , displayItems: items
     , total: {
       label: 'Мастеркласс'
       , amount: 4000
@@ -44,11 +45,12 @@ if (Stripe !== undefined) {
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
     }
-
-    paymentRequest.on('token', async (event) => {
+    paymentRequest.on('source', async event => {
       const { token } = event;
-      console.info(sku, token);
-      const response = await fetch('/orders', {
+      console.info(sku);
+      console.info(token);
+      console.info(event);
+      const response = await fetch('/order', {
         method: 'POST'
         , body: JSON.stringify({ token, sku })
         , headers: {'content-type': 'application/json'}
