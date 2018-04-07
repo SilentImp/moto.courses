@@ -75,8 +75,10 @@ if (Stripe !== undefined) {
       } else {
         event.complete('fail');
       }
-      sku = await updateCount();
-      showButton(sku);
+      setTimeout(async () => {
+        sku = await updateCount();
+        showButton(sku);
+      }, 1000);
     });
   })();
 }

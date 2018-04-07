@@ -115,18 +115,18 @@ gulp.task('css', ['lint:css', 'html'], function () {
   let plugins = [
     require('precss')
     , require('autoprefixer')
-    , require('postcss-discard-empty')
-    , require('postcss-clean')
+    // , require('postcss-discard-empty')
+    // , require('postcss-clean')
   ];
 
   return gulp.src(paths.source.components_css)
     .pipe(postcss(plugins))
     .pipe(order(['reset.css']))
     .pipe(concat('styles.css'))
-    .pipe(purify(['./build/**/*.js', './build/*.html'], {
-      minify: true
-      , info: true
-    }))
+    // .pipe(purify(['./build/**/*.js', './build/*.html'], {
+    //   minify: true
+    //   , info: true
+    // }))
     .pipe(gulp.dest(paths.build.css));
 });
 
