@@ -72,7 +72,12 @@ if (Stripe !== undefined) {
       prButton.mount('#payment-request-button');
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
-      document.getElementById('checkout__message').appendChild(document.createTextNode('И вы не сможете их купить, так как у вас нет ApplePay.'));
+      const element = document.getElementById('checkout__message');
+      if (ApplePaySession) {
+        element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
+      } else {
+        element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
+      }
     }
   };
 
