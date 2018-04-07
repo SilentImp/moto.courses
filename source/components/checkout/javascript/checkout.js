@@ -31,6 +31,22 @@ if (Stripe !== undefined) {
     }
   });
 
+  const getNoun = (number) => {
+    let n = Math.abs(number);
+    n %= 100;
+    if (n >= 5 && n <= 20) {
+      return 'many';
+    }
+    n %= 10;
+    if (n === 1) {
+      return 'one';
+    }
+    if (n >= 2 && n <= 4) {
+      return 'few';
+    }
+    return 'many';
+  };
+
   const updateCount = async () => {
     const response = await fetch('/skus');
     if (!response.ok) {
@@ -38,7 +54,9 @@ if (Stripe !== undefined) {
     }
     const sku = await response.json();
     const quantity = parseInt(sku.inventory.quantity, 10);
-    const plural = new Intl.PluralRules('ru').select(quantity);
+    const plural = (Intl.PluralRules !== undefined)
+      ? getNoun(quantity)
+      : new Intl.PluralRules('ru').select(quantity);
     const suffixes = new Map([
         ['many', 'Билетов осталось']
       , ['one', 'Билет остался']
