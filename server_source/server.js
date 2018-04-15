@@ -6,7 +6,7 @@ import fs from 'fs';
 import http from 'http';
 // import https from 'https';
 
-require('dotenv').config({path: '../.env'});
+require('dotenv').config({path: './.env'});
 
 // const options = {
 //   key: fs.readFileSync('./localhost.key')
@@ -34,6 +34,40 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.post('/submit-payment', async (req, res, next) => {
+  const { token, sku, name, email } = req.body;
+
+  try {
+    const order = await stripe.orders.create({
+      email: email
+      , currency: sku.currency
+      , metadata: {
+        name: name
+      }
+      , items: [
+        {
+          type: 'sku'
+          , parent: sku.id
+        }
+      ]
+    });
+
+    const paidOrder = await stripe.orders.pay(order.id, {
+      source: (token.livemode ? token.id : 'tok_visa')
+    });
+
+    const fulfilledOrder = await stripe.orders.update(order.id, {
+      status: 'fulfilled'
+    });
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(fulfilledOrder)).status(200).end();
+  } catch (error) {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
+  }
+});
+
 app.post('/order', async (req, res, next) => {
   const { token, sku } = req.body;
 
@@ -50,7 +84,7 @@ app.post('/order', async (req, res, next) => {
     });
 
     const paidOrder = await stripe.orders.pay(order.id, {
-      source: (token.livemode ? token.id : 'tok_visa'),
+      source: (token.livemode ? token.id : 'tok_visa')
     });
 
     const fulfilledOrder = await stripe.orders.update(order.id, {
@@ -63,14 +97,10 @@ app.post('/order', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
   }
-
 });
-
 
 app.post('/charge', async (req, res, next) => {
   const { token, sku } = req.body;
-  console.log(token, sku);
-  
   stripe.charges.create({
     amount: sku.price
     , currency: sku.currency
@@ -88,7 +118,6 @@ app.post('/charge', async (req, res, next) => {
       res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
     }
   });
-  
 });
 
 app.head('/cache/', function (req, res, next) {
@@ -104,7 +133,7 @@ app.head('/cache/', function (req, res, next) {
 
 app.get('/skus', function (req, res, next) {
   stripe.skus.retrieve(
-    'sku_CckkugPVHUWbpZ', 
+    'sku_CckkugPVHUWbpZ',
     (error, sku) => {
       if (error === null) {
         res.setHeader('Content-Type', 'application/json');

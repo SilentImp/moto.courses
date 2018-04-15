@@ -1,0 +1,11 @@
+form.form#payment-form(method="post")
+  fieldset.form__fieldset
+    label.form__label(for="form-name") Имя
+    input.form__input#form-name(type="text", placeholder="Corgi", name="name")
+  fieldset.form__fieldset
+    label.form__label(for="form-email") Email
+    input.form__input#form-email(type="email", autocomplete="on", placeholder="corgi@corgi.corgi", name="email")
+  label.form__label(for="card-element") Карта
+  #card-element
+  #card-errors(role="alert")
+  button.form__submit-button(type="submit") Купить
