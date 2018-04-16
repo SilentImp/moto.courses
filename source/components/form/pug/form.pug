@@ -1,11 +1,16 @@
 form.form#payment-form(method="post")
   fieldset.form__fieldset
     label.form__label(for="form-name") Имя
-    input.form__input#form-name(type="text", placeholder="Corgi", name="name")
+    input.form__input#form-name(type="text", placeholder="Corgi", autocomplete="name", name="name")
   fieldset.form__fieldset
     label.form__label(for="form-email") Email
-    input.form__input#form-email(type="email", autocomplete="on", placeholder="corgi@corgi.corgi", name="email")
+    input.form__input#form-email(type="email", autocomplete="email", placeholder="corgi@corgi.corgi", name="email")
+  fieldset.form__fieldset
+    label.form__label(for="form-tel") Телефон
+    input.form__input#form-tel(type="tel", placeholder="+380502773882", autocomplete="tel", name="tel")
   label.form__label(for="card-element") Карта
   #card-element
-  #card-errors(role="alert")
-  button.form__submit-button(type="submit") Купить
+  #card-errors.form__error-message(role="alert")
+  button#form-submit-button.form__submit-button(type="submit") Купить
+  .form__feedback#form-feedback
+    p.form__feedback-message#form-feedback-message Оплата прошла успешно!

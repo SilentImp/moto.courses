@@ -1,9 +1,29 @@
 .form {
   width: 50%;
+  position: relative;
 }
 
 .form * {
   box-sizing: border-box;
+}
+
+.form--loading {
+  pointer-events: none;
+  animation: loading 1s infinite;
+}
+
+@keyframes loading {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .form__submit-button {
@@ -68,6 +88,35 @@
 .form__input:focus {
   box-shadow: 0 1px 3px 0 #cfd7df;
   outline: none;
+}
+
+.form__error-message {
+  color: #fa755a;
+  font-size: 16px;
+}
+
+.form__feedback {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  padding: 20px 30px;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
+  transition: all 500ms ease-in-out;
+  background-color: white;
+  opacity: 0;
+  transform: translateY(-80px);
+}
+
+.form__feedback--visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.form__feedback-message {
+  font-size: 16px;
+  color: #32325d;
 }
 
 .StripeElement {
