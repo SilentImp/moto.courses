@@ -23,6 +23,11 @@
     margin-right: $step_2;
     float: left;
   }
+
+  &--close {
+    width: $font_size_4;
+    height: $font_size_4;
+  }
 }
 
 @media (max-width: 960px) {

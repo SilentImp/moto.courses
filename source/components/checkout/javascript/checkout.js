@@ -55,7 +55,7 @@ if (Stripe !== undefined) {
     const quantity = parseInt(sku.inventory.quantity, 10);
     const plural = getNoun(quantity);
     const suffixes = new Map([
-        ['many', 'билетов осталось']
+      ['many', 'билетов осталось']
       , ['one', 'билет остался']
       , ['few', 'билета осталось']
     ]);
@@ -72,11 +72,15 @@ if (Stripe !== undefined) {
       prButton.mount('#payment-request-button');
     } else {
       document.getElementById('payment-request-button').style.display = 'none';
-      const element = document.getElementById('checkout__message');
-      if (ApplePaySession) {
-        element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
-      } else {
-        element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
+      try {
+        const element = document.getElementById('checkout__message');
+        if (window.ApplePaySession) {
+          element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
+        } else {
+          element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
+        }
+      } catch (error) {
+        console.log('error: ', error.message);
       }
     }
   };
@@ -85,10 +89,10 @@ if (Stripe !== undefined) {
     let sku = await updateCount();
     showButton(sku);
     paymentRequest.on('token', async (event) => {
-      const { token } = event;
+      const {token} = event;
       const response = await fetch('/order', {
         method: 'POST'
-        , body: JSON.stringify({ token, sku })
+        , body: JSON.stringify({token, sku})
         , headers: {'content-type': 'application/json'}
       });
       if (response.ok) {
