@@ -4,14 +4,8 @@ import 'babel-polyfill';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
-// import https from 'https';
 
-require('dotenv').config({path: './.env'});
-
-// const options = {
-//   key: fs.readFileSync('./localhost.key')
-//   , cert: fs.readFileSync('./localhost.crt')
-// };
+require('dotenv').config({path: '../.env'});
 
 const stripe = require('stripe')(process.env.STRIPE_API_KEY_SECRET);
 
@@ -154,9 +148,5 @@ app.use(express.static(`${__dirname}/../build`));
 app.listen(PORT, () => {
   console.log('Server listening on', PORT);
 });
-
-// https.createServer(options, app).listen(PORT, function () {
-//   console.log('Express server listening on port ' + PORT);
-// });
 
 export default app;

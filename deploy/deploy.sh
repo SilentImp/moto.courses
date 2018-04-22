@@ -22,6 +22,7 @@ rm .env;
 if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
     echo STRIPE_API_KEY_SECRET=${STRIPE_API_KEY_SECRET} >> .env;
+    echo STRIPE_API_KEY_SECRET_TEST=${STRIPE_API_KEY_SECRET_TEST} >> .env;
 fi
 cd ${RESULT_DIR};
 nvm install 7;

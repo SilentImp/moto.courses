@@ -4,17 +4,26 @@
   "description": "Курсы обслуживания мотоциклов",
   "main": "./build/server.js",
   "scripts": {
-    "install": "./deploy/hooks.sh && npm run static",
-    "lint": "gulp lint:js && gulp lint:css && gulp lint:pug",
-    "lintjs": "gulp lint:css",
-    "lintcss": "gulp lint:css",
-    "lintpug": "gulp lint:pug",
+    "install": "npm run static",
+    "lint": "run-p lint:*",
+    "lint:js": "gulp lint:js",
+    "lint:css": "gulp lint:css",
+    "lint:pug": "gulp lint:pug",
     "build": "gulp server && gulp build",
     "static": "gulp build",
     "build:critical": "gulp critical",
     "build:html": "gulp html",
     "critical": "gulp critical",
-    "pure": "purifycss build/styles/styles.css build/javascript/scripts.js build/*.html -m -o build/styles/styles.css -i -r"
+    "pure": "purifycss build/styles/styles.css build/javascript/scripts.js build/*.html -m -o build/styles/styles.css -i -r",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "eslint --fix"
+    ],
+    "*.{css}": [
+      "stylelint --fix"
+    ]
   },
   "repository": {
     "type": "git",
