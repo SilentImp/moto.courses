@@ -13,12 +13,12 @@
 }
 
 .checkout__button {
+  display: none;
   border: none;
   outline: none;
   color: #fff;
   background: #32325d;
   white-space: nowrap;
-  display: inline-block;
   height: 36px;
   line-height: 36px;
   padding: 0 14px;

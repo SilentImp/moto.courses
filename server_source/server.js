@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 });
 
 app.post('/submit-payment', async (req, res, next) => {
-  const { token, sku, name, email } = req.body;
+  const { token, sku, name, email, phone } = req.body;
 
   try {
     const order = await stripe.orders.create({
@@ -42,6 +42,7 @@ app.post('/submit-payment', async (req, res, next) => {
       , currency: sku.currency
       , metadata: {
         name: name
+        , phone: phone
       }
       , items: [
         {

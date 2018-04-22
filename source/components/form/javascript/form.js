@@ -103,9 +103,10 @@ export default class Form {
       const sku = await response.json();
       const name = document.getElementById('form-name').value;
       const email = document.getElementById('form-email').value;
+      const phone = document.getElementById('form-tel').value;
       const submitResponse = fetch('/submit-payment', {
         method: 'POST'
-        , body: JSON.stringify({name, email, sku, token})
+        , body: JSON.stringify({name, email, phone, sku, token})
         , headers: {'content-type': 'application/json'}
       });
       form.classList.add('form--loading');

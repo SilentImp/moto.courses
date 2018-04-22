@@ -63,9 +63,9 @@ if (Stripe !== undefined) {
     if (quantity > 0) {
       if (result) {
         const button = document.getElementById('checkout-button');
+        button.style.display = 'inline-block';
         button.addEventListener('click', () => { paymentRequest.show(); });
       } else {
-        document.getElementById('checkout-button').style.display = 'none';
         form.style.display = 'block';
         if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
           new Form().renderForm();
