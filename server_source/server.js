@@ -4,10 +4,15 @@ import 'babel-polyfill';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
+import { resolve } from 'path';
 
-require('dotenv').config({path: '../.env'});
+console.log('path to .env: ', resolve('./', '../.env'));
 
-const stripe = require('stripe')(process.env.STRIPE_API_KEY_SECRET);
+require('dotenv').config({path: resolve('./', '../.env')});
+
+console.log('process.env: ', process.env);
+
+const stripe = require('stripe')(process.env.STRIPE_API_KEY_SECRET_TEST);
 
 const bodyParser = require('body-parser');
 const app = express()
