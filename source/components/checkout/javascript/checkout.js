@@ -20,16 +20,6 @@ if (Stripe !== undefined) {
       , amount: 4000
     }
   });
-  const elements = stripe.elements();
-  const prButton = elements.create('paymentRequestButton', {
-    paymentRequest
-    , style: {
-      paymentRequestButton: {
-        type: 'buy'
-        , theme: 'dark'
-      }
-    }
-  });
 
   const getNoun = (number) => {
     let n = Math.abs(number);
@@ -72,7 +62,8 @@ if (Stripe !== undefined) {
     const form = document.getElementById('payment-form');
     if (quantity > 0) {
       if (result) {
-        prButton.mount('#payment-request-button');
+        const button = document.getElementById('checkout-button');
+        button.addEventListener('click', () => { paymentRequest.show(); });
       } else {
         document.getElementById('payment-request-button').style.display = 'none';
         form.style.display = 'block';
@@ -96,16 +87,6 @@ if (Stripe !== undefined) {
             new Form().renderForm();
           });
         }
-        // try {
-        //   const element = document.getElementById('checkout__message');
-        //   if (window.ApplePaySession) {
-        //     element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
-        //   } else {
-        //     element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
-        //   }
-        // } catch (error) {
-        //   console.log('error: ', error.message);
-        // }
       }
     }
   };
