@@ -1,13 +1,13 @@
 form.form#payment-form(method="post")
   fieldset.form__fieldset
     label.form__label(for="form-name") Имя
-    input.form__input#form-name(type="text", placeholder="Corgi", autocomplete="name", name="name")
+    input.form__input#form-name(type="text", placeholder="Corgi", autocomplete="name", name="name", required)
   fieldset.form__fieldset
     label.form__label(for="form-email") Email
-    input.form__input#form-email(type="email", autocomplete="email", placeholder="corgi@corgi.corgi", name="email")
+    input.form__input#form-email(type="email", autocomplete="email", placeholder="corgi@corgi.corgi", name="email", required)
   fieldset.form__fieldset
     label.form__label(for="form-tel") Телефон
-    input.form__input#form-tel(type="tel", placeholder="+380502773882", autocomplete="tel", name="tel")
+    input.form__input#form-tel(type="tel", placeholder="+380502773882", autocomplete="tel", name="tel", required)
   label.form__label(for="card-element") Карта
   #card-element
   #card-errors.form__error-message(role="alert")

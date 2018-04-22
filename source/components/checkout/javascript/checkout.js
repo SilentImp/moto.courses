@@ -1,7 +1,7 @@
 import 'babel-polyfill';
+import Form from '../../form/javascript/form';
 
 if (Stripe !== undefined) {
-  console.log('stripe');
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
     amount: 4000
@@ -76,6 +76,26 @@ if (Stripe !== undefined) {
       } else {
         document.getElementById('payment-request-button').style.display = 'none';
         form.style.display = 'block';
+        if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
+          new Form().renderForm();
+        } else {
+          const stateChange = new Promise((resolve) => {
+            document.onreadystatechange = () => {
+              if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
+                resolve();
+              }
+            };
+          });
+          const DOMContentLoaded = new Promise((resolve) => {
+            document.addEventListener('DOMContentLoaded', function () {
+              resolve();
+            });
+          });
+
+          Promise.race([stateChange, DOMContentLoaded]).then(() => {
+            new Form().renderForm();
+          });
+        }
         // try {
         //   const element = document.getElementById('checkout__message');
         //   if (window.ApplePaySession) {

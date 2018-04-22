@@ -90,5 +90,8 @@
     "stylint-stylish": "^1.4.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
   }
 }
