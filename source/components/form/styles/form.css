@@ -34,8 +34,8 @@
   background: #32325d;
   white-space: nowrap;
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
+  height: 36px;
+  line-height: 36px;
   padding: 0 14px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
   border-radius: 4px;
@@ -44,7 +44,7 @@
   letter-spacing: .025em;
   text-decoration: none;
   transition: all 150ms ease;
-  margin-top: 28px;
+  margin-top: 36px;
   cursor: pointer;
 }
 
@@ -55,16 +55,15 @@
 }
 
 .form__label {
-  font-size: 15px;
-  margin-bottom: 8px;
+  font-size: 18px;
   color: #6b7c93;
-  font-weight: bold;
+  line-height: 36px;
 }
 
 .form__fieldset {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .form__input {
