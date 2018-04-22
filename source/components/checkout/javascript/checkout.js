@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 
 if (Stripe !== undefined) {
-  console.log('stripe');
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
     amount: 4000
@@ -56,9 +55,9 @@ if (Stripe !== undefined) {
     const quantity = parseInt(sku.inventory.quantity, 10);
     const plural = getNoun(quantity);
     const suffixes = new Map([
-      ['many', 'билетов осталось']
-      , ['one', 'билет остался']
-      , ['few', 'билета осталось']
+      ['many', `Осталось ${quantity} билетов`]
+      , ['one', `Остался ${quantity} билет`]
+      , ['few', `Осталось ${quantity} билета`]
     ]);
     document.querySelector('.checkout__skus').innerText = (quantity === 0)
       ? 'Билетов нет'
