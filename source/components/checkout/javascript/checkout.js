@@ -52,7 +52,7 @@ if (Stripe !== undefined) {
     ]);
     document.querySelector('.checkout__skus').innerText = (quantity === 0)
       ? 'Билетов нет'
-      : `${sku.inventory.quantity} ${suffixes.get(plural)}`;
+      : suffixes.get(plural);
     return sku;
   };
 
