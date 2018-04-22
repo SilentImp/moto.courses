@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 
 if (Stripe !== undefined) {
+  console.log('stripe');
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
     amount: 4000
@@ -68,19 +69,23 @@ if (Stripe !== undefined) {
   const showButton = async (sku) => {
     const quantity = parseInt(sku.inventory.quantity, 10);
     const result = await paymentRequest.canMakePayment();
-    if (result && (quantity > 0)) {
-      prButton.mount('#payment-request-button');
-    } else {
-      document.getElementById('payment-request-button').style.display = 'none';
-      try {
-        const element = document.getElementById('checkout__message');
-        if (window.ApplePaySession) {
-          element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
-        } else {
-          element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
-        }
-      } catch (error) {
-        console.log('error: ', error.message);
+    const form = document.getElementById('payment-form');
+    if (quantity > 0) {
+      if (result) {
+        prButton.mount('#payment-request-button');
+      } else {
+        document.getElementById('payment-request-button').style.display = 'none';
+        form.style.display = 'block';
+        // try {
+        //   const element = document.getElementById('checkout__message');
+        //   if (window.ApplePaySession) {
+        //     element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
+        //   } else {
+        //     element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
+        //   }
+        // } catch (error) {
+        //   console.log('error: ', error.message);
+        // }
       }
     }
   };
@@ -102,7 +107,7 @@ if (Stripe !== undefined) {
       }
       setTimeout(async () => {
         sku = await updateCount();
-        showButton(sku);
+        await showButton(sku);
       }, 1000);
     });
   })();
