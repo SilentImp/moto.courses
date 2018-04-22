@@ -25,9 +25,9 @@ if [ ! -f ".env" ]; then
     echo STRIPE_API_KEY_SECRET_TEST=${STRIPE_API_KEY_SECRET_TEST} >> .env;
 fi
 cd ${RESULT_DIR};
-nvm install 7;
-nvm use 7;
-nvm alias default 7;
+nvm install 9;
+nvm use 9;
+nvm alias default 9;
 npm install;
 npm run build;
 cd ..;
