@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import Form from '../../form/javascript/form';
 
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
@@ -17,16 +18,6 @@ if (Stripe !== undefined) {
     , total: {
       label: 'Мастеркласс'
       , amount: 4000
-    }
-  });
-  const elements = stripe.elements();
-  const prButton = elements.create('paymentRequestButton', {
-    paymentRequest
-    , style: {
-      paymentRequestButton: {
-        type: 'buy'
-        , theme: 'dark'
-      }
     }
   });
 
@@ -71,20 +62,31 @@ if (Stripe !== undefined) {
     const form = document.getElementById('payment-form');
     if (quantity > 0) {
       if (result) {
-        prButton.mount('#payment-request-button');
+        const button = document.getElementById('checkout-button');
+        button.addEventListener('click', () => { paymentRequest.show(); });
       } else {
         document.getElementById('payment-request-button').style.display = 'none';
         form.style.display = 'block';
-        // try {
-        //   const element = document.getElementById('checkout__message');
-        //   if (window.ApplePaySession) {
-        //     element.innerText = 'И вы не сможете их купить, так как у вас нет ApplePay';
-        //   } else {
-        //     element.innerText = 'Но в этом браузере чекаут не работает — он недостаточно хром';
-        //   }
-        // } catch (error) {
-        //   console.log('error: ', error.message);
-        // }
+        if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
+          new Form().renderForm();
+        } else {
+          const stateChange = new Promise((resolve) => {
+            document.onreadystatechange = () => {
+              if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
+                resolve();
+              }
+            };
+          });
+          const DOMContentLoaded = new Promise((resolve) => {
+            document.addEventListener('DOMContentLoaded', function () {
+              resolve();
+            });
+          });
+
+          Promise.race([stateChange, DOMContentLoaded]).then(() => {
+            new Form().renderForm();
+          });
+        }
       }
     }
   };
