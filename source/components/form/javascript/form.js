@@ -1,24 +1,3 @@
-// if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
-//   new Form().renderForm();
-// } else {
-//   const stateChange = new Promise((resolve) => {
-//     document.onreadystatechange = () => {
-//       if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
-//         resolve();
-//       }
-//     };
-//   });
-//   const DOMContentLoaded = new Promise((resolve) => {
-//     document.addEventListener('DOMContentLoaded', function () {
-//       resolve();
-//     });
-//   });
-//
-//   Promise.race([stateChange, DOMContentLoaded]).then(() => {
-//     new Form().renderForm();
-//   });
-// }
-
 export default class Form {
   renderForm () {
     const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
@@ -35,7 +14,6 @@ export default class Form {
         color: '#fa755a'
         , iconColor: '#fa755a'
       }
-      // , hidePostalCode: true
     };
 
     const errorMessages = {

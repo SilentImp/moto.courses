@@ -38,7 +38,7 @@ if (Stripe !== undefined) {
   };
 
   const updateCount = async () => {
-    const response = await fetch('/skus');
+    const response = await fetch('https://5e3e41e3.ngrok.io/skus');
     if (!response.ok) {
       throw new Error(`${response.status} ${response.statusText}`);
     }
@@ -96,9 +96,11 @@ if (Stripe !== undefined) {
     showButton(sku);
     paymentRequest.on('token', async (event) => {
       const {token} = event;
+      const phone = event.payerPhone;
+      const name = event.payerName;
       const response = await fetch('/order', {
         method: 'POST'
-        , body: JSON.stringify({token, sku})
+        , body: JSON.stringify({token, sku, phone, name})
         , headers: {'content-type': 'application/json'}
       });
       if (response.ok) {

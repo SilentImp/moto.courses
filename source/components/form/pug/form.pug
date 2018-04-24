@@ -7,7 +7,7 @@ form.form#payment-form(method="post")
     input.form__input#form-email(type="email", autocomplete="email", placeholder="corgi@corgi.corgi", name="email", required)
   fieldset.form__fieldset
     label.form__label(for="form-tel") Телефон
-    input.form__input#form-tel(type="tel", placeholder="+380502773882", autocomplete="tel", name="tel", required)
+    input.form__input#form-tel(type="tel", placeholder="+380502773882", autocomplete="tel", name="tel", pattern="([+](38))?[0-9]{10}", required)
   label.form__label(for="card-element") Карта
   #card-element
   #card-errors.form__error-message(role="alert")
