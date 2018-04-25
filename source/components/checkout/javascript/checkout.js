@@ -38,7 +38,7 @@ if (Stripe !== undefined) {
   };
 
   const updateCount = async () => {
-    const response = await fetch('https://5e3e41e3.ngrok.io/skus');
+    const response = await fetch('/skus');
     if (!response.ok) {
       throw new Error(`${response.status} ${response.statusText}`);
     }
