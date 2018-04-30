@@ -52,19 +52,29 @@ app.post('/submit-payment', async (req, res, next) => {
       ]
     });
 
-    const paidOrder = await stripe.orders.pay(order.id, {
-      source: (token.livemode ? token.id : 'tok_visa')
+    console.log('token: ', token, token.livemode, (token.livemode ? token.id : 'tok_visa'));
+    console.log('res: ', {
+      source: ((token.livemode === true) ? token.id : 'tok_visa')
     });
+
+    const paidOrder = await stripe.orders.pay(order.id, {
+      source: ((token.livemode === true) ? token.id : 'tok_visa')
+    });
+
+    console.log('success: ', paidOrder);
 
     const fulfilledOrder = await stripe.orders.update(order.id, {
       status: 'fulfilled'
     });
 
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(fulfilledOrder)).status(200).end();
+    res.send(JSON.stringify({ fulfilledOrder, paidOrder })).status(200).end();
   } catch (error) {
+    console.log('failure: ', error);
+
     res.setHeader('Content-Type', 'application/json');
-    res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
+    res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(JSON.stringify(error.code));
+    // res.send(JSON.stringify(error)).status(error.statusCode).end();
   }
 });
 

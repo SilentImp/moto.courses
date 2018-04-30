@@ -1,7 +1,14 @@
+@import "../../../helpers/_helpers.css";
+
 .form {
   position: relative;
   margin-bottom: 24px;
   display: none;
+  max-height: 400px;
+  transition: max-height .5s ease-in;
+  will-change: max-height;
+  overflow: hidden;
+  padding-bottom: 24px;
 }
 
 .form * {
@@ -11,6 +18,10 @@
 .form--loading {
   pointer-events: none;
   animation: loading 1s infinite;
+}
+
+.form--hidden {
+  max-height: 0;
 }
 
 @keyframes loading {
@@ -28,30 +39,37 @@
 }
 
 .form__submit-button {
-  border: none;
-  outline: none;
-  color: #fff;
-  background: #32325d;
-  white-space: nowrap;
-  display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 14px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: .025em;
-  text-decoration: none;
-  transition: all 150ms ease;
-  margin-top: 36px;
-  cursor: pointer;
-}
+  @mixin button;
 
-.form__submit-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
-  background-color: #43458b;
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
+  position: relative;
+  text-transform: uppercase;
+  transition: background-color .25s, transform .25s;
+  margin-top: 36px;
+
+  &::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    top: 100%;
+    left: $step_1;
+    border-style: solid;
+    border-width: $step_1 $step_1 0 0;
+    border-color: color($color_blue l(-5%)) transparent transparent;
+    transition: border-color .25s;
+  }
+
+  &:focus::after,
+  &:hover::after {
+    border-color: color($color_blue l(+5%)) transparent transparent;
+  }
+
+  &:active {
+    transform: scale(.95);
+  }
 }
 
 .form__label {
@@ -93,40 +111,6 @@
 .form__error-message {
   color: #fa755a;
   font-size: 16px;
-}
-
-.form__feedback {
-  position: absolute;
-  z-index: 1000;
-  bottom: 0;
-  left: 25%;
-  right: 25%;
-  padding: 20px 36px 20px 30px;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
-  transition: all 500ms ease-in-out;
-  background-color: white;
-  opacity: 0;
-  transform: translateY(-80px);
-}
-
-.form__feedback--visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.form__feedback-message {
-  font-size: 16px;
-  color: #32325d;
-}
-
-.form__close-feedback-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 0;
-  border: none;
-  background: transparent;
 }
 
 .StripeElement {

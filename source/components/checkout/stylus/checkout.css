@@ -12,29 +12,36 @@
   vertical-align: middle;
 }
 
-.checkout__button {
-  display: none;
-  border: none;
-  outline: none;
-  color: #fff;
-  background: #32325d;
-  white-space: nowrap;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 14px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: .025em;
-  text-decoration: none;
-  transition: all 150ms ease;
-  margin-top: 36px;
-  cursor: pointer;
-}
+.checkout__button,
+.checkout__button-buy-more {
+  @mixin button;
 
-.checkout__button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
-  background-color: #43458b;
+  display: none;
+  width: auto;
+  vertical-align: middle;
+  position: relative;
+  text-transform: uppercase;
+  transition: background-color .25s, transform .25s;
+
+  &::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    top: 100%;
+    left: $step_1;
+    border-style: solid;
+    border-width: $step_1 $step_1 0 0;
+    border-color: color($color_blue l(-5%)) transparent transparent;
+    transition: border-color .25s;
+  }
+
+  &:focus::after,
+  &:hover::after {
+    border-color: color($color_blue l(+5%)) transparent transparent;
+  }
+
+  &:active {
+    transform: scale(.95);
+  }
 }

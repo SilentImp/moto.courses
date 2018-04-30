@@ -45,32 +45,55 @@ export default class Form {
 
     const form = document.getElementById('payment-form');
     const submitButton = document.getElementById('form-submit-button');
-    const feedback = document.getElementById('form-feedback');
+    // const feedback = document.getElementById('form-feedback');
+    const buyMoreButton = document.querySelector('.checkout__button-buy-more');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       const {token, error} = await stripe.createToken(card);
+      submitButton.disabled = false;
+      form.classList.add('form--loading');
 
       if (error) {
         errorElement.textContent = errorMessages[error.code];
       } else {
         errorElement.textContent = '';
         const response = await stripeTokenHandler(token);
-        const feedbackMessage = document.getElementById('form-feedback-message');
-        feedback.classList.add('form__feedback--visible');
-        if (!response.ok) {
-          feedbackMessage.innerText = 'Что-то пошло не так';
-          submitButton.disabled = false;
-          form.classList.remove('form--loading');
-          throw new Error(`${response.status} ${response.statusText}`);
-        } else {
-          form.reset();
-          card.clear();
-          form.classList.remove('form--loading');
-          submitButton.disabled = false;
+        const feedbackMessage = document.querySelector('.checkout__skus'); // document.getElementById('form-feedback-message');
+        form.classList.remove('form--loading');
+        form.classList.add('form--hidden');
+        // feedback.classList.add('form__feedback--visible');
+        console.log(response);
+        const result = await response.json();
+        if (response.ok) {
+          console.warn('ok');
+          console.log('success: ', result);
+          // form.reset();
+          // card.clear();
+          // form.classList.remove('form--loading');
+          // form.classList.add('form--hidden');
           feedbackMessage.innerText = 'Оплата прошла успешно!';
+          buyMoreButton.style.display = 'inline-block';
+        } else {
+          console.warn('not ok');
+          // feedbackMessage.innerText = 'Что-то пошло не так';
+          // const result = await response.json();
+          console.log('error: ', result);
+          // console.log('response: ', result);
+          // console.log('response error: ', response.error);
+          const errorMessage = errorMessages[result] || '';
+          feedbackMessage.innerText = `Мастер-класс не оплачен. ${errorMessage}`;
+          buyMoreButton.innerText = 'Попробовать еще';
+          buyMoreButton.style.display = 'inline-block';
+          // form.classList.remove('form--loading');
+          throw new Error(`${response.status} ${response.statusText}`);
         }
       }
+    });
+
+    buyMoreButton.addEventListener('click', () => {
+      form.classList.remove('form--hidden');
+      buyMoreButton.style.display = 'none';
     });
 
     const stripeTokenHandler = async (token) => {
@@ -87,13 +110,11 @@ export default class Form {
         , body: JSON.stringify({name, email, phone, sku, token})
         , headers: {'content-type': 'application/json'}
       });
-      form.classList.add('form--loading');
-      submitButton.disabled = true;
       return submitResponse;
     };
 
-    document.getElementById('form-close-feedback-button').addEventListener('click', () => {
-      feedback.classList.remove('form__feedback--visible');
-    });
+    // document.getElementById('form-close-feedback-button').addEventListener('click', () => {
+    //   feedback.classList.remove('form__feedback--visible');
+    // });
   }
 }
