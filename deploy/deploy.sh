@@ -23,6 +23,9 @@ if [ ! -f ".env" ]; then
     echo WEB_PATH=${WEB_PATH} >> .env;
     echo STRIPE_API_KEY_SECRET=${STRIPE_API_KEY_SECRET} >> .env;
     echo STRIPE_API_KEY_SECRET_TEST=${STRIPE_API_KEY_SECRET_TEST} >> .env;
+    echo MAILCHIMP_LIST=${MAILCHIMP_LIST} >> .env;
+    echo MAILCHIMP_API_KEY_SECRET=${MAILCHIMP_API_KEY_SECRET} >> .env;
+    echo MAILCHIMP_API_URL=${MAILCHIMP_API_URL} >> .env;
 fi
 cd ${RESULT_DIR};
 nvm install 9;

@@ -5,6 +5,7 @@ import express from 'express';
 import fs from 'fs';
 import http from 'http';
 import { resolve } from 'path';
+import MailChimpSubscriber from './MailChimpSubscriber';
 
 console.log('path to .env: ', resolve('./', '../.env'));
 
@@ -51,6 +52,14 @@ app.post('/submit-payment', async (req, res, next) => {
         }
       ]
     });
+    
+    if (false) {
+      const chimp = new MailChimpSubscriber(
+        process.env.MAILCHIMP_API_KEY_SECRET, 
+        process.env.MAILCHIMP_API_URL
+      );
+      chimp.subscribe('email@me.com', process.env.MAILCHIMP_LIST);
+    }
 
     console.log('token: ', token, token.livemode, (token.livemode ? token.id : 'tok_visa'));
     console.log('res: ', {
