@@ -14,13 +14,13 @@ export default class MailChimpSubscriber {
     this.token = token;
     this.url = url;
   }
-  
+
   /**
    * Add email to the list
-   * 
+   *
    * @param  {string} email - email
    * @param  {string} list  - list id
-   * @return {object}       - server answer 
+   * @return {object}       - server answer
    * @throw  {Error}        - throw error if something have go wrong
    * @link http://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/
    *
@@ -28,7 +28,7 @@ export default class MailChimpSubscriber {
    * import MailChimpSubscriber from './MailChimpSubscriber';
    * (async () => {
    *   const chimp = new MailChimpSubscriber(
-   *    'b3eac318f2e54f183cc9da9445f579e7-us12', 
+   *    'b3eac318f2e54f183cc9da9445f579e7-us12',
    *    'https://us12.api.mailchimp.com/3.0/'
    *   );
    *   try {
@@ -38,22 +38,23 @@ export default class MailChimpSubscriber {
    *   }
    * })();
    */
-  subscribe (email, list) {
+  async subscribe (email, list) {
     const options = {
-      method: 'POST',
-      headers: {
-        Authorization: `apikey ${this.token}`,
-        Accept: 'application/json; charset=utf-8',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        status: 'subscribed',
-      }),
+      method: 'POST'
+      , headers: {
+        Authorization: `apikey ${this.token}`
+        , Accept: 'application/json; charset=utf-8'
+        , 'Content-Type': 'application/json'
+      }
+      , body: JSON.stringify({
+        email_address: email
+        , status: 'subscribed'
+      })
     };
     const response = await fetch(`${this.url}/lists/${list}/members`, options);
     const json = await response.json();
+    console.log('mailchimp json: ', json);
     if (response.ok) return json;
-    throw new Error(JSON.stringify(json));
+    throw new Error(json.title);
   }
 }

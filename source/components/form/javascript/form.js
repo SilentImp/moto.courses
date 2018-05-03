@@ -1,4 +1,14 @@
 export default class Form {
+
+  getCookie (name) {
+    let cookie = {};
+    document.cookie.split(';').forEach(function (el) {
+      let [k, v] = el.split('=');
+      cookie[k.trim()] = v;
+    });
+    return cookie[name];
+  };
+
   renderForm () {
     const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
     const elements = stripe.elements();
@@ -29,6 +39,12 @@ export default class Form {
       , rate_limit: 'Слишком много запросов к API.'
     };
 
+    console.log(document.cookie);
+    if (this.getCookie('moto_courses_subscription')) {
+      console.log('!!1');
+      document.querySelector('.form .form__fieldset--checkbox').style.display = 'none';
+    }
+
     const card = elements.create('card', {style}, {hidePostalCode: true});
 
     card.mount('#card-element');
@@ -45,7 +61,6 @@ export default class Form {
 
     const form = document.getElementById('payment-form');
     const submitButton = document.getElementById('form-submit-button');
-    // const feedback = document.getElementById('form-feedback');
     const buyMoreButton = document.querySelector('.checkout__button-buy-more');
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -56,36 +71,27 @@ export default class Form {
 
       if (error) {
         errorElement.textContent = errorMessages[error.code];
+        form.classList.remove('form--loading');
       } else {
         errorElement.textContent = '';
         const response = await stripeTokenHandler(token);
-        const feedbackMessage = document.querySelector('.checkout__skus'); // document.getElementById('form-feedback-message');
+        const feedbackMessage = document.querySelector('.checkout__skus');
         form.classList.remove('form--loading');
         form.classList.add('form--hidden');
-        // feedback.classList.add('form__feedback--visible');
         console.log(response);
         const result = await response.json();
         if (response.ok) {
           console.warn('ok');
           console.log('success: ', result);
-          // form.reset();
-          // card.clear();
-          // form.classList.remove('form--loading');
-          // form.classList.add('form--hidden');
           feedbackMessage.innerText = 'Оплата прошла успешно!';
           buyMoreButton.style.display = 'inline-block';
         } else {
           console.warn('not ok');
-          // feedbackMessage.innerText = 'Что-то пошло не так';
-          // const result = await response.json();
           console.log('error: ', result);
-          // console.log('response: ', result);
-          // console.log('response error: ', response.error);
           const errorMessage = errorMessages[result] || '';
           feedbackMessage.innerText = `Мастер-класс не оплачен. ${errorMessage}`;
           buyMoreButton.innerText = 'Попробовать еще';
           buyMoreButton.style.display = 'inline-block';
-          // form.classList.remove('form--loading');
           throw new Error(`${response.status} ${response.statusText}`);
         }
       }
@@ -105,16 +111,13 @@ export default class Form {
       const name = document.getElementById('form-name').value;
       const email = document.getElementById('form-email').value;
       const phone = document.getElementById('form-tel').value;
+      const subscription = document.getElementById('form-subscription-checkbox').checked;
       const submitResponse = fetch('/submit-payment', {
         method: 'POST'
-        , body: JSON.stringify({name, email, phone, sku, token})
+        , body: JSON.stringify({name, email, phone, sku, token, subscription})
         , headers: {'content-type': 'application/json'}
       });
       return submitResponse;
     };
-
-    // document.getElementById('form-close-feedback-button').addEventListener('click', () => {
-    //   feedback.classList.remove('form__feedback--visible');
-    // });
   }
 }

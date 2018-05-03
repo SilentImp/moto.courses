@@ -6,6 +6,19 @@
   vertical-align: middle;
 }
 
+.checkout .form__fieldset--checkbox {
+  margin-top: 0;
+}
+
+.checkout__wrapper {
+  width: $col_3;
+  margin: $step_2 0 $step_4;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  z-index: 2;
+}
+
 .checkout__skus {
   display: inline-block;
   margin-right: 20px;

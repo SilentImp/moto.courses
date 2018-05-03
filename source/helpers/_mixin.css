@@ -70,8 +70,8 @@
     @mixin fontfamily;
     font-size: $font_size_2;
     color: $color_white;
-    height: $step_4;
-    line-height: $step_4;
+    height: $step_3;
+    line-height: $step_3;
     padding: 0 $step_2;
     width: $col_2;
     text-align: center;
@@ -80,6 +80,7 @@
     vertical-align: middle;
     margin-right: $step_2;
     outline: none;
+    cursor: pointer;
 
     &:focus,
     &:hover {

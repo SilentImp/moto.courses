@@ -11,4 +11,7 @@ form.form#payment-form(method="post")
   label.form__label(for="card-element") Карта
   #card-element
   #card-errors.form__error-message(role="alert")
+  .form__fieldset.form__fieldset--checkbox
+    label.form__label.form__label--checkbox(for="form-subscription-checkbox") Я хочу получать новости
+    input#form-subscription-checkbox(type="checkbox", name="subscription-checkbox", checked)
   button#form-submit-button.form__submit-button(type="submit") Купить

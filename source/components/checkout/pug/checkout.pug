@@ -1,6 +1,9 @@
 .checkout
   h2.abstract__title Прими участие в мастер-классе:
   span.checkout__skus
+  .form__fieldset.form__fieldset--checkbox
+    label.form__label.form__label--checkbox(for="checkout-subscription-checkbox") Я хочу получать новости
+    input#checkout-subscription-checkbox(type="checkbox", name="subscription-checkbox", checked)
   button.checkout__button#checkout-button Купить
   p#checkout__message
   button.checkout__button-buy-more Купить еще

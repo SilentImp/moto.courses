@@ -1,6 +1,15 @@
 import 'babel-polyfill';
 import Form from '../../form/javascript/form';
 
+function getCookie (name) {
+  let cookie = {};
+  document.cookie.split(';').forEach(function (el) {
+    let [k, v] = el.split('=');
+    cookie[k.trim()] = v;
+  });
+  return cookie[name];
+};
+
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
@@ -37,6 +46,10 @@ if (Stripe !== undefined) {
     return 'many';
   };
 
+  if (getCookie('moto_courses_subscription')) {
+    document.querySelector('.checkout .form__fieldset--checkbox').style.display = 'none';
+  }
+
   const updateCount = async () => {
     const response = await fetch('/skus');
     if (!response.ok) {
@@ -67,6 +80,7 @@ if (Stripe !== undefined) {
         button.addEventListener('click', () => { paymentRequest.show(); });
       } else {
         form.style.display = 'block';
+        document.querySelector('.checkout .form__fieldset--checkbox').style.display = 'none';
         if (['complete', 'interactive'].indexOf(document.readyState) > -1) {
           new Form().renderForm();
         } else {
@@ -88,6 +102,9 @@ if (Stripe !== undefined) {
           });
         }
       }
+    } else {
+      document.getElementById('subscription-form').style.display = 'inline-block';
+      document.querySelector('.checkout__wrapper').style.display = 'none';
     }
   };
 
@@ -98,20 +115,20 @@ if (Stripe !== undefined) {
       const {token} = event;
       const phone = event.payerPhone;
       const name = event.payerName;
+      const subscription = document.getElementById('checkout-subscription-checkbox').checked;
       const response = await fetch('/order', {
         method: 'POST'
-        , body: JSON.stringify({token, sku, phone, name})
+        , body: JSON.stringify({token, sku, phone, name, subscription})
         , headers: {'content-type': 'application/json'}
       });
+      const feedbackMessage = document.querySelector('.checkout__skus');
       if (response.ok) {
         event.complete('success');
+        feedbackMessage.innerText = 'Оплата прошла успешно!';
+        document.getElementById('checkout-button').innerText = 'Купить еще';
       } else {
         event.complete('fail');
       }
-      setTimeout(async () => {
-        sku = await updateCount();
-        await showButton(sku);
-      }, 1000);
     });
   })();
 }

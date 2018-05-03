@@ -4,8 +4,9 @@ import 'babel-polyfill';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
-import { resolve } from 'path';
+import {resolve} from 'path';
 import MailChimpSubscriber from './MailChimpSubscriber';
+import cookieParser from 'cookie-parser';
 
 console.log('path to .env: ', resolve('./', '../.env'));
 
@@ -34,8 +35,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(cookieParser());
+
 app.post('/submit-payment', async (req, res, next) => {
-  const { token, sku, name, email, phone } = req.body;
+  const {token, sku, name, email, phone, subscription} = req.body;
 
   try {
     const order = await stripe.orders.create({
@@ -52,13 +55,20 @@ app.post('/submit-payment', async (req, res, next) => {
         }
       ]
     });
-    
-    if (false) {
+
+    if (subscription) {
       const chimp = new MailChimpSubscriber(
-        process.env.MAILCHIMP_API_KEY_SECRET, 
+        process.env.MAILCHIMP_API_KEY_SECRET,
         process.env.MAILCHIMP_API_URL
       );
-      chimp.subscribe('email@me.com', process.env.MAILCHIMP_LIST);
+      try {
+        await chimp.subscribe(email, process.env.MAILCHIMP_LIST);
+        res.cookie('moto_courses_subscription', 'true', {httpOnly: false});
+      } catch (error) {
+        if (error === 'Member Exists') {
+          res.cookie('moto.courses.subscription', 'true', {httpOnly: false});
+        }
+      }
     }
 
     console.log('token: ', token, token.livemode, (token.livemode ? token.id : 'tok_visa'));
@@ -77,18 +87,17 @@ app.post('/submit-payment', async (req, res, next) => {
     });
 
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ fulfilledOrder, paidOrder })).status(200).end();
+    res.send(JSON.stringify({fulfilledOrder, paidOrder})).status(200).end();
   } catch (error) {
     console.log('failure: ', error);
 
     res.setHeader('Content-Type', 'application/json');
     res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(JSON.stringify(error.code));
-    // res.send(JSON.stringify(error)).status(error.statusCode).end();
   }
 });
 
 app.post('/order', async (req, res, next) => {
-  const { token, sku, phone, name } = req.body;
+  const {token, sku, phone, name, subscription} = req.body;
 
   try {
     const order = await stripe.orders.create({
@@ -105,6 +114,14 @@ app.post('/order', async (req, res, next) => {
         }
       ]
     });
+
+    if (subscription) {
+      const chimp = new MailChimpSubscriber(
+        process.env.MAILCHIMP_API_KEY_SECRET,
+        process.env.MAILCHIMP_API_URL
+      );
+      chimp.subscribe(token.email, process.env.MAILCHIMP_LIST);
+    }
 
     const paidOrder = await stripe.orders.pay(order.id, {
       source: (token.livemode ? token.id : 'tok_visa')
@@ -123,7 +140,7 @@ app.post('/order', async (req, res, next) => {
 });
 
 app.post('/charge', async (req, res, next) => {
-  const { token, sku } = req.body;
+  const {token, sku} = req.body;
   stripe.charges.create({
     amount: sku.price
     , currency: sku.currency
