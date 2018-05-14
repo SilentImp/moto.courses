@@ -39,9 +39,7 @@ export default class Form {
       , rate_limit: 'Слишком много запросов к API.'
     };
 
-    console.log(document.cookie);
     if (this.getCookie('moto_courses_subscription')) {
-      console.log('!!1');
       document.querySelector('.form .form__fieldset--checkbox').style.display = 'none';
     }
 
@@ -84,7 +82,12 @@ export default class Form {
           console.warn('ok');
           console.log('success: ', result);
           feedbackMessage.innerText = 'Оплата прошла успешно!';
-          buyMoreButton.style.display = 'inline-block';
+          const skuResponse = await fetch('/skus');
+          const sku = await skuResponse.json();
+          const quantity = parseInt(sku.inventory.quantity, 10);
+          if (quantity > 0) {
+            buyMoreButton.style.display = 'inline-block';
+          }
         } else {
           console.warn('not ok');
           console.log('error: ', result);
@@ -117,6 +120,10 @@ export default class Form {
         , body: JSON.stringify({name, email, phone, sku, token, subscription})
         , headers: {'content-type': 'application/json'}
       });
+      if (subscription) {
+        document.cookie = 'moto_courses_subscription=true';
+        document.querySelector('.form .form__fieldset--checkbox').style.display = 'none';
+      }
       return submitResponse;
     };
   }

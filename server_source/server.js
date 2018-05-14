@@ -61,14 +61,7 @@ app.post('/submit-payment', async (req, res, next) => {
         process.env.MAILCHIMP_API_KEY_SECRET,
         process.env.MAILCHIMP_API_URL
       );
-      try {
-        await chimp.subscribe(email, process.env.MAILCHIMP_LIST);
-        res.cookie('moto_courses_subscription', 'true', {httpOnly: false});
-      } catch (error) {
-        if (error === 'Member Exists') {
-          res.cookie('moto.courses.subscription', 'true', {httpOnly: false});
-        }
-      }
+      chimp.subscribe(email, process.env.MAILCHIMP_LIST);
     }
 
     console.log('token: ', token, token.livemode, (token.livemode ? token.id : 'tok_visa'));

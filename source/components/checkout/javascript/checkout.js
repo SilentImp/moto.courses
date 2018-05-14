@@ -10,6 +10,8 @@ function getCookie (name) {
   return cookie[name];
 };
 
+const checkBoxSubscription = document.querySelector('.checkout .form__fieldset--checkbox');
+
 if (Stripe !== undefined) {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
@@ -47,7 +49,7 @@ if (Stripe !== undefined) {
   };
 
   if (getCookie('moto_courses_subscription')) {
-    document.querySelector('.checkout .form__fieldset--checkbox').style.display = 'none';
+    checkBoxSubscription.style.display = 'none';
   }
 
   const updateCount = async () => {
@@ -77,7 +79,9 @@ if (Stripe !== undefined) {
       if (result) {
         const button = document.getElementById('checkout-button');
         button.style.display = 'inline-block';
-        button.addEventListener('click', () => { paymentRequest.show(); });
+        button.addEventListener('click', () => {
+          paymentRequest.show();
+        });
       } else {
         form.style.display = 'block';
         document.querySelector('.checkout .form__fieldset--checkbox').style.display = 'none';
@@ -121,11 +125,22 @@ if (Stripe !== undefined) {
         , body: JSON.stringify({token, sku, phone, name, subscription})
         , headers: {'content-type': 'application/json'}
       });
+      if (subscription) {
+        document.cookie = 'moto_courses_subscription=true';
+      }
       const feedbackMessage = document.querySelector('.checkout__skus');
       if (response.ok) {
         event.complete('success');
         feedbackMessage.innerText = 'Оплата прошла успешно!';
-        document.getElementById('checkout-button').innerText = 'Купить еще';
+        const response = await fetch('/skus');
+        const sku = await response.json();
+        const quantity = parseInt(sku.inventory.quantity, 10);
+        if (quantity > 0) {
+          document.getElementById('checkout-button').innerText = 'Купить еще';
+        } else {
+          document.getElementById('checkout-button').style.display = 'none';
+        }
+        if (subscription) checkBoxSubscription.style.display = 'none';
       } else {
         event.complete('fail');
       }

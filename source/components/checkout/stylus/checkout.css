@@ -58,3 +58,12 @@
     transform: scale(.95);
   }
 }
+
+@media (max-width: 989px) {
+  .checkout__wrapper {
+    width: $col_6;
+    display: block;
+    order: -1;
+    margin-bottom: 0;
+  }
+}
