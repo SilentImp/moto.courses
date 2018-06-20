@@ -252,7 +252,15 @@ gulp.task('default', ['javascript'], function () {
   gulp.watch(paths.source.js, ['javascript']);
 });
 
-gulp.task('build', ['fonts', 'javascript', 'javascript-standalone', 'critical', 'image:resize', 'favicon', 'static']);
+gulp.task('build', [
+  'fonts', 
+  'javascript', 
+  'javascript-standalone', 
+  'critical', 
+  'image:resize', 
+  'favicon', 
+  'static'
+]);
 
 gulp.task('watch', function () {
   gulp.watch(paths.source.all_js, ['javascript', 'javascript-standalone']);

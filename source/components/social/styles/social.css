@@ -1,7 +1,15 @@
 @import "../../../helpers/_helpers.css";
 
 .social {
-  margin: $step_2 0 $step_4;
+  margin: $step_2 0 0;
+
+  @media (min-width: 989px) {
+    margin: $step_2 0 $step_4;
+  }
+
+  @media (min-width: 621px) and (max-width: 989px) {
+    order: 1;
+  }
 
   &__title {
     @mixin header;
@@ -20,3 +28,4 @@
     }
   }
 }
+

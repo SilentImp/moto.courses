@@ -8,6 +8,10 @@
   position: relative;
   z-index: 2;
 
+  @media (min-width: 621px) and (max-width: 989px) {
+    order: 3;
+  }
+
   &__title {
     @mixin header;
   }

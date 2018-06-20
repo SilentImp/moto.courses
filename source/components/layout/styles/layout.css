@@ -21,9 +21,9 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 100vh;
-  height: 100vh;
+  flex-basis: 100vh;
   z-index: 1;
 
   @mixin text;
@@ -32,6 +32,7 @@ body {
 .content {
   @mixin page;
 
+  flex-grow: 1;
   z-index: 1;
 }
 
@@ -40,6 +41,14 @@ body {
     display: block;
   }
 }
+
+/* @media (max-width: 621px) {
+  .page {
+
+  }
+} */
+
+/* justify-content: space-between; */
 
 @media (max-width: 989px) {
   .content {
