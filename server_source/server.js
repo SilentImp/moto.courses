@@ -45,29 +45,47 @@ app.post('/validate', async (req, res, next) => {
     const certPath = resolve(__dirname, '../../../apple/merchant_id.cer');
     const keyPath = resolve(__dirname, '../../../apple/merchant_id.pem');
     console.warn('certPath: ', certPath);
-    console.warn('validationURL: ', validationURL);
     const appleURL = url.parse(`${validationURL}/paymentSession`);
     console.warn('body: ', req.body);
-    console.warn('data: ', req.data);
-    console.warn('query: ', req.query);
     const { validationURL } = req.body;
-    const cert = fs.readFileSync(certPath, 'utf8');
-    const key = fs.readFileSync(keyPath, 'utf8');
-    console.warn('cert: ', cert);
-    const options = { 
+    console.warn('validationURL: ', validationURL);
+    const cert = fs.readFileSync(certPath);
+    const key = fs.readFileSync(keyPath);
+    const options = {
+      url: `${validationURL}/paymentSession`,
       hostname: appleURL.hostname, 
       path: appleURL.path, 
       method: 'POST', 
       key,
       cert,
+      json: true,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
     }; 
     
+    console.warn('options: ', options);
+    
     var appleRequest = https.request(options, function(appleResponce) {
+      console.log("statusCode: ", appleResponce.statusCode);
+      console.log("headers: ", appleResponce.headers);
+
     	console.log(res.statusCode);
     	appleResponce.on('data', function(data){
     		res.send(JSON.stringify(data));
     	});
     });
+    appleRequest.on('error', (err) => {
+      console.error('ERROR failed to login into website');
+      res.send(err.message);
+    });
+    appleRequest.write(JSON.stringify({
+      merchantIdentifier: 'merchant.moto.courses',
+      displayName: 'Moto Courses',
+      initiative: 'web',
+      initiativeContext: 'moto.courses', 
+    }));
     appleRequest.end();
   } catch (error) {
     console.warn('error on verification: ', error);
