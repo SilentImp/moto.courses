@@ -1,5 +1,5 @@
 if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.PaymentRequest) {
-  // we may pay with payment request API
+
   const applePayMethod = {
     supportedMethods: "https://apple.com/apple-pay",
     data: {
@@ -27,23 +27,18 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
 
   const request = new PaymentRequest([applePayMethod], paymentDetails, paymentOptions);
   
-  request.onmerchantvalidation = function (event) {
+  request.onmerchantvalidation = async function (event) {
     console.log('onmerchantvalidation validation');
-    const response = await fetch("/validate", {
-          body: JSON.stringify({ validationURL: event.validationURL }),
-          method: "POST",
-      });
-    if (response.ok) return event.complete(response.json());
+    const response = await fetch('/validate', {
+      body: JSON.stringify({ validationURL: event.validationURL }),
+      method: 'POST',
+    });
+    if (response.ok) {
+      return event.complete(response.json());
+    }
     throw new Error(`${response.status} ${response.statusText}`);
   };
 
-  // request.onmerchantvalidation = event => {
-      // fetch("merchant-validation.php", {
-      //     body: JSON.stringify({ validationURL: event.validationURL }),
-      //     method: "POST",
-      // }).then(response => event.complete(response.json()));
-  // };
-  
   const button = document.getElementById('pay-safari');
   button.addEventListener('click', function (event) {
     console.log('clicked');
