@@ -10,6 +10,8 @@ export default class Form {
   };
 
   renderForm () {
+    if (typeof Stripe === 'undefined') return;
+
     const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
     const elements = stripe.elements();
     const style = {

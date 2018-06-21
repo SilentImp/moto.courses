@@ -54,9 +54,9 @@
     "express": "^4.14.0",
     "glob-array": "^1.0.0",
     "gm": "^1.23.1",
-    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-cheerio": "^0.6.2",
+    "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
     "gulp-gm": "0.0.9",
@@ -94,6 +94,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
     "npm-run-all": "^4.1.2"
   }
 }

@@ -12,7 +12,7 @@ function getCookie (name) {
 
 const checkBoxSubscription = document.querySelector('.checkout .form__fieldset--checkbox');
 
-if (Stripe !== undefined) {
+if (typeof Stripe !== 'undefined') {
   const stripe = Stripe('pk_test_DoqCioanEscOmfUYCQQjittH');
   const items = [{
     amount: 4000
