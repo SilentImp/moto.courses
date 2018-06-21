@@ -37,6 +37,12 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
       //     method: "POST",
       // }).then(response => event.complete(response.json()));
   // };
-  const result = request.show();
-  console.warn('result: ', result);
+  
+  const button = document.getElementById('pay-safari');
+  button.addEventListener('click', function (event) {
+    console.log('clicked');
+    const result = request.show();
+    console.warn('result: ', result);
+  });
+  
 }
