@@ -7,6 +7,8 @@ import http from 'http';
 import {resolve} from 'path';
 import MailChimpSubscriber from './MailChimpSubscriber';
 import cookieParser from 'cookie-parser';
+import https from 'https'; 
+
 
 console.log('path to .env: ', resolve('./', '../.env'));
 
@@ -36,6 +38,42 @@ app.use(function (req, res, next) {
 });
 
 app.use(cookieParser());
+
+app.post('/validate', async (req, res, next) => {
+  try {
+    const { validationURL } = req.body;
+    const options = { 
+      hostname: validationURL, 
+      port: 4433, 
+      path: '/paymentSession', 
+      method: 'POST', 
+      key: fs.readFileSync('../../apple/merchant_id.cer'),
+      cert: fs.readFileSync('../../apple/merchant_id.cer'),
+    }; 
+    
+    var appleRequest = https.request(options, function(appleResponce) {
+    	console.log(res.statusCode);
+    	appleResponce.on('data', function(data){
+    		res.send(JSON.stringify(data));
+    	});
+    });
+    appleRequest.end();
+  } catch (error) {
+    console.warn('error on verification: ', error);
+  }
+
+  // const response = await fetch(`https://${validationURL}/paymentSession`, {
+  //   url: `https://${validationURL}/paymentSession`,
+  //   method: 'POST',
+  //   body: JSON.stringify({
+  //     merchantIdentifier: 'merchant.moto.courses',
+  //     displayName: 'Moto Courses',
+  //     initiative: 'web',
+  //     initiativeContext: 'moto.courses', 
+  //   }),
+  //   json: true,
+  // });
+});
 
 app.post('/submit-payment', async (req, res, next) => {
   const {token, sku, name, email, phone, subscription} = req.body;

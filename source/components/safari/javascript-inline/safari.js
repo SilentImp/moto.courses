@@ -24,13 +24,19 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
     requestPayerPhone: true,
     requestShipping: false,
   };
-  
+
   const request = new PaymentRequest([applePayMethod], paymentDetails, paymentOptions);
+  
   request.onmerchantvalidation = function (event) {
     console.log('onmerchantvalidation validation');
-    // const sessionPromise = fetchPaymentSession(event.validationURL);
-    event.complete(Math.riound(Math.random())? 'success' : 'fail');
+    const response = await fetch("/validate", {
+          body: JSON.stringify({ validationURL: event.validationURL }),
+          method: "POST",
+      });
+    if (response.ok) return event.complete(response.json());
+    throw new Error(`${response.status} ${response.statusText}`);
   };
+
   // request.onmerchantvalidation = event => {
       // fetch("merchant-validation.php", {
       //     body: JSON.stringify({ validationURL: event.validationURL }),
