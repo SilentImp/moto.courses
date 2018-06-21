@@ -8,6 +8,7 @@ import {resolve} from 'path';
 import MailChimpSubscriber from './MailChimpSubscriber';
 import cookieParser from 'cookie-parser';
 import https from 'https'; 
+import url from 'url';
 
 
 console.log('path to .env: ', resolve('./', '../.env'));
@@ -41,14 +42,24 @@ app.use(cookieParser());
 
 app.post('/validate', async (req, res, next) => {
   try {
+    const certPath = resolve(__dirname, '../../../apple/merchant_id.cer');
+    const keyPath = resolve(__dirname, '../../../apple/merchant_id.pem');
+    console.warn('certPath: ', certPath);
+    console.warn('validationURL: ', validationURL);
+    const appleURL = url.parse(`${validationURL}/paymentSession`);
+    console.warn('body: ', req.body);
+    console.warn('data: ', req.data);
+    console.warn('query: ', req.query);
     const { validationURL } = req.body;
+    const cert = fs.readFileSync(certPath, 'utf8');
+    const key = fs.readFileSync(keyPath, 'utf8');
+    console.warn('cert: ', cert);
     const options = { 
-      hostname: validationURL, 
-      port: 4433, 
-      path: '/paymentSession', 
+      hostname: appleURL.hostname, 
+      path: appleURL.path, 
       method: 'POST', 
-      key: fs.readFileSync('../../apple/merchant_id.cer'),
-      cert: fs.readFileSync('../../apple/merchant_id.cer'),
+      key,
+      cert,
     }; 
     
     var appleRequest = https.request(options, function(appleResponce) {

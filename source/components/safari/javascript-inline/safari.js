@@ -28,10 +28,15 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
   const request = new PaymentRequest([applePayMethod], paymentDetails, paymentOptions);
   
   request.onmerchantvalidation = async function (event) {
-    console.log('onmerchantvalidation validation');
+    console.warn('onmerchantvalidation', event);
     const response = await fetch('/validate', {
-      body: JSON.stringify({ validationURL: event.validationURL }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
+      json: true,
+      body: JSON.stringify({ validationURL: event.validationURL }),
     });
     if (response.ok) {
       return event.complete(response.json());
