@@ -123,10 +123,11 @@ if (typeof Stripe !== 'undefined') {
       console.warn('token: ', token);
       const phone = event.payerPhone;
       const name = event.payerName;
+      const email = event.payerEmail;
       const subscription = document.getElementById('checkout-subscription-checkbox').checked;
       const response = await fetch('/order', {
         method: 'POST'
-        , body: JSON.stringify({token, sku, phone, name, subscription})
+        , body: JSON.stringify({token, sku, phone, name, email, subscription})
         , headers: {'content-type': 'application/json'}
       });
       if (subscription) {

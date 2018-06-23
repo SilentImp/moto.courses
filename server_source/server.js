@@ -188,12 +188,12 @@ app.post('/submit-payment', async (req, res, next) => {
 });
 
 app.post('/order', async (req, res, next) => {
-  const {token, sku, phone, name, subscription} = req.body;
+  const {token, sku, phone, name, email, subscription} = req.body;
   console.log('order 1');
   try {
     console.log('order 2');
     const order = await stripe.orders.create({
-      email: token.email
+      email: email || token.email
       , currency: sku.currency
       , metadata: {
         name: name
@@ -209,13 +209,13 @@ app.post('/order', async (req, res, next) => {
     
     console.log('order 3');
 
-    if (subscription && token.email) {
+    if (subscription && (email || token.email)) {
       console.log('order 4');
       const chimp = new MailChimpSubscriber(
         process.env.MAILCHIMP_API_KEY_SECRET,
         process.env.MAILCHIMP_API_URL
       );
-      chimp.subscribe(token.email, process.env.MAILCHIMP_LIST);
+      chimp.subscribe((email || token.email), process.env.MAILCHIMP_LIST);
     }
     
     console.log('order 5');
