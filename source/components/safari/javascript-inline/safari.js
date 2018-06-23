@@ -28,7 +28,8 @@
   }], paymentDetails, paymentOptions);
   
   request.onmerchantvalidation = async function (event) {
-    console.warn('onmerchantvalidation', event);
+    console.warn('onmerchantvalidation');
+    console.warn(event);
     const response = await fetch('/validate', {
       headers: {
         'Accept': 'application/json',
@@ -43,6 +44,11 @@
     }
     throw new Error(`${response.status} ${response.statusText}`);
   };
+  
+  session.onpaymentauthorized = async function(event) {
+    console.warn('onpaymentauthorized');
+    console.warn(event);
+  }
 
   const button = document.getElementById('pay-safari');
   button.addEventListener('click', function (event) {
