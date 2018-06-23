@@ -19,7 +19,7 @@ if (window.PaymentRequest) {
     merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
     supportedNetworks: ["amex", "discover", "masterCard", "visa"],
     total: {
-      amount: '40'
+      amount: { value: "10", currency: "UAH" }
       , label: 'maintenance.course'
     },
   };
@@ -31,7 +31,9 @@ if (window.PaymentRequest) {
     requestShipping: false,
   };
 
-  const request = new PaymentRequest([applePayMethod], paymentDetails, paymentOptions);
+  const request = new PaymentRequest([applePayMethod, {
+    supportedMethods: 'basic-card'
+  }], paymentDetails, paymentOptions);
   
   request.onmerchantvalidation = async function (event) {
     console.warn('onmerchantvalidation');
@@ -57,12 +59,23 @@ if (window.PaymentRequest) {
   }
 
   const button = document.getElementById('pay-safari');
-  button.addEventListener('click', async function (event) {
+  button.addEventListener('click', async (event) => {
     console.log('clicked');
     console.log('paymentDetails: ', paymentDetails);
     
     if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-      const sessionResult = new ApplePaySession(3, paymentDetails);
+      const session = new ApplePaySession(3, {
+        countryCode: 'UA',
+        currencyCode: 'UAH',
+        merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
+        supportedNetworks: ["amex", "discover", "masterCard", "visa"],
+        total: {
+          amount: '10'
+          , label: 'maintenance.course'
+        },
+      });
+      console.log('session: ');
+      console.warn(session);
     }
     
     const result = await request.show();
