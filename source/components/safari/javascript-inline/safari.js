@@ -69,19 +69,29 @@ let session;
   
   const buttonA = document.getElementById('pay-apple');
   buttonA.addEventListener('click', async (event) => {
-    session = new ApplePaySession(3, {
-      countryCode: 'UA',
-      currencyCode: 'UAH',
+    session = new window.ApplePaySession(1, {
+      countryCode: 'US',
+      currencyCode: 'USD',
       merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
-      supportedNetworks: ["amex", "discover", "masterCard", "visa"],
+      supportedNetworks: ["masterCard", "visa"],
       total: {
-        amount: '10.00'
+        amount: 50
         , label: 'maintenance.course'
       },
     });
-    session.onmerchantvalidation = function (event) {
+    session.onvalidatemerchant = function (event) {
       console.warn('onmerchantvalidation apple');
       console.warn(event);
+      const response = await fetch('/validate', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        json: true,
+        body: JSON.stringify({ validationURL: event.validationURL }),
+      });
+      return event.complete(response.json());
     };
     session.begin();
   });
