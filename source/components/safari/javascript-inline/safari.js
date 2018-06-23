@@ -1,5 +1,3 @@
-if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.PaymentRequest) {
-
   const applePayMethod = {
     supportedMethods: "https://apple.com/apple-pay",
     data: {
@@ -52,5 +50,3 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
     const result = request.show();
     console.warn('result: ', result);
   });
-  
-}
