@@ -55,5 +55,5 @@
     console.log('clicked');
     const result = request.show();
     console.warn('result: ', result);
-    result.complete('success');
+    setTimeout(function(){result.complete('success');}, 5000);
   });
