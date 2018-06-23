@@ -1,6 +1,3 @@
-
-if (window.PaymentRequest) {  
-  
   const applePayMethod = {
     supportedMethods: "https://apple.com/apple-pay",
     data: {
@@ -82,5 +79,3 @@ if (window.PaymentRequest) {
     console.warn('result: ', result);
     setTimeout(function(){result.complete('success');}, 5000);
   });
-
-}
