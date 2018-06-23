@@ -59,7 +59,7 @@ if (window.PaymentRequest) {
   }
 
   const button = document.getElementById('pay-safari');
-  button.addEventListener('click', function (event) {
+  button.addEventListener('click', async function (event) {
     console.log('clicked');
     console.log('paymentDetails: ', paymentDetails);
     
@@ -67,7 +67,7 @@ if (window.PaymentRequest) {
       const sessionResult = new ApplePaySession(3, paymentDetails);
     }
     
-    const result = request.show();
+    const result = await request.show();
     console.warn('result: ', result);
     setTimeout(function(){result.complete('success');}, 5000);
   });
