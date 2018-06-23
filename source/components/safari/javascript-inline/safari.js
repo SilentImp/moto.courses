@@ -19,7 +19,7 @@ if (window.PaymentRequest) {
     merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
     supportedNetworks: ["amex", "discover", "masterCard", "visa"],
     total: {
-      amount: { value: "10", currency: "UAH" }
+      amount: '40'
       , label: 'maintenance.course'
     },
   };
@@ -61,9 +61,10 @@ if (window.PaymentRequest) {
   const button = document.getElementById('pay-safari');
   button.addEventListener('click', function (event) {
     console.log('clicked');
+    console.log('paymentDetails: ', paymentDetails);
     
     if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-      console.log(new ApplePaySession(3, paymentDetails));
+      const sessionResult = new ApplePaySession(3, paymentDetails);
     }
     
     const result = request.show();
