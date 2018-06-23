@@ -80,16 +80,14 @@ app.post('/bak', async (req, res, next) => {
     const cert = fs.readFileSync(certPath);
     const key = fs.readFileSync(keyPath);
     const options = {
-      protocol: 'https:',
-      url: `${validationURL}/paymentSession`,
+      key,
+      cert,
       hostname: appleURL.hostname,
       path: appleURL.path,
       method: 'POST', 
       "headers": {
         "Content-Type": "application/json",
       },
-      key,
-      cert,
       body:{
         merchantIdentifier: 'merchant.moto.courses',
         displayName: 'Moto Courses',
