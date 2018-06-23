@@ -55,4 +55,5 @@
     console.log('clicked');
     const result = request.show();
     console.warn('result: ', result);
+    result.complete('success');
   });
