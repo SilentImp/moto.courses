@@ -22,7 +22,7 @@ if (typeof Stripe !== 'undefined') {
     country: 'US'
     , currency: 'uah'
     , requestPayerName: true
-    , requestPayerEmail: true
+    , requestPayerEmail: false
     , requestPayerPhone: true
     , requestShipping: false
     , displayItems: items
