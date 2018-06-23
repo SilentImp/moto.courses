@@ -1,3 +1,5 @@
+let session;
+
   const applePayMethod = {
     supportedMethods: "https://apple.com/apple-pay",
     data: {
@@ -16,7 +18,7 @@
     merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
     supportedNetworks: ["amex", "discover", "masterCard", "visa"],
     total: {
-      amount: { value: "10", currency: "UAH" }
+      amount: { value: "10.00", currency: "UAH" }
       , label: 'maintenance.course'
     },
   };
@@ -32,50 +34,54 @@
     supportedMethods: 'basic-card'
   }], paymentDetails, paymentOptions);
   
-  request.onmerchantvalidation = async function (event) {
-    console.warn('onmerchantvalidation');
-    console.warn(event);
-    const response = await fetch('/validate', {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      json: true,
-      body: JSON.stringify({ validationURL: event.validationURL }),
-    });
-    if (response.ok) {
-      return event.complete(response.json());
-    }
-    throw new Error(`${response.status} ${response.statusText}`);
-  };
-  
-  request.onpaymentauthorized = async function(event) {
-    console.warn('onpaymentauthorized');
-    console.warn(event);
-  }
-
   const button = document.getElementById('pay-safari');
   button.addEventListener('click', async (event) => {
     console.log('clicked');
     console.log('paymentDetails: ', paymentDetails);
-    
-    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-      const session = new ApplePaySession(3, {
-        countryCode: 'UA',
-        currencyCode: 'UAH',
-        merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
-        supportedNetworks: ["amex", "discover", "masterCard", "visa"],
-        total: {
-          amount: '10'
-          , label: 'maintenance.course'
+      
+    console.log('session: ', session);
+      
+    request.onmerchantvalidation = async function (event) {
+      console.warn('onmerchantvalidation');
+      console.warn(event);
+      const response = await fetch('/validate', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
+        method: 'POST',
+        json: true,
+        body: JSON.stringify({ validationURL: event.validationURL }),
       });
-      console.log('session: ');
-      console.warn(session);
+      return event.complete(response.json());
+    };
+
+    request.onpaymentauthorized = async function(event) {
+      console.warn('onpaymentauthorized');
+      console.warn(event);
     }
-    
-    const result = await request.show();
-    console.warn('result: ', result);
-    setTimeout(function(){result.complete('success');}, 5000);
+
+    const response = await request.show();
+    response.complete("success");
+
+  });
+  
+  
+  const buttonA = document.getElementById('pay-apple');
+  buttonA.addEventListener('click', async (event) => {
+    session = new ApplePaySession(3, {
+      countryCode: 'UA',
+      currencyCode: 'UAH',
+      merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
+      supportedNetworks: ["amex", "discover", "masterCard", "visa"],
+      total: {
+        amount: '10.00'
+        , label: 'maintenance.course'
+      },
+    });
+    session.onmerchantvalidation = function (event) {
+      console.warn('onmerchantvalidation apple');
+      console.warn(event);
+    };
+    session.begin();
   });
