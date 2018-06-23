@@ -9,13 +9,9 @@ import MailChimpSubscriber from './MailChimpSubscriber';
 import cookieParser from 'cookie-parser';
 import https from 'https'; 
 import url from 'url';
-
-
-console.log('path to .env: ', resolve('./', '../.env'));
+import request from 'request';
 
 require('dotenv').config({path: resolve('./', '../.env')});
-
-console.log('process.env: ', process.env);
 
 const stripe = require('stripe')(process.env.STRIPE_API_KEY_SECRET_TEST);
 
@@ -23,13 +19,10 @@ const bodyParser = require('body-parser');
 const app = express()
   , PORT = process.env.PORT || 3004;
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
 
-// parse application/json
 app.use(bodyParser.json());
 
-// Set crossorigin headers
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD');
@@ -42,66 +35,104 @@ app.use(cookieParser());
 
 app.post('/validate', async (req, res, next) => {
   try {
-    const certPath = resolve(__dirname, '../../../apple/merchant_id.cer');
-    const keyPath = resolve(__dirname, '../../../apple/merchant_id.pem');
-    console.warn('certPath: ', certPath);
-    const appleURL = url.parse(`${validationURL}/paymentSession`);
-    console.warn('body: ', req.body);
+    const certPath = resolve(__dirname, '../../../apple/merchant_identity_cert.pem');
+    const keyPath = resolve(__dirname, '../../../apple/applepaytls.key');
     const { validationURL } = req.body;
-    console.warn('validationURL: ', validationURL);
     const cert = fs.readFileSync(certPath);
     const key = fs.readFileSync(keyPath);
     const options = {
-      url: `${validationURL}/paymentSession`,
-      hostname: appleURL.hostname, 
-      path: appleURL.path, 
+      uri: `${validationURL}/paymentSession`,
       method: 'POST', 
+      "headers": {
+        "Content-Type": "application/json",
+      },
       key,
       cert,
-      json: true,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+      body:{
+        merchantIdentifier: 'merchant.moto.courses',
+        displayName: 'MotoCourses',
+        initiative: 'web',
+        initiativeContext: 'moto.courses', 
       },
+      json: true,
+    };
+    
+    let response = '';
+    request.post(options, function (error, response, body) {
+      console.log('inner error:', error); 
+      console.log('inner statusCode:', response && response.statusCode); 
+      console.log('inner body:', body); 
+    }).on('error', function(err) {
+      console.log(err)
+    });
+    
+  } catch (error) {
+    console.warn('error on merchant verification: ', error);
+  }
+});
+
+app.post('/bak', async (req, res, next) => {
+  try {
+    const certPath = resolve(__dirname, '../../../apple/merchant_identity_cert.pem');
+    const keyPath = resolve(__dirname, '../../../apple/applepaytls.key');
+    const { validationURL } = req.body;
+    const appleURL = url.parse(`${validationURL}/paymentSession`);
+    const cert = fs.readFileSync(certPath);
+    const key = fs.readFileSync(keyPath);
+    const options = {
+      protocol: 'https:',
+      url: `${validationURL}/paymentSession`,
+      hostname: appleURL.hostname,
+      path: appleURL.path,
+      method: 'POST', 
+      "headers": {
+        "Content-Type": "application/json",
+      },
+      key,
+      cert,
+      body:{
+        merchantIdentifier: 'merchant.moto.courses',
+        displayName: 'Moto Courses',
+        initiative: 'web',
+        initiativeContext: 'moto.courses', 
+      },
+      json: true,
     }; 
     
-    console.warn('options: ', options);
-    
-    var appleRequest = https.request(options, function(appleResponce) {
-      console.log("statusCode: ", appleResponce.statusCode);
-      console.log("headers: ", appleResponce.headers);
-
-    	console.log(res.statusCode);
-    	appleResponce.on('data', function(data){
-    		res.send(JSON.stringify(data));
-    	});
-    });
-    appleRequest.on('error', (err) => {
-      console.error('ERROR failed to login into website');
-      res.send(err.message);
-    });
-    appleRequest.write(JSON.stringify({
+    const POSTJSONString = JSON.stringify({
       merchantIdentifier: 'merchant.moto.courses',
       displayName: 'Moto Courses',
       initiative: 'web',
       initiativeContext: 'moto.courses', 
-    }));
+    });
+    const HTTPBody = Buffer.from(POSTJSONString, "utf8");
+    
+    console.warn('options: ', options);
+    
+    const appleRequest = https.request(options, function(appleResponce) {
+      console.log("statusCode: ", appleResponce.statusCode);
+      console.log("headers: ", appleResponce.headers);
+      let response = '';
+    	appleResponce.on('data', function(data){
+        response += data;
+    	});
+      
+      appleResponce.on('end', function(){
+        console.warn('response.toString: ', response.toString());
+    		res.send(JSON.stringify(response));
+      });
+    });
+    appleRequest.on('error', (err) => {
+      console.error('ERROR failed to login into website', err);
+      res.send(err.message);
+    });
+    appleRequest.write(HTTPBody);
     appleRequest.end();
+    
   } catch (error) {
     console.warn('error on verification: ', error);
   }
 
-  // const response = await fetch(`https://${validationURL}/paymentSession`, {
-  //   url: `https://${validationURL}/paymentSession`,
-  //   method: 'POST',
-  //   body: JSON.stringify({
-  //     merchantIdentifier: 'merchant.moto.courses',
-  //     displayName: 'Moto Courses',
-  //     initiative: 'web',
-  //     initiativeContext: 'moto.courses', 
-  //   }),
-  //   json: true,
-  // });
 });
 
 app.post('/submit-payment', async (req, res, next) => {
@@ -158,8 +189,9 @@ app.post('/submit-payment', async (req, res, next) => {
 
 app.post('/order', async (req, res, next) => {
   const {token, sku, phone, name, subscription} = req.body;
-
+  console.log('order 1');
   try {
+    console.log('order 2');
     const order = await stripe.orders.create({
       email: token.email
       , currency: sku.currency
@@ -174,26 +206,36 @@ app.post('/order', async (req, res, next) => {
         }
       ]
     });
+    
+    console.log('order 3');
 
-    if (subscription) {
+    if (subscription && token.email) {
+      console.log('order 4');
       const chimp = new MailChimpSubscriber(
         process.env.MAILCHIMP_API_KEY_SECRET,
         process.env.MAILCHIMP_API_URL
       );
       chimp.subscribe(token.email, process.env.MAILCHIMP_LIST);
     }
+    
+    console.log('order 5');
 
     const paidOrder = await stripe.orders.pay(order.id, {
       source: (token.livemode ? token.id : 'tok_visa')
     });
+    
+    console.log('order 6');
 
     const fulfilledOrder = await stripe.orders.update(order.id, {
       status: 'fulfilled'
     });
+    
+    console.log('order 7');
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(fulfilledOrder)).status(200).end();
   } catch (error) {
+    console.log('order error');
     res.setHeader('Content-Type', 'application/json');
     res.status(error.statusCode, http.STATUS_CODES[error.statusCode]).end(`{"${http.STATUS_CODES[error.statusCode]}": "${error.message}"}`);
   }
@@ -247,10 +289,8 @@ app.get('/skus', function (req, res, next) {
   );
 });
 
-// Load static
 app.use(express.static(`${__dirname}/../build`));
 
-// Listen for requests
 app.listen(PORT, () => {
   console.log('Server listening on', PORT);
 });

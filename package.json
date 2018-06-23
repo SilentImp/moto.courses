@@ -86,6 +86,7 @@
     "postcss-discard-empty": "^2.1.0",
     "postcss-reporter": "^3.0.0",
     "precss": "^1.4.0",
+    "request": "^2.87.0",
     "stripe": "^5.6.1",
     "stylelint": "^7.10.1",
     "stylelint-config-standard": "^16.0.0",

@@ -115,8 +115,12 @@ if (typeof Stripe !== 'undefined') {
   (async () => {
     let sku = await updateCount();
     showButton(sku);
+    console.log('paymentRequest: ', paymentRequest);
     paymentRequest.on('token', async (event) => {
       const {token} = event;
+      console.warn('event: ', event);
+      console.warn('X: ');
+      console.warn('token: ', token);
       const phone = event.payerPhone;
       const name = event.payerName;
       const subscription = document.getElementById('checkout-subscription-checkbox').checked;
