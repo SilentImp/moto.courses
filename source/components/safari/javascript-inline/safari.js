@@ -25,7 +25,9 @@ if (window.ApplePaySession && ApplePaySession.canMakePayments() && window.Paymen
     requestShipping: false,
   };
 
-  const request = new PaymentRequest([applePayMethod], paymentDetails, paymentOptions);
+  const request = new PaymentRequest([applePayMethod, {
+    supportedMethods: 'basic-card'
+  }], paymentDetails, paymentOptions);
   
   request.onmerchantvalidation = async function (event) {
     console.warn('onmerchantvalidation', event);
